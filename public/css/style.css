@@ -1,0 +1,15 @@
+.main {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  
+  .section {
+    flex: 1 !important;
+    padding-top: 10px !important;
+  }
+
+  .footer {
+      background-color: lightsteelblue !important;
+      padding: 1rem 1rem 1rem !important;
+  }

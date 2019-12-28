@@ -3,7 +3,7 @@
     <h1 class="title">Sign Up</h1>
 </div>
 
-<form action="" method="post" class="form">
+<form action="index.php?page=signup" method="post" class="form">
 <div class="field">
       <p class="control has-icons-left">
         <input class="input" type="text" placeholder="Username" name="username">
@@ -37,11 +37,11 @@
   </p>
 </div>
 <div class="content">
-    <a href="#"> Already Have An Account? LOG IN</a>
+    <a href="index.php?page=login"> Already Have An Account? LOG IN</a>
 </div>
 <div class="field">
   <p class="control has-text-centered">
-  <input class="button is-success is-medium" type="button" value="Sign Up" name="SignUp">
+  <input class="button is-success is-medium" type="submit" value="Sign Up" name="signUp">
   </p>
 </div>
 </form>

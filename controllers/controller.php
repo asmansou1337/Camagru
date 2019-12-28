@@ -50,6 +50,7 @@ class Controller
                     $errors = $e->getMessage();
                 }
                 require('views/messageView.php');
+                unset($_SESSION["message"]);
                 require('views/signUpView.php');
                 break;
             case ($page === "activateAccount"):
@@ -70,10 +71,26 @@ class Controller
                     $errors = $e->getMessage();
                 }
                 require('views/messageView.php');
+                unset($_SESSION["message"]);
                 require('views/loginView.php');
                 break;
             case ($page === "login"):
-               // echo "signin";
+                try 
+                {
+                    if(isset($_POST['login']))
+                    {
+                        require('controllers/controllerSignIn.php');
+                        $ctrl = new controllerSignIn();
+                        $ctrl->login($this->pdo);
+                        if (isset($_SESSION["message"]))
+                            $message = $_SESSION["message"];
+                    }
+                } catch (Exception $e)
+                {
+                    $errors = $e->getMessage();
+                }
+                require('views/messageView.php');
+                unset($_SESSION["message"]);
                 require('views/loginView.php');
                 break;
             default:

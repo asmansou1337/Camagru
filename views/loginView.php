@@ -1,9 +1,9 @@
 <div class='container'>
 <div class='block  has-text-centered'>
-    <h1 class="title">Sign In</h1>
+    <h1 class="title">Log In</h1>
 </div>
 
-<form action="" method="post" class="form">
+<form action="index.php?page=login" method="post" class="form">
 <div class="field">
   <p class="control has-icons-left">
     <input class="input" type="email" placeholder="Email" name="email">
@@ -29,7 +29,7 @@
 </div>
 <div class="field">
   <p class="control has-text-centered">
-  <input class="button is-success is-medium" type="button" value="Sign IN" name="SignIN">
+  <input class="button is-success is-medium" type="submit" value="LOG IN" name="login">
   </p>
 </div>
 <div class="content">

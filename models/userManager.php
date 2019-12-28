@@ -48,6 +48,7 @@ class UserManager {
 
     public function activateUserAccount($pdo, $token)
     {
+        $token = filter_var($token, FILTER_SANITIZE_STRING);
         require('models/Validation.php');
         $validation = new Validation();
         $validation->verifyAccountActivated($pdo, $token);
@@ -58,6 +59,16 @@ class UserManager {
         } else {
             $_SESSION["message"] = "Your Account has been activated successfully.";
         }
+    }
+
+    public function userLogin($pdo, $email, $password)
+    {
+        require('models/Validation.php');
+        $validation = new Validation();
+        $email = $validation->validateEmail($email);
+        $password = $validation->validatePassowrd($password);
+        $user = $validation->verifyCorrectloginInfo($pdo, $email, $password);
+        return $user;
     }
 }
 ?>

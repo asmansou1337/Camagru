@@ -80,7 +80,17 @@ if ($navbarBurgers.length > 0) {
         </div>
       </div> -->
     </div>
-
+  <?php if ($_SESSION['loggedIn'] === 'yes') {?>
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-light" href="index.php?page=logout">
+            Log out
+          </a>
+        </div>
+      </div>
+    </div>
+<?php } else {?>
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
@@ -93,6 +103,7 @@ if ($navbarBurgers.length > 0) {
         </div>
       </div>
     </div>
+<?php }?>
   </div>
 </nav>
 

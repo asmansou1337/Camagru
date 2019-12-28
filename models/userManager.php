@@ -67,8 +67,8 @@ class UserManager {
         $validation = new Validation();
         $email = $validation->validateEmail($email);
         $password = $validation->validatePassowrd($password);
-        $user = $validation->verifyCorrectloginInfo($pdo, $email, $password);
-        return $user;
+        $userInfo = $validation->verifyCorrectloginInfo($pdo, $email, $password);
+        return $userInfo;
     }
 }
 ?>

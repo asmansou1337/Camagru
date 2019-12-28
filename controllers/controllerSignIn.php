@@ -11,10 +11,14 @@ class controllerSignIn
             throw new Exception("All fields should not be empty !");
         } else {
             require('models/userManager.php');
+            require('models/user.php');
             $userLogin = new UserManager();
-            $user = $userLogin->userLogin($pdo, $email, $password);
-            //echo $row['email'] . ' ' .  $row['password'];
-            print_r($user);
+            $userInfo = $userLogin->userLogin($pdo, $email, $password);
+            $user = new User($userInfo['username'], $userInfo['email'], $userInfo['password'], $userInfo['firstName'], $userInfo['lastName']);
+            $_SESSION['user'] = $user;
+            $_SESSION['loggedIn'] = 'yes';
+            echo "<script>console.log('Debug Objects: " . $_SESSION['loggedIn'] . "' );</script>";
+            //echo 'logged ' . $_SESSION['loggedIn'];
         }
     }
 }

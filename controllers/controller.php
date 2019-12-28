@@ -32,11 +32,18 @@ class Controller
         //require('controllers/controllerSignUp.php');
         switch ($page) {
             case ($page === "home"):
+               // if (isset($_SESSION['loggedIn']))
+               //     echo "<script>console.log('Debug Objects: " . $_SESSION['loggedIn'] . "' );</script>";
                 require('views/homeView.php');
                 break;
             case ($page === "signup"):
                 try 
                 {
+                    if (isset($_SESSION['loggedIn']))
+                    {
+                        header('Location: index.php?page=home');
+                        exit();
+                    }
                     if(isset($_POST['signUp']))
                     {
                         require('controllers/controllerSignUp.php');
@@ -56,6 +63,11 @@ class Controller
             case ($page === "activateAccount"):
                 try 
                 {
+                    if (isset($_SESSION['loggedIn']))
+                    {
+                        header('Location: index.php?page=home');
+                        exit();
+                    }
                     if(isset($_GET['token']))
                     {
                         require('controllers/controllerSignUp.php');
@@ -77,6 +89,12 @@ class Controller
             case ($page === "login"):
                 try 
                 {
+                    if (isset($_SESSION['loggedIn']))
+                    {
+                        //$message = "You are already logged in !";
+                        header('Location: index.php?page=home');
+                        exit();
+                    }
                     if(isset($_POST['login']))
                     {
                         require('controllers/controllerSignIn.php');
@@ -84,6 +102,8 @@ class Controller
                         $ctrl->login($this->pdo);
                         if (isset($_SESSION["message"]))
                             $message = $_SESSION["message"];
+                        header('Location: index.php?page=home');
+                        exit();
                     }
                 } catch (Exception $e)
                 {

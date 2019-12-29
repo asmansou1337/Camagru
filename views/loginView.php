@@ -21,11 +21,11 @@
   </p>
 </div>
 <label class="checkbox">
-  <input type="checkbox" name="isChecked">
+  <input type="checkbox" name="RememberMe">
   Remember me
 </label>
 <div class="content has-text-right">
-    <a href="#"> Forgot Your Password?</a>
+    <a href="index.php?page=forgotPassword"> Forgot Your Password?</a>
 </div>
 <div class="field">
   <p class="control has-text-centered">
@@ -33,7 +33,7 @@
   </p>
 </div>
 <div class="content">
-    <a href="#"> Don't Have An Account Yet? Create One Here</a>
+    <a href="index.php?page=signup"> Don't Have An Account Yet? Create One Here</a>
 </div>
 </form>
 </div>

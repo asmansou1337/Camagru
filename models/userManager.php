@@ -51,7 +51,11 @@ class UserManager {
         $token = filter_var($token, FILTER_SANITIZE_STRING);
         require('models/Validation.php');
         $validation = new Validation();
-        $validation->verifyAccountActivated($pdo, $token);
+        $activated = $validation->verifyAccountActivated($pdo, $token);
+        if ($activated->rowCount() > 0)
+        {
+            throw new Exception('This account is already activated !');
+        }
         $query = "UPDATE user_account SET active = 'ON' WHERE token = ?";
         $Statement = $pdo->prepare($query);
         if(!$Statement->execute([$token])){
@@ -65,10 +69,56 @@ class UserManager {
     {
         require('models/Validation.php');
         $validation = new Validation();
-        $email = $validation->validateEmail($email);
-        $password = $validation->validatePassowrd($password);
+        $email = $validation->validateString($email);
+        $password = $validation->validateString($password);
         $userInfo = $validation->verifyCorrectloginInfo($pdo, $email, $password);
         return $userInfo;
+    }
+
+    public function reinitializePasswordEmail($pdo, $email)
+    {
+        require('models/Validation.php');
+        $validation = new Validation();
+        $email = $validation->validateEmail($email);
+        $query = "SELECT * FROM user_account WHERE email = ?";
+        $Statement=$pdo->prepare($query);
+        if(!$Statement->execute([$email]))
+        {
+            throw new Exception('Something Went Wrong, Please Try Again!');
+        } else 
+        {
+            if ($Statement->rowcount() === 0)
+            {
+                throw new Exception('This email does not exist, Please Try Again!');
+            }
+            $row = $Statement->fetch();
+            require('models/emailManager.php');
+            $subject = "Password Reinitialisation Link";
+            $body = 'Hi '. $row['username'] . '<br>Folow the link below to reinitialize your password <br>'.
+            'http://localhost/camagruproject/index.php?page=reinitializePassword&token='.$row['token'].'<br>';
+            $sendEmail = new EmailManager();
+            $sendEmail->sendEmail($email, $subject, $body);
+            $_SESSION["message"] = "A link to reinitialize your password is sent to you, Please check your Email.";
+        }
+    }
+    
+    public function updatePassword($pdo, $password, $token)
+    {
+        require('models/Validation.php');
+        $validation = new Validation();
+        $password = $validation->validatePassowrd($password);
+        $hashedPassword = $this->hashPassword($password);
+        $validation->validateString($token);
+        $validation->verifyTokenExist($pdo, $token);
+        $query = "UPDATE user_account SET password = ? WHERE token = ?";
+        $Statement=$pdo->prepare($query);
+        if(!$Statement->execute([$hashedPassword, $token]))
+        {
+            throw new Exception('Something Went Wrong, Please Try Again!');
+        }
+        else {
+            $_SESSION["message"] = "Your password has changed successfuly.";
+        }
     }
 }
 ?>

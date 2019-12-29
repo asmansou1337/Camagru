@@ -36,26 +36,46 @@ if ($navbarBurgers.length > 0) {
 <!-- Fixed navbar -->
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-  <p class="navbar-item title" > Camagru </p>
+  <figure class="image is-128x128">
+  <img class="navbar-item"  src="public/images/Camagru.png" alt="camagru">
+  </figure>
   
-
-  
-  <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+   <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
-    </a>
+    </a> 
   </div>
 
   <div class="navbar-menu" id="navbarMenu">
     <div class="navbar-start">
-      <a class="navbar-item" href="index.php?page=home">
-        Home
+    <span class="navbar-item">
+      <a class="button is-black is-outlined" href="index.php?page=home">
+        <span class="icon">
+            <i class="fa fa-home"></i>
+        </span>
+        <span>Home</span>
       </a>
+    </span>
 
-      <a class="navbar-item" href="index.php?page=gallery">
-        Gallery
+    <span class="navbar-item">
+      <a class="button is-black is-outlined" href="index.php?page=gallery">
+        <span class="icon">
+            <i class="fa fa-images"></i>
+        </span>
+        <span>Gallery</span>
       </a>
+    </span>
+
+      <?php if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === 'yes') {?>
+        <span class="navbar-item">
+      <a class="button is-black is-outlined" href="index.php?page=upload">
+        <span class="icon">
+            <i class="fa fa-download"></i>
+        </span>
+        <span>Upload</span>
+      </a>
+    </span>
 
 
      <!-- <div class="navbar-item has-dropdown is-hoverable">
@@ -80,7 +100,6 @@ if ($navbarBurgers.length > 0) {
         </div>
       </div> -->
     </div>
-  <?php if ($_SESSION['loggedIn'] === 'yes') {?>
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
@@ -91,6 +110,7 @@ if ($navbarBurgers.length > 0) {
       </div>
     </div>
 <?php } else {?>
+  </div>
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">

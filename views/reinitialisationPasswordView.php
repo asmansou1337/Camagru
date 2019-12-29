@@ -25,7 +25,7 @@
 </div>
 <div class="field">
   <p class="control has-text-centered">
-  <input class="button is-success is-medium" type="button" value="Submit" name="">
+  <input class="button is-success is-medium" type="submit" value="Submit" name="changePassword">
   </p>
 </div>
 </form>

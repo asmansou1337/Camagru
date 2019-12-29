@@ -42,7 +42,7 @@ class Controller
                     if (isset($_SESSION['loggedIn']))
                     {
                         header('Location: index.php?page=home');
-                        exit();
+                        //exit();
                     }
                     if(isset($_POST['signUp']))
                     {
@@ -66,7 +66,7 @@ class Controller
                     if (isset($_SESSION['loggedIn']))
                     {
                         header('Location: index.php?page=home');
-                        exit();
+                        //exit();
                     }
                     if(isset($_GET['token']))
                     {
@@ -93,7 +93,6 @@ class Controller
                     {
                         //$message = "You are already logged in !";
                         header('Location: index.php?page=home');
-                        exit();
                     }
                     if(isset($_POST['login']))
                     {
@@ -102,12 +101,88 @@ class Controller
                         $ctrl->login($this->pdo);
                         if (isset($_SESSION["message"]))
                             $message = $_SESSION["message"];
+                        if (isset($_POST["RememberMe"]))
+                        {
+                            setcookie("SettingEmail", $_SESSION['user']->getEmail() , time() + 86400);
+                        }
                         header('Location: index.php?page=home');
-                        exit();
                     }
                 } catch (Exception $e)
                 {
                     $errors = $e->getMessage();
+                }
+                require('views/messageView.php');
+                unset($_SESSION["message"]);
+                require('views/loginView.php');
+                break;
+            case ($page === "forgotPassword"):
+                try 
+                {
+                    if (isset($_SESSION['loggedIn']))
+                    {
+                            //$message = "You are already logged in !";
+                        header('Location: index.php?page=home');
+                        //exit();
+                    }
+                    if(isset($_POST['SendPasswordEmail']))
+                    {
+                        require('controllers/controllerSignIn.php');
+                        $ctrl = new controllerSignIn();
+                        $ctrl->sendReinitializeEmail($this->pdo);
+                        if (isset($_SESSION["message"]))
+                            $message = $_SESSION["message"];
+                        //header('Location: index.php?page=home');
+                        //exit();
+                    }
+                } catch (Exception $e)
+                {
+                    $errors = $e->getMessage();
+                }
+                require('views/messageView.php');
+                unset($_SESSION["message"]);
+                require('views/reinitialisationEmailView.php');
+                break;
+            case ($page === "reinitializePassword"):
+                try 
+                {
+                    if (isset($_SESSION['loggedIn']))
+                    {
+                                //$message = "You are already logged in !";
+                        header('Location: index.php?page=home');
+                        //exit();
+                    }
+                    if(isset($_POST['changePassword']))
+                    {
+                        require('controllers/controllerSignIn.php');
+                        $ctrl = new controllerSignIn();
+                        $ctrl->reinitializePassword($this->pdo);
+                        if (isset($_SESSION["message"]))
+                            $message = $_SESSION["message"];
+                        //header('Location: index.php?page=login');
+                        //exit();
+                    }
+                } catch (Exception $e)
+                {
+                    $errors = $e->getMessage();
+                }
+                require('views/messageView.php');
+                unset($_SESSION["message"]);
+                require('views/reinitialisationPasswordView.php');
+                break;
+            case ($page === "logout"):
+                try 
+                {
+                        require('controllers/controllerSignIn.php');
+                        $ctrl = new controllerSignIn();
+                        $ctrl->logout($this->pdo);
+                        if (isset($_SESSION["message"]))
+                            $message = $_SESSION["message"];
+                        header('Location: index.php?page=home');
+                        //exit();
+                    
+                } catch (Exception $e)
+                {
+                        $errors = $e->getMessage();
                 }
                 require('views/messageView.php');
                 unset($_SESSION["message"]);

@@ -1,8 +1,9 @@
-<div class='container'>
-
+<div class="container has-text-centered">
+<div class="column is-6 is-offset-3">
+    <h1 class="title"> About This Project </h1>
+</div>
 <article class="message is-info is-medium">
   <div class="message-header">
-    <p>About This Project</p>
   </div>
   <div class="message-body">
   Camagru is a web application allowing you to create beautiful and customize 

@@ -6,7 +6,7 @@
     <h1 class="subtitle">Please enter your email, a link to reinitialize your password will be send to you</h1>
 </div>
 
-<form action="" method="post" class="form">
+<form action="index.php?page=forgotPassword" method="post" class="form">
 <div class="field">
   <p class="control has-icons-left">
     <input class="input" type="email" placeholder="Email" name="email">
@@ -17,7 +17,7 @@
 </div>
 <div class="field">
   <p class="control has-text-centered">
-  <input class="button is-success is-medium" type="button" value="Submit" name="SendEmail">
+  <input class="button is-success is-medium" type="submit" value="Submit" name="SendPasswordEmail">
   </p>
 </div>
 </form>

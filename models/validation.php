@@ -83,6 +83,11 @@ class Validation {
         $row = $Statement->fetch();
         if (hash("whirlpool", $password) === $row['password'])
         {
+            $activated = $this->verifyAccountActivated($pdo, $row['token']);
+                if ($activated->rowCount() === 0)
+                {
+                    throw new Exception('Account Activation Required !');
+                }
             return $row;
         } else {
             throw new Exception('Wrong Password!');
@@ -104,16 +109,13 @@ class Validation {
     {
         $this->verifyTokenExist($pdo, $token);
         $query = "SELECT * FROM user_account WHERE token = ? AND active = 'ON'";
-        $Statement=$pdo->prepare($query);
+        $Statement = $pdo->prepare($query);
         $Statement->execute([$token]);
         $ErrorInformation = $Statement->errorInfo();
         if(isset($ErrorInformation[2])){
             throw new Exception($ErrorInformation[2]);
         }
-        if ($Statement->rowCount() > 0)
-        {
-            throw new Exception('This account is already activated !');
-        }
+        return $Statement;
     }
 }
 ?>

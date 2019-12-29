@@ -41,27 +41,27 @@ class User {
         $this->password = $password;
     }
 
-    private function getUsername()
+    public function getUsername()
     {
        return $this->username;
     }
 
-    private function getFirstName()
+    public function getFirstName()
     {
         return $this->firstName;
     }
 
-    private function getLastName()
+    public function getLastName()
     {
         return $this->lastName;
     }
 
-    private function getEmail()
+    public function getEmail()
     {
         return $this->email;
     }
 
-    private function getPassword($password)
+    public function getPassword($password)
     {
         return $this->password;
     }

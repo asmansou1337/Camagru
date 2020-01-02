@@ -101,6 +101,24 @@ if ($navbarBurgers.length > 0) {
       </div> -->
     </div>
     <div class="navbar-end">
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          Welcome
+        </a>
+
+        <div class="navbar-dropdown">
+          <!-- Other navbar items -->
+          <a class="navbar-item" href="index.php?page=editProfile">
+            Edit Profile
+          </a>
+          <a class="navbar-item" href="index.php?page=changePassword">
+            Change Password
+          </a>
+          <a class="navbar-item" href="index.php?page=notifications">
+            Notifications
+          </a>
+        </div>
+      </div>
       <div class="navbar-item">
         <div class="buttons">
           <a class="button is-light" href="index.php?page=logout">

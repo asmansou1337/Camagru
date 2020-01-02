@@ -15,9 +15,16 @@ class controllerSignIn
             $userLogin = new UserManager();
             $userInfo = $userLogin->userLogin($pdo, $email, $password);
             $user = new User($userInfo['username'], $userInfo['email'], $userInfo['password'], $userInfo['firstName'], $userInfo['lastName']);
-            $_SESSION['user'] = $user;
+            $_SESSION['username'] = $user->getUsername();
+            $_SESSION['firstName'] = $user->getFirstName();
+            $_SESSION['lastName'] = $user->getLastName();
+            $_SESSION['email'] = $user->getEmail();
+            $_SESSION['token'] = $userInfo['token'];
+            //$_SESSION['user'] = serialize($user);
+            
             $_SESSION['loggedIn'] = 'yes';
             //echo "<script>console.log('Debug Objects: " . $_SESSION['loggedIn'] . "' );</script>";
+           // echo "<script>console.log('Debug Objects: " . $_SESSION['user']->getUsername() . "' );</script>";
             //echo 'logged ' . $_SESSION['loggedIn'];
         }
     }

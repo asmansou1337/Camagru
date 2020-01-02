@@ -67,6 +67,21 @@ class Validation {
         }
     }
 
+    public function verifyPasswordExists($pdo, $password)
+    {
+        $query = "SELECT * FROM user_account WHERE password = ?";
+        $Statement=$pdo->prepare($query);
+        $Statement->execute([$password]);
+        $ErrorInformation = $Statement->errorInfo();
+        if(isset($ErrorInformation[2])){
+            throw new Exception($ErrorInformation[2]);
+        }
+        if ($Statement->rowCount() === 0)
+        {
+            throw new Exception('The old password is wrong, Try Again !');
+        }
+    }
+
     public function verifyCorrectloginInfo($pdo, $email, $password)
     {
         $query = "SELECT * FROM user_account WHERE email = ?";

@@ -28,9 +28,9 @@ class Controller
         $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_SPECIAL_CHARS);
         $title = $page;
         require('views/header.php');
-        /*spl_autoload_register(function($class){
+        spl_autoload_register(function($class){
             require_once('models/'.$class.'.php');
-          });*/
+          });
         //require('controllers/controllerSignUp.php');
         switch ($page) {
             case ($page === "home"):
@@ -44,7 +44,6 @@ class Controller
                     if (isset($_SESSION['loggedIn']))
                     {
                         header('Location: index.php?page=home');
-                        //exit();
                     }
                     if(isset($_POST['signUp']))
                     {
@@ -68,7 +67,6 @@ class Controller
                     if (isset($_SESSION['loggedIn']))
                     {
                         header('Location: index.php?page=home');
-                        //exit();
                     }
                     if(isset($_GET['token']))
                     {
@@ -93,7 +91,7 @@ class Controller
                 {
                     if (isset($_SESSION['loggedIn']))
                     {
-                        $message = "You are already logged in !";
+                        //$message = "You are already logged in !";
                         header('Location: index.php?page=home');
                     }
                     if(isset($_POST['login']))
@@ -235,6 +233,29 @@ class Controller
                     require('views/messageView.php');
                     unset($_SESSION["message"]);
                     require('views/editPasswordView.php');
+                    break;
+            case ($page === "notifications"):
+                try 
+                    {   
+                        if (!isset($_SESSION['loggedIn']))
+                        {
+                            header('Location: index.php?page=home');
+                        }
+                        // if(isset($_POST['editPassword']))
+                        // {
+                        //     require('controllers/controllerProfile.php');
+                        //     $ctrl = new controllerProfile();
+                        //     $ctrl->changePassword($this->pdo);
+                        //     if (isset($_SESSION["message"]))
+                        //         $message = $_SESSION["message"];
+                        // }
+                    } catch (Exception $e)
+                    {
+                        $errors = $e->getMessage();
+                    }
+                    require('views/messageView.php');
+                    unset($_SESSION["message"]);
+                    require('views/notificationView.php');
                     break;
                 case ($page === "gallery"):
                 try 

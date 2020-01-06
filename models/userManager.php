@@ -27,7 +27,7 @@ class UserManager {
             require('models/emailManager.php');
             $subject = "Activation Link For Camagru";
             $body = 'Hi '. $username . '<br>Folow the link below to activate your account <br>'.
-            'http://localhost/camagruproject/index.php?page=activateAccount&token='.$this->token.'<br>';
+            'http://localhost/index.php?page=activateAccount&token='.$this->token.'<br>';
             $sendEmail = new EmailManager();
             $sendEmail->sendEmail($email, $subject, $body);
             $_SESSION["message"] = "Your Account has been created successfully, Please check your Email for the activation link";
@@ -95,7 +95,7 @@ class UserManager {
             require('models/emailManager.php');
             $subject = "Password Reinitialisation Link";
             $body = 'Hi '. $row['username'] . '<br>Folow the link below to reinitialize your password <br>'.
-            'http://localhost/camagruproject/index.php?page=reinitializePassword&token='.$row['token'].'<br>';
+            'http://localhost/index.php?page=reinitializePassword&token='.$row['token'].'<br>';
             $sendEmail = new EmailManager();
             $sendEmail->sendEmail($email, $subject, $body);
             $_SESSION["message"] = "A link to reinitialize your password is sent to you, Please check your Email.";
@@ -113,7 +113,7 @@ class UserManager {
     
     public function updatePassword($pdo, $password, $token)
     {
-        require('models/Validation.php');
+        //require('models/Validation.php');
         $validation = new Validation();
         $password = $validation->validatePassowrd($password);
         $hashedPassword = $this->hashPassword($password);
@@ -137,11 +137,22 @@ class UserManager {
         $username = $validation->validateString($username);
         $firstName = $validation->validateString($firstName);
         $lastName = $validation->validateString($lastName);
-        if (!ctype_alpha($firstName))
+        if (!empty($firstName) && !ctype_alpha($firstName))
             throw new Exception('Invalid Firstname!');
-        if (!ctype_alpha($lastName))
+        if (!empty($lastName) && !ctype_alpha($lastName))
             throw new Exception('Invalid Lastname!');
         $email = $validation->validateEmail($email);
+        if ($username != unserialize($_SESSION['user'])->getUsername())
+        {
+            // verify if new username does not exist already
+            $validation->verifyUsernameExists($pdo, $username);
+        }
+        if ($email != unserialize($_SESSION['user'])->getEmail())
+        {
+            // verify if new email does not exist already
+            $validation->verifyEmailExists($pdo, $email);
+        }
+
         $query = "UPDATE user_account SET username = ?, email = ?, firstName = ?, lastName = ? WHERE token = ?";
         $Statement = $pdo->prepare($query);
         if(!$Statement->execute([$username, $email, $firstName, $lastName, $_SESSION['token']]))

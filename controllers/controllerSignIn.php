@@ -15,16 +15,17 @@ class controllerSignIn
             $userLogin = new UserManager();
             $userInfo = $userLogin->userLogin($pdo, $email, $password);
             $user = new User($userInfo['username'], $userInfo['email'], $userInfo['password'], $userInfo['firstName'], $userInfo['lastName']);
-            $_SESSION['username'] = $user->getUsername();
-            $_SESSION['firstName'] = $user->getFirstName();
-            $_SESSION['lastName'] = $user->getLastName();
-            $_SESSION['email'] = $user->getEmail();
+            // $_SESSION['username'] = $user->getUsername();
+            // $_SESSION['firstName'] = $user->getFirstName();
+            // $_SESSION['lastName'] = $user->getLastName();
+            // $_SESSION['email'] = $user->getEmail();
             $_SESSION['token'] = $userInfo['token'];
-            //$_SESSION['user'] = serialize($user);
+            $_SESSION['user'] = serialize($user);
             
             $_SESSION['loggedIn'] = 'yes';
             //echo "<script>console.log('Debug Objects: " . $_SESSION['loggedIn'] . "' );</script>";
-           // echo "<script>console.log('Debug Objects: " . $_SESSION['user']->getUsername() . "' );</script>";
+           // <?php  echo "<script>console.log('Debug Objects: " . unserialize($_SESSION['user'])->getUsername() . "' );</script>"; 
+            //echo "<script>console.log('Debug Objects: " . unserialize($_SESSION['user'])->getUsername() . "' );</script>";
             //echo 'logged ' . $_SESSION['loggedIn'];
         }
     }
@@ -33,6 +34,11 @@ class controllerSignIn
     {
         setcookie("SettingEmail", null, time() - 86400);
         $_SESSION["user"]  = null;
+        // $_SESSION['username'] = null;
+        // $_SESSION['firstName'] = null;
+        // $_SESSION['lastName'] = null;
+        // $_SESSION['email'] = null;
+        $_SESSION['token'] = null;
         $_SESSION['loggedIn'] = null;
         //$_SESSION["message"] = "you are logged out";
         session_destroy();
@@ -62,6 +68,8 @@ class controllerSignIn
         } else if ($password !== $confirmPassword)
         {
             throw new Exception("Both password values must be same !");
+        } else if (!isset($_GET['token'])){
+            throw new Exception("Invalid link, Please try again !");
         } else {
             require('models/userManager.php');
             $user = new UserManager();

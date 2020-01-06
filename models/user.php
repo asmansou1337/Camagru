@@ -16,27 +16,27 @@ class User {
         
     }
 
-    private function setUsername($username)
+    public function setUsername($username)
     {
         $this->username = $username;
     }
 
-    private function setFirstName($firstName)
+    public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
     }
 
-    private function setLastName($lastName)
+    public function setLastName($lastName)
     {
         $this->lastName = $lastName;
     }
 
-    private function setEmail($email)
+    public function setEmail($email)
     {
         $this->email = $email;
     }
 
-    private function setPassword($password)
+    public function setPassword($password)
     {
         $this->password = $password;
     }
@@ -61,7 +61,7 @@ class User {
         return $this->email;
     }
 
-    public function getPassword($password)
+    public function getPassword()
     {
         return $this->password;
     }

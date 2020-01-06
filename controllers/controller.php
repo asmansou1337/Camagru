@@ -241,14 +241,17 @@ class Controller
                         {
                             header('Location: index.php?page=home');
                         }
-                        // if(isset($_POST['editPassword']))
-                        // {
-                        //     require('controllers/controllerProfile.php');
-                        //     $ctrl = new controllerProfile();
-                        //     $ctrl->changePassword($this->pdo);
-                        //     if (isset($_SESSION["message"]))
-                        //         $message = $_SESSION["message"];
-                        // }
+                        if(isset($_POST['checkNotification']))
+                        {
+                            print_r("yes");
+                            // require('controllers/controllerProfile.php');
+                            // $ctrl = new controllerProfile();
+                            // $ctrl->changeNotification($this->pdo);
+                            // if (isset($_SESSION["message"]))
+                            //     $message = $_SESSION["message"];
+                        } else {
+                            print_r("non");
+                        }
                     } catch (Exception $e)
                     {
                         $errors = $e->getMessage();

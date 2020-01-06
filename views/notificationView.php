@@ -7,7 +7,7 @@
 
 <div class="field has-text-centered">
 <label class="checkbox">
-  <input type="checkbox">
+  <input type="checkbox" name="checkNotification">
   Send Notifications Via Email
 </label>
 </div>

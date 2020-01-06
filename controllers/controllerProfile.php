@@ -47,5 +47,16 @@ class controllerProfile {
         }
     }
 
+    public function changeNotification($pdo)
+    {
+        $query = "SELECT active FROM user_account WHERE token = ?";
+        $Statement=$pdo->prepare($query);
+        $Statement->execute([$_SESSION['token']]);
+        // if($Statement->rowCount() === 0)
+        // {
+        //     throw new Exception('Unvalid link, Please try again !');
+        // }
+    }
+
 }
 ?>

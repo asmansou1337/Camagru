@@ -66,22 +66,41 @@ function openTab(evt, tabName) {
         <div class="container is-centered">
             <input class="button is-large" type="submit" value="Take A Picture">
         </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-2 box">
+                <!-- 1/3 -->
+                <label class="checkbox">
+                        <input type="checkbox" name="checkImage">
+                            <figure class="image is-128x128">
+                                <img src="https://bulma.io/images/placeholders/256x256.png">
+                            </figure>
+                    </label>
+            </div>
+        </div>
         <div class="columns">
             <div class="column">
-                <div class="box">
+                <div class = "tile">
+                    <label class="checkbox">
+                        <input type="checkbox" name="checkImage">
+                            <figure class="image is-128x128">
+                                <img src="https://bulma.io/images/placeholders/256x256.png">
+                            </figure>
+                    </label>
+                </div>
+                <!--<div class="box">
                     <figure class="image is-128x128">
                         <img src="https://bulma.io/images/placeholders/256x256.png">
                     </figure>
                     <label class="radio">
                         <input type="radio" name="answer">
                     </label>
-                </div>
+                </div>-->
             </div>
             <div class="column">
                 <div class="box">
                         <figure class="image is-square">
                             <img src="https://bulma.io/images/placeholders/256x256.png">
-                            <button class="delete is-large"></button>
+                           
                         </figure>
                 </div>
             </div>
@@ -89,7 +108,7 @@ function openTab(evt, tabName) {
                 <div class="box">
                         <figure class="image is-square">
                             <img src="https://bulma.io/images/placeholders/256x256.png">
-                            <button class="delete is-large"></button>
+                           
                         </figure>
                 </div>
             </div>

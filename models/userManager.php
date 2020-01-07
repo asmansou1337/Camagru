@@ -163,5 +163,32 @@ class UserManager {
             $_SESSION["message"] = "Your profile information has been updated successfuly.";
         }
     }
+
+    public function editNotification($pdo, $checked, $token)
+    {
+        $query = "UPDATE user_account SET notify = ? WHERE token = ?";
+        $Statement=$pdo->prepare($query);
+        if(!$Statement->execute([$checked, $token]))
+        {
+            throw new Exception('Something Went Wrong, Please Try Again!');
+        }
+        else {
+            $_SESSION["message"] = "Your notification setting has changed successfuly.";
+        }
+    }
+
+    public function getNotification($pdo, $token)
+    {
+        $query = "SELECT notify FROM user_account WHERE token = ?";
+        $Statement=$pdo->prepare($query);
+        if(!$Statement->execute([$token]))
+        {
+            throw new Exception('Something Went Wrong, Please Try Again!');
+        }
+        else {
+           $row = $Statement->fetch();
+            return $row['notify'];
+        }
+    }
 }
 ?>

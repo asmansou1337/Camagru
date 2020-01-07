@@ -49,13 +49,25 @@ class controllerProfile {
 
     public function changeNotification($pdo)
     {
-        $query = "SELECT active FROM user_account WHERE token = ?";
-        $Statement=$pdo->prepare($query);
-        $Statement->execute([$_SESSION['token']]);
-        // if($Statement->rowCount() === 0)
-        // {
-        //     throw new Exception('Unvalid link, Please try again !');
-        // }
+        if(isset($_POST['checkNotification']))
+        {
+            //echo "checked";
+            $checked = "ON";
+
+        } else {
+            //echo "not checked";
+            $checked = "OFF";
+        }
+        require('models/userManager.php');
+        $user = new UserManager();
+        $user->editNotification($pdo, $checked, $_SESSION['token']); 
+    }
+
+    public function getNotificationSetting($pdo)
+    {
+        // require('models/userManager.php');
+        $user = new UserManager();
+        return $user->getNotification($pdo, $_SESSION['token']); 
     }
 
 }

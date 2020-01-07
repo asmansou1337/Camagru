@@ -236,22 +236,21 @@ class Controller
                     break;
             case ($page === "notifications"):
                 try 
-                    {   
+                    {
+                        $notify = "ON/OFF";
+                        require('controllers/controllerProfile.php');
+                        $ctrl = new controllerProfile();
                         if (!isset($_SESSION['loggedIn']))
                         {
                             header('Location: index.php?page=home');
                         }
-                        if(isset($_POST['checkNotification']))
+                        if(isset($_POST['editNotifications']))
                         {
-                            print_r("yes");
-                            // require('controllers/controllerProfile.php');
-                            // $ctrl = new controllerProfile();
-                            // $ctrl->changeNotification($this->pdo);
-                            // if (isset($_SESSION["message"]))
-                            //     $message = $_SESSION["message"];
-                        } else {
-                            print_r("non");
+                            $ctrl->changeNotification($this->pdo);
+                            if (isset($_SESSION["message"]))
+                                $message = $_SESSION["message"];
                         }
+                        $notify = $ctrl->getNotificationSetting($this->pdo);
                     } catch (Exception $e)
                     {
                         $errors = $e->getMessage();

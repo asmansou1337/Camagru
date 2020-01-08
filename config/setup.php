@@ -8,6 +8,15 @@ class Setup {
         $this->pdo = $pdo;
     }
 
+    function createDB()
+    {
+        $sql = "CREATE DATABASE IF NOT EXISTS camagru_db";
+        if($this->pdo->query($sql) === FALSE)
+        {
+            throw new Exception("Unable to create Database");
+        }
+    }
+
     function createTables()
     {
 

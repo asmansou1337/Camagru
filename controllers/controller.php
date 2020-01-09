@@ -11,13 +11,17 @@
 //require('views/galleryView.php');
 //require('views/footer.php');
 session_start();
+require_once('controllers/controllerSignUp.php');
+require_once('controllers/controllerSignIn.php');
+require_once('controllers/controllerProfile.php');
+
 class Controller 
 {
     private $pdo;
-    private $ctrl;
-    private $view;
-    private $message;
-    private $errors;
+    // private $ctrl;
+    // private $view;
+    // private $message;
+    // private $errors;
     
     public function __construct($pdo) {
         $this->pdo = $pdo;
@@ -31,7 +35,7 @@ class Controller
         spl_autoload_register(function($class){
             require_once('models/'.$class.'.php');
           });
-        //require('controllers/controllerSignUp.php');
+
         switch ($page) {
             case ($page === "home"):
                // if (isset($_SESSION['loggedIn']))
@@ -40,43 +44,29 @@ class Controller
                 break;
             case ($page === "signup"):
                 $this->accessControl("logged");
-                    require('controllers/controllerSignUp.php');
-                $this->routing("SignUp", "signUp");
-                // try 
-                // {
-                //     if (isset($_SESSION['loggedIn']))
-                //     {
-                //         header('Location: index.php?page=home');
-                //     }
-                //     if(isset($_POST['signUp']))
-                //     {
-                //         require('controllers/controllerSignUp.php');
-                //         $ctrl = new controllerSignUp();
-                //         $ctrl->signUp($this->pdo);
-                //         if (isset($_SESSION["message"]))
-                //             $message = $_SESSION["message"];
-                //     }
-                // } catch (Exception $e)
-                // {
-                //     $errors = $e->getMessage();
-                // }
-                // require('views/messageView.php');
-                // unset($_SESSION["message"]);
+                try 
+                {
+                    if(isset($_POST['signUp']))
+                    {
+                        $ctrl = new controllerSignUp();
+                        $ctrl->signUp($this->pdo);
+                        if (isset($_SESSION["message"]))
+                            $message = $_SESSION["message"];
+                    }
+                } catch (Exception $e)
+                {
+                    $errors = $e->getMessage();
+                }
+                require('views/messageView.php');
+                unset($_SESSION["message"]);
                 require('views/signUpView.php');
                 break;
             case ($page === "activateAccount"):
                 $this->accessControl("logged");
-                // require('controllers/controllerSignUp.php');
-                // $this->routing("SignUp", "signUp");
                 try 
                 {
-                    // if (isset($_SESSION['loggedIn']))
-                    // {
-                    //     header('Location: index.php?page=home');
-                    // }
                     if(isset($_GET['token']))
                     {
-                        require('controllers/controllerSignUp.php');
                         $ctrl = new controllerSignUp();
                         $ctrl->activateAccount($this->pdo, $_GET['token']);
                         if (isset($_SESSION["message"]))
@@ -96,21 +86,15 @@ class Controller
                 $this->accessControl("logged");
                 try 
                 {
-                    // if (isset($_SESSION['loggedIn']))
-                    // {
-                    //     //$message = "You are already logged in !";
-                    //     header('Location: index.php?page=home');
-                    // }
                     if(isset($_POST['login']))
                     {
-                        require('controllers/controllerSignIn.php');
                         $ctrl = new controllerSignIn();
                         $ctrl->login($this->pdo);
                         if (isset($_SESSION["message"]))
                             $message = $_SESSION["message"];
                         if (isset($_POST["RememberMe"]))
                         {
-                            setcookie("SettingEmail", $_SESSION['user']->getEmail() , time() + 86400);
+                            setcookie("SettingEmail", unserialize($_SESSION['user'])->getEmail() , time() + 86400);
                         }
                         header('Location: index.php?page=home');
                     }
@@ -126,21 +110,12 @@ class Controller
                 $this->accessControl("logged");
                 try 
                 {
-                    // if (isset($_SESSION['loggedIn']))
-                    // {
-                    //         //$message = "You are already logged in !";
-                    //     header('Location: index.php?page=home');
-                    //     //exit();
-                    // }
                     if(isset($_POST['SendPasswordEmail']))
                     {
-                        require('controllers/controllerSignIn.php');
                         $ctrl = new controllerSignIn();
                         $ctrl->sendReinitializeEmail($this->pdo);
                         if (isset($_SESSION["message"]))
                             $message = $_SESSION["message"];
-                        //header('Location: index.php?page=home');
-                        //exit();
                     }
                 } catch (Exception $e)
                 {
@@ -154,21 +129,12 @@ class Controller
                 $this->accessControl("logged");
                 try 
                 {
-                    // if (isset($_SESSION['loggedIn']))
-                    // {
-                    //             //$message = "You are already logged in !";
-                    //     header('Location: index.php?page=home');
-                    //     //exit();
-                    // }
                     if(isset($_POST['changePassword']))
                     {
-                        require('controllers/controllerSignIn.php');
                         $ctrl = new controllerSignIn();
                         $ctrl->reinitializePassword($this->pdo);
                         if (isset($_SESSION["message"]))
                             $message = $_SESSION["message"];
-                        //header('Location: index.php?page=login');
-                        //exit();
                     }
                 } catch (Exception $e)
                 {
@@ -181,14 +147,11 @@ class Controller
             case ($page === "logout"):
                 try 
                 {
-                        require('controllers/controllerSignIn.php');
                         $ctrl = new controllerSignIn();
                         $ctrl->logout($this->pdo);
                         if (isset($_SESSION["message"]))
                             $message = $_SESSION["message"];
                         header('Location: index.php?page=home');
-                        //exit();
-                    
                 } catch (Exception $e)
                 {
                         $errors = $e->getMessage();
@@ -201,13 +164,8 @@ class Controller
                 $this->accessControl("notlogged");
                     try 
                     {   
-                        // if (!isset($_SESSION['loggedIn']))
-                        // {
-                        //     header('Location: index.php?page=home');
-                        // }
                         if(isset($_POST['editProfile']))
                         {
-                            require('controllers/controllerProfile.php');
                             $ctrl = new controllerProfile();
                             $ctrl->editUserProfile($this->pdo);
                             if (isset($_SESSION["message"]))
@@ -225,13 +183,8 @@ class Controller
                 $this->accessControl("notlogged");
                     try 
                     {   
-                        // if (!isset($_SESSION['loggedIn']))
-                        // {
-                        //     header('Location: index.php?page=home');
-                        // }
                         if(isset($_POST['editPassword']))
                         {
-                            require('controllers/controllerProfile.php');
                             $ctrl = new controllerProfile();
                             $ctrl->changePassword($this->pdo);
                             if (isset($_SESSION["message"]))
@@ -249,13 +202,8 @@ class Controller
                 $this->accessControl("notlogged");
                 try 
                     {
-                        $notify = "ON/OFF";
-                        require('controllers/controllerProfile.php');
+                        $notify = "";
                         $ctrl = new controllerProfile();
-                        // if (!isset($_SESSION['loggedIn']))
-                        // {
-                        //     header('Location: index.php?page=home');
-                        // }
                         if(isset($_POST['editNotifications']))
                         {
                             $ctrl->changeNotification($this->pdo);
@@ -271,22 +219,22 @@ class Controller
                     unset($_SESSION["message"]);
                     require('views/notificationView.php');
                     break;
-                case ($page === "gallery"):
-                try 
-                {
-                   
-                    if (isset($_SESSION["message"]))
-                        $message = $_SESSION["message"];
-                        
-                } catch (Exception $e)
-                {
-                            $errors = $e->getMessage();
-                }
-                require('views/messageView.php');
-                unset($_SESSION["message"]);
-                require('views/galleryView.php');
-                break;
-                case ($page === "upload"):
+            case ($page === "gallery"):
+                    try 
+                    {
+                    
+                        if (isset($_SESSION["message"]))
+                            $message = $_SESSION["message"];
+                            
+                    } catch (Exception $e)
+                    {
+                                $errors = $e->getMessage();
+                    }
+                    require('views/messageView.php');
+                    unset($_SESSION["message"]);
+                    require('views/galleryView.php');
+                    break;
+            case ($page === "upload"):
                     try 
                     {
                        
@@ -308,29 +256,29 @@ class Controller
         require('views/footer.php');
     }
 
-    private function routing($controller, $function , $type)
-    {
-        if ($type === "post")
-            $par = $_POST[$function];
-        if ($type === "get")
-            $par = $_POST[$function];
-        try 
-            {
-                if(isset($par))
-                {
-                    $var = "controller".$controller;
-                    $ctrl = new $var();
-                    $ctrl->$function($this->pdo);
-                    if (isset($_SESSION["message"]))
-                        $message = $_SESSION["message"];
-                }
-        } catch (Exception $e)
-        {
-            $errors = $e->getMessage();
-        }
-        require('views/messageView.php');
-        unset($_SESSION["message"]);
-    }
+    // private function routing($controller, $function , $type)
+    // {
+    //     if ($type === "post")
+    //         $par = $_POST[$function];
+    //     if ($type === "get")
+    //         $par = $_GET[$function];
+    //     try 
+    //         {
+    //             if(isset($par))
+    //             {
+    //                 $var = "controller".$controller;
+    //                 $ctrl = new $var();
+    //                 $ctrl->$function($this->pdo);
+    //                 if (isset($_SESSION["message"]))
+    //                     $message = $_SESSION["message"];
+    //             }
+    //     } catch (Exception $e)
+    //     {
+    //         $errors = $e->getMessage();
+    //     }
+    //     require('views/messageView.php');
+    //     unset($_SESSION["message"]);
+    // }
 
     private function accessControl($access)
     {

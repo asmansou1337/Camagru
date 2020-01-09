@@ -1,4 +1,5 @@
 <?php
+require_once('models/userManager.php');
 class controllerSignUp {
 
     public function signUp($pdo)
@@ -14,18 +15,16 @@ class controllerSignUp {
             {
                 throw new Exception("Both password values must be same !");
             } else {
-                require('models/userManager.php');
-                $user = new UserManager();
-                $user->addNewUser($pdo, $username, $email, $password);
+                $userManager = new UserManager();
+                $userManager->addNewUser($pdo, $username, $email, $password);
             }
        
     }
 
     public function activateAccount($pdo, $token)
     {
-        require('models/userManager.php');
-        $user = new UserManager();
-        $user->activateUserAccount($pdo, $token);
+        $userManager = new UserManager();
+        $userManager->activateUserAccount($pdo, $token);
     }
 }
 ?>

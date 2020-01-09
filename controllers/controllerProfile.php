@@ -1,4 +1,6 @@
 <?php
+ require_once('models/userManager.php');
+ require_once('models/user.php');
 class controllerProfile {
 
     public function editUserProfile($pdo)
@@ -7,24 +9,14 @@ class controllerProfile {
             $firstName = trim($_POST['firstName']);
             $lastName = trim($_POST['lastName']);
             $email = trim($_POST['email']);
-            require('models/userManager.php');
-            require('models/user.php');
+            if (empty($username))
+                throw new Exception("Username should not be empty !");
+            if (empty($email))
+                throw new Exception("Email should not be empty !");
             $user = new UserManager();
             $user->editProfile($pdo, $username, $firstName, $lastName, $email);
-            // unserialize($_SESSION['user'])->setUsername($username);
-            // unserialize($_SESSION['user'])->setFirstName($firstName);
-            // unserialize($_SESSION['user'])->setLastName($lastName);
-            // unserialize($_SESSION['user'])->setEmail($email);
-            // print_r($_SESSION['user']);
-
             $user = new User($username, $email, unserialize($_SESSION['user'])->getPassword(), $firstName, $lastName);
             $_SESSION['user'] = serialize($user);
-            //print_r($_SESSION['user']);
-
-            // $_SESSION['username'] = $username;
-            // $_SESSION['firstName'] = $firstName;
-            // $_SESSION['lastName'] = $lastName;
-            // $_SESSION['email'] = $email;
     }
 
     public function changePassword($pdo)
@@ -40,7 +32,6 @@ class controllerProfile {
         {
             throw new Exception("Both password values must be same !");
         } else {
-            require('models/userManager.php');
             $user = new UserManager();
             $user->verifyOldPassword($pdo, $oldPassword);
             $user->updatePassword($pdo, $newPassword, $_SESSION['token']);
@@ -51,21 +42,17 @@ class controllerProfile {
     {
         if(isset($_POST['checkNotification']))
         {
-            //echo "checked";
             $checked = "ON";
 
         } else {
-            //echo "not checked";
             $checked = "OFF";
         }
-        require('models/userManager.php');
         $user = new UserManager();
         $user->editNotification($pdo, $checked, $_SESSION['token']); 
     }
 
     public function getNotificationSetting($pdo)
     {
-        // require('models/userManager.php');
         $user = new UserManager();
         return $user->getNotification($pdo, $_SESSION['token']); 
     }

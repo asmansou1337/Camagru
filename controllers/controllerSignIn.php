@@ -1,5 +1,6 @@
 <?php
-
+ require_once('models/userManager.php');
+ require_once('models/user.php');
 class controllerSignIn 
 {
     public function login($pdo)
@@ -10,8 +11,6 @@ class controllerSignIn
         {
             throw new Exception("All fields should not be empty !");
         } else {
-            require('models/userManager.php');
-            require('models/user.php');
             $userLogin = new UserManager();
             $userInfo = $userLogin->userLogin($pdo, $email, $password);
             $user = new User($userInfo['username'], $userInfo['email'], $userInfo['password'], $userInfo['firstName'], $userInfo['lastName']);
@@ -51,7 +50,6 @@ class controllerSignIn
         {
             throw new Exception("Please enter your email !");
         } else {
-            require('models/userManager.php');
             $user = new UserManager();
             $user->reinitializePasswordEmail($pdo, $email);
         }
@@ -71,7 +69,6 @@ class controllerSignIn
         } else if (!isset($_GET['token'])){
             throw new Exception("Invalid link, Please try again !");
         } else {
-            require('models/userManager.php');
             $user = new UserManager();
             $user->updatePassword($pdo, $password, $_GET['token']);
         }

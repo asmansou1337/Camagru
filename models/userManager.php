@@ -1,19 +1,20 @@
 <?php
-
+ require_once('models/Validation.php');
+ require_once('models/emailManager.php');
 class UserManager {
     private $token;
-    private $active;
-    private $notify;
+    private $validation;
+
+    
 
     public function addNewUser($pdo, $username, $email, $password)
     {
-        require('models/Validation.php');
-        $validation = new Validation();
-        $username = $validation->validateString($username);
-        $email = $validation->validateEmail($email);
-        $password = $validation->validatePassowrd($password);
-        $validation->verifyUsernameExists($pdo, $username);
-        $validation->verifyEmailExists($pdo, $email);
+        $this->validation = new Validation();
+        $username = $this->validation->validateString($username);
+        $email = $this->validation->validateEmail($email);
+        $password = $this->validation->validatePassowrd($password);
+        $this->validation->verifyUsernameExists($pdo, $username);
+        $this->validation->verifyEmailExists($pdo, $email);
         $hashedPassword = $this->hashPassword($password);
         $this->token = $this->createToken();
         // Add User to database
@@ -24,7 +25,6 @@ class UserManager {
             throw new Exception('Something Went Wrong, Please Try Again!');
         } else 
         {
-            require('models/emailManager.php');
             $subject = "Activation Link For Camagru";
             $body = 'Hi '. $username . '<br>Folow the link below to activate your account <br>'.
             'http://localhost/index.php?page=activateAccount&token='.$this->token.'<br>';
@@ -48,10 +48,9 @@ class UserManager {
 
     public function activateUserAccount($pdo, $token)
     {
+        $this->validation = new Validation();
         $token = filter_var($token, FILTER_SANITIZE_STRING);
-        require('models/Validation.php');
-        $validation = new Validation();
-        $activated = $validation->verifyAccountActivated($pdo, $token);
+        $activated = $this->validation->verifyAccountActivated($pdo, $token);
         if ($activated->rowCount() > 0)
         {
             throw new Exception('This account is already activated !');
@@ -67,19 +66,17 @@ class UserManager {
 
     public function userLogin($pdo, $email, $password)
     {
-        require('models/Validation.php');
-        $validation = new Validation();
-        $email = $validation->validateString($email);
-        $password = $validation->validateString($password);
-        $userInfo = $validation->verifyCorrectloginInfo($pdo, $email, $password);
+        $this->validation = new Validation();
+        $email = $this->validation->validateEmail($email);
+        $password = $this->validation->validateString($password);
+        $userInfo = $this->validation->verifyCorrectloginInfo($pdo, $email, $password);
         return $userInfo;
     }
 
     public function reinitializePasswordEmail($pdo, $email)
     {
-        require('models/Validation.php');
-        $validation = new Validation();
-        $email = $validation->validateEmail($email);
+        $this->validation = new Validation();
+        $email = $this->validation->validateEmail($email);
         $query = "SELECT * FROM user_account WHERE email = ?";
         $Statement=$pdo->prepare($query);
         if(!$Statement->execute([$email]))
@@ -92,7 +89,6 @@ class UserManager {
                 throw new Exception('This email does not exist, Please Try Again!');
             }
             $row = $Statement->fetch();
-            require('models/emailManager.php');
             $subject = "Password Reinitialisation Link";
             $body = 'Hi '. $row['username'] . '<br>Folow the link below to reinitialize your password <br>'.
             'http://localhost/index.php?page=reinitializePassword&token='.$row['token'].'<br>';
@@ -104,21 +100,19 @@ class UserManager {
 
     public function verifyOldPassword($pdo, $oldPassword)
     {
-        require('models/Validation.php');
-        $validation = new Validation();
-        $password = $validation->validateString($oldPassword);
+        $this->validation = new Validation();
+        $password = $this->validation->validateString($oldPassword);
         $hashedPassword = $this->hashPassword($password);
-        $validation->verifyPasswordExists($pdo, $hashedPassword);
+        $this->validation->verifyPasswordExists($pdo, $hashedPassword);
     }
     
     public function updatePassword($pdo, $password, $token)
     {
-        //require('models/Validation.php');
-        $validation = new Validation();
-        $password = $validation->validatePassowrd($password);
+        $this->validation = new Validation();
+        $password = $this->validation->validatePassowrd($password);
         $hashedPassword = $this->hashPassword($password);
-        $validation->validateString($token);
-        $validation->verifyTokenExist($pdo, $token);
+        $this->validation->validateString($token);
+        $this->validation->verifyTokenExist($pdo, $token);
         $query = "UPDATE user_account SET password = ? WHERE token = ?";
         $Statement=$pdo->prepare($query);
         if(!$Statement->execute([$hashedPassword, $token]))
@@ -132,25 +126,24 @@ class UserManager {
 
     public function editProfile($pdo, $username, $firstName, $lastName, $email)
     {
-        require('models/Validation.php');
-        $validation = new Validation();
-        $username = $validation->validateString($username);
-        $firstName = $validation->validateString($firstName);
-        $lastName = $validation->validateString($lastName);
+        $this->validation = new Validation();
+        $username = $this->validation->validateString($username);
+        $firstName = $this->validation->validateString($firstName);
+        $lastName = $this->validation->validateString($lastName);
         if (!empty($firstName) && !ctype_alpha($firstName))
             throw new Exception('Invalid Firstname!');
         if (!empty($lastName) && !ctype_alpha($lastName))
             throw new Exception('Invalid Lastname!');
-        $email = $validation->validateEmail($email);
+        $email = $this->validation->validateEmail($email);
         if ($username != unserialize($_SESSION['user'])->getUsername())
         {
             // verify if new username does not exist already
-            $validation->verifyUsernameExists($pdo, $username);
+            $this->validation->verifyUsernameExists($pdo, $username);
         }
         if ($email != unserialize($_SESSION['user'])->getEmail())
         {
             // verify if new email does not exist already
-            $validation->verifyEmailExists($pdo, $email);
+            $this->validation->verifyEmailExists($pdo, $email);
         }
 
         $query = "UPDATE user_account SET username = ?, email = ?, firstName = ?, lastName = ? WHERE token = ?";

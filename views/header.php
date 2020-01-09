@@ -6,39 +6,13 @@
     <title><?= $title;?> </title>
 </head>
 <body class='main'>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
 
-// Get all "navbar-burger" elements
-const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-// Check if there are any navbar burgers
-if ($navbarBurgers.length > 0) {
-
-  // Add a click event on each of them
-  $navbarBurgers.forEach( el => {
-    el.addEventListener('click', () => {
-
-      // Get the target from the "data-target" attribute
-      const target = el.dataset.target;
-      const $target = document.getElementById(target);
-
-      // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-      el.classList.toggle('is-active');
-      $target.classList.toggle('is-active');
-
-    });
-  });
-}
-
-});
-</script>
 <!-- Fixed navbar -->
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-  <figure class="image is-128x128">
-  <img class="navbar-item"  src="public/images/Camagru.png" alt="camagru">
-  </figure>
+    <figure class="image is-128x128">
+    <img class="navbar-item"  src="public/images/Camagru.png" alt="camagru">
+    </figure>
   
    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
       <span aria-hidden="true"></span>
@@ -49,23 +23,23 @@ if ($navbarBurgers.length > 0) {
 
   <div class="navbar-menu" id="navbarMenu">
     <div class="navbar-start">
-    <span class="navbar-item">
-      <a class="button is-black is-outlined" href="index.php?page=home">
-        <span class="icon">
-            <i class="fa fa-home"></i>
-        </span>
-        <span>Home</span>
-      </a>
-    </span>
+      <span class="navbar-item">
+        <a class="button is-black is-outlined" href="index.php?page=home">
+          <span class="icon">
+              <i class="fa fa-home"></i>
+          </span>
+          <span>Home</span>
+        </a>
+      </span>
 
-    <span class="navbar-item">
-      <a class="button is-black is-outlined" href="index.php?page=gallery">
-        <span class="icon">
-            <i class="fa fa-images"></i>
-        </span>
-        <span>Gallery</span>
-      </a>
-    </span>
+      <span class="navbar-item">
+        <a class="button is-black is-outlined" href="index.php?page=gallery">
+          <span class="icon">
+              <i class="fa fa-images"></i>
+          </span>
+          <span>Gallery</span>
+        </a>
+      </span>
 
       <?php if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === 'yes') {?>
         <span class="navbar-item">
@@ -103,10 +77,10 @@ if ($navbarBurgers.length > 0) {
     <div class="navbar-end">
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
-          Welcome
+          Welcome &nbsp; <strong> <?php echo (isset($_SESSION['user']) ? unserialize($_SESSION['user'])->getUsername() : ''); ?> </strong>
         </a>
 
-        <div class="navbar-dropdown">
+        <div class="navbar-dropdown is-hidden-mobile is-boxed">
           <!-- Other navbar items -->
           <a class="navbar-item" href="index.php?page=editProfile">
             Edit Profile
@@ -118,6 +92,7 @@ if ($navbarBurgers.length > 0) {
             Notifications
           </a>
         </div>
+        
       </div>
       <div class="navbar-item">
         <div class="buttons">
@@ -148,17 +123,4 @@ if ($navbarBurgers.length > 0) {
     <!-- Begin page content -->
     <div class="section">
 
-
-
-
- <!-- <div class="section">
-    <div class="container">
-      <h1 class="title">
-        Hello World
-      </h1>
-      <p class="subtitle">
-        My first website with <strong>Bulma</strong>!
-      </p>
-    </div>
-  </div> -->
   

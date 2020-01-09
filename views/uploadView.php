@@ -34,9 +34,9 @@ function openTab(evt, tabName) {
                 </li>
             </ul>
         </div>
-        <div class="container section">
+        <div class="container ">
             <div id="Webcam" class="content-tab" >
-                <div class="container">
+                <div class="box">
                     <figure class="image is-5by4">
                         <img src="https://bulma.io/images/placeholders/256x256.png">
                     </figure>
@@ -44,59 +44,47 @@ function openTab(evt, tabName) {
             </div>
             <div id="local" class="content-tab" style="display:none">
                 <div class="container">
-                    <div class="file">
-                        <label class="file-label">
-                            <input class="file-input" type="file" name="resume">
-                            <span class="file-cta">
-                            <span class="file-icon">
-                                <i class="fas fa-upload"></i>
-                            </span>
-                            <span class="file-label">
-                                Choose a file…
-                            </span>
-                            </span>
-                        </label>
+                    <div class="container" style="margin-bottom: 2rem;">
+                        <div class="file is-centered">
+                            <label class="file-label">
+                                <input class="file-input" type="file" name="resume">
+                                    <span class="file-cta">
+                                        <span class="file-icon">
+                                            <i class="fas fa-upload"></i>
+                                        </span>
+                                        <span class="file-label">
+                                            Choose a file…
+                                        </span>
+                                    </span>
+                            </label>
+                        </div>
                     </div>
+                    <div class="box">
                         <figure class="image is-5by4">
+                                <img src="https://bulma.io/images/placeholders/256x256.png">
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" style="margin-top: 2rem;margin-bottom: 2rem;">
+            <input class="button is-large is-fullwidth is-link is-outlined" type="submit" value="Take A Picture">
+        </div>
+        <div class="columns">
+            <div class="column">
+                <div>
+                    <input type="radio" name="filter" value="1">
+                </div>
+                <div class="box">
+                        <figure class="image is-square">
                             <img src="https://bulma.io/images/placeholders/256x256.png">
                         </figure>
                 </div>
             </div>
-        </div>
-        <div class="container is-centered">
-            <input class="button is-large" type="submit" value="Take A Picture">
-        </div>
-        <div class="tile is-ancestor">
-            <div class="tile is-2 box">
-                <!-- 1/3 -->
-                <label class="checkbox">
-                        <input type="checkbox" name="checkImage">
-                            <figure class="image is-128x128">
-                                <img src="https://bulma.io/images/placeholders/256x256.png">
-                            </figure>
-                    </label>
-            </div>
-        </div>
-        <div class="columns">
             <div class="column">
-                <div class = "tile">
-                    <label class="checkbox">
-                        <input type="checkbox" name="checkImage">
-                            <figure class="image is-128x128">
-                                <img src="https://bulma.io/images/placeholders/256x256.png">
-                            </figure>
-                    </label>
+                <div>
+                    <input type="radio" name="filter" value="2">
                 </div>
-                <!--<div class="box">
-                    <figure class="image is-128x128">
-                        <img src="https://bulma.io/images/placeholders/256x256.png">
-                    </figure>
-                    <label class="radio">
-                        <input type="radio" name="answer">
-                    </label>
-                </div>-->
-            </div>
-            <div class="column">
                 <div class="box">
                         <figure class="image is-square">
                             <img src="https://bulma.io/images/placeholders/256x256.png">
@@ -105,6 +93,31 @@ function openTab(evt, tabName) {
                 </div>
             </div>
             <div class="column">
+                <div>
+                    <input type="radio" name="filter" value="3">
+                </div>
+                <div class="box">
+                        <figure class="image is-square">
+                            <img src="https://bulma.io/images/placeholders/256x256.png">
+                           
+                        </figure>
+                </div>
+            </div>
+            <div class="column">
+                <div>
+                    <input type="radio" name="filter" value="4">
+                </div>
+                <div class="box">
+                        <figure class="image is-square">
+                            <img src="https://bulma.io/images/placeholders/256x256.png">
+                           
+                        </figure>
+                </div>
+            </div>
+            <div class="column">
+                <div>
+                    <input type="radio" name="filter" value="5">
+                </div>
                 <div class="box">
                         <figure class="image is-square">
                             <img src="https://bulma.io/images/placeholders/256x256.png">
@@ -115,7 +128,8 @@ function openTab(evt, tabName) {
         </div>
     </div>
   </div>
-  <div class="column is-one-quarter">
+  <!-- list of taken pictures -->
+  <div class="column is-two-quarter">
     <div class="box">
         <figure class="image is-square">
             <img src="https://bulma.io/images/placeholders/256x256.png">

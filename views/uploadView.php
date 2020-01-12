@@ -47,7 +47,7 @@ function openTab(evt, tabName) {
                     <div class="container" style="margin-bottom: 2rem;">
                         <div class="file is-centered">
                             <label class="file-label">
-                                <input class="file-input" type="file" name="resume">
+                                <input class="file-input" type="file" name="localImage">
                                     <span class="file-cta">
                                         <span class="file-icon">
                                             <i class="fas fa-upload"></i>

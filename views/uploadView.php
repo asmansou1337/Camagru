@@ -73,11 +73,11 @@ function openTab(evt, tabName) {
         <div class="columns">
             <div class="column">
                 <div>
-                    <input type="radio" name="filter" value="1">
+                    <input type="radio" name="filter" value="public/filters/1.png">
                 </div>
                 <div class="box">
                         <figure class="image is-square">
-                            <img src="https://bulma.io/images/placeholders/256x256.png">
+                            <img src="public/filters/1.png">
                         </figure>
                 </div>
             </div>
@@ -87,7 +87,7 @@ function openTab(evt, tabName) {
                 </div>
                 <div class="box">
                         <figure class="image is-square">
-                            <img src="https://bulma.io/images/placeholders/256x256.png">
+                            <img src="public/filters/2.png">
                            
                         </figure>
                 </div>
@@ -98,7 +98,7 @@ function openTab(evt, tabName) {
                 </div>
                 <div class="box">
                         <figure class="image is-square">
-                            <img src="https://bulma.io/images/placeholders/256x256.png">
+                            <img src="public/filters/3.png">
                            
                         </figure>
                 </div>
@@ -109,7 +109,7 @@ function openTab(evt, tabName) {
                 </div>
                 <div class="box">
                         <figure class="image is-square">
-                            <img src="https://bulma.io/images/placeholders/256x256.png">
+                            <img src="public/filters/4.png">
                            
                         </figure>
                 </div>
@@ -120,7 +120,7 @@ function openTab(evt, tabName) {
                 </div>
                 <div class="box">
                         <figure class="image is-square">
-                            <img src="https://bulma.io/images/placeholders/256x256.png">
+                            <img src="public/filters/5.png">
                            
                         </figure>
                 </div>

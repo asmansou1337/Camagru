@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   
+    <title>Document</title>
+    <style>
+    .booth {
+        width: 400px;
+        background-color: #ccc;
+        border: 10px solid #ddd;
+        margin: 0 auto;
+    }
+    .booth-capture-button {
+        display: block;
+        margin: 10px, 0;
+        padding: 10px 20px;
+        background-color: cornflowerblue;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+    }
+    #canvas {
+        display: none;
+    }
+    </style>
+</head>
+<body>
+    <div class="booth">
+        <video id="video" width="400" height="300" ></video>
+        <a href="#" id="capture" class="booth-capture-button">Take photo</a>
+        <canvas id="canvas" width="400" height="300"></canvas>
+        <img id="photo" src="" alt="photo of you">
+    </div>
+    <script src="photo.js"></script>
+</body>
+</html>

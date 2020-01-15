@@ -35,11 +35,11 @@ function openTab(evt, tabName) {
             </ul>
         </div>
         <div class="container ">
-            <div id="Webcam" class="content-tab" >
-                <div class="box">
-                    <figure class="image is-5by4">
-                        <img src="https://bulma.io/images/placeholders/256x256.png">
-                    </figure>
+            <div id="Webcam" class="content-tab">
+                <video id="video"></video>
+               
+                <div id="canvasvideo" style="position: relative;">
+            
                 </div>
             </div>
             <div id="local" class="content-tab" style="display:none">
@@ -47,7 +47,7 @@ function openTab(evt, tabName) {
                     <div class="container" style="margin-bottom: 2rem;">
                         <div class="file is-centered">
                             <label class="file-label">
-                                <input class="file-input" type="file" name="localImage">
+                                <input class="file-input" name="localImage" type='file' accept="image/*" onchange="readURL(this);" />
                                     <span class="file-cta">
                                         <span class="file-icon">
                                             <i class="fas fa-upload"></i>
@@ -61,19 +61,20 @@ function openTab(evt, tabName) {
                     </div>
                     <div class="box">
                         <figure class="image is-5by4">
-                                <img src="https://bulma.io/images/placeholders/256x256.png">
+                                <img id="imgUploaded">
                         </figure>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card" style="margin-top: 2rem;margin-bottom: 2rem;">
-            <input class="button is-large is-fullwidth is-link is-outlined" type="submit" value="Take A Picture">
+            <input class="button is-large is-fullwidth is-link is-outlined" id="snap" type="submit" value="Take A Picture" onclick="javascript:Shot()">
         </div>
+        <div id="canvas"></div>
         <div class="columns">
             <div class="column">
                 <div>
-                    <input type="radio" name="filter" value="public/filters/1.png">
+                    <input type="radio" name="img_filter" value="public/filters/1.png" id="1" onchange="myimage('1')">
                 </div>
                 <div class="box">
                         <figure class="image is-square">
@@ -83,7 +84,7 @@ function openTab(evt, tabName) {
             </div>
             <div class="column">
                 <div>
-                    <input type="radio" name="filter" value="2">
+                    <input type="radio" name="img_filter" value="public/filters/2.png" id="2" onchange="myimage('2')">
                 </div>
                 <div class="box">
                         <figure class="image is-square">
@@ -94,7 +95,7 @@ function openTab(evt, tabName) {
             </div>
             <div class="column">
                 <div>
-                    <input type="radio" name="filter" value="3">
+                    <input type="radio" name="img_filter" value="public/filters/3.png" id="3" onchange="myimage('3')">
                 </div>
                 <div class="box">
                         <figure class="image is-square">
@@ -105,7 +106,7 @@ function openTab(evt, tabName) {
             </div>
             <div class="column">
                 <div>
-                    <input type="radio" name="filter" value="4">
+                <input type="radio" name="img_filter" value="public/filters/4.png" id="4" onchange="myimage('4')">
                 </div>
                 <div class="box">
                         <figure class="image is-square">
@@ -116,11 +117,67 @@ function openTab(evt, tabName) {
             </div>
             <div class="column">
                 <div>
-                    <input type="radio" name="filter" value="5">
+                     <input type="radio" name="img_filter" value="public/filters/5.png" id="5" onchange="myimage('5')">
                 </div>
                 <div class="box">
                         <figure class="image is-square">
                             <img src="public/filters/5.png">
+                           
+                        </figure>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <div>
+                    <input type="radio" name="img_filter" value="public/filters/6.png" id="6" onchange="myimage('6')">
+                </div>
+                <div class="box">
+                        <figure class="image is-square">
+                            <img src="public/filters/6.png">
+                        </figure>
+                </div>
+            </div>
+            <div class="column">
+                <div>
+                    <input type="radio" name="img_filter" value="public/filters/7.png" id="7" onchange="myimage('7')">
+                </div>
+                <div class="box">
+                        <figure class="image is-square">
+                            <img src="public/filters/7.png">
+                           
+                        </figure>
+                </div>
+            </div>
+            <div class="column">
+                <div>
+                    <input type="radio" name="img_filter" value="public/filters/8.png" id="8" onchange="myimage('8')">
+                </div>
+                <div class="box">
+                        <figure class="image is-square">
+                            <img src="public/filters/8.png">
+                           
+                        </figure>
+                </div>
+            </div>
+            <div class="column">
+                <div>
+                    <input type="radio" name="img_filter" value="public/filters/9.png" id="9" onchange="myimage('9')">
+                </div>
+                <div class="box">
+                        <figure class="image is-square">
+                            <img src="public/filters/9.png">
+                           
+                        </figure>
+                </div>
+            </div>
+            <div class="column">
+                <div>
+                    <input type="radio" name="img_filter" value="public/filters/10.png" id="10" onchange="myimage('10')">
+                </div>
+                <div class="box">
+                        <figure class="image is-square">
+                            <img src="public/filters/10.png">
                            
                         </figure>
                 </div>

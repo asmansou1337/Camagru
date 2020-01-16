@@ -1,18 +1,3 @@
-<script>
-function openTab(evt, tabName) {
-    var i, x, tablinks;
-    x = document.getElementsByClassName("content-tab");
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tab");
-    for (i = 0; i < x.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" is-active", "");
-    }
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " is-active";
-  }
-</script>
 
 <div class='container'>
 <div class="columns">
@@ -35,12 +20,9 @@ function openTab(evt, tabName) {
             </ul>
         </div>
         <div class="container ">
-            <div id="Webcam" class="content-tab">
-                <video id="video"></video>
-               
-                <div id="canvasvideo" style="position: relative;">
-            
-                </div>
+            <div id="Webcam" class="content-tab" style="position: relative; left: 0; top: 0;">
+                <video id="video" autoplay style="position: relative; left: 0; top: 0;"></video>
+                <div id="canvasvideo" style="position: absolute; top: 0px; left: 0px;"></div>
             </div>
             <div id="local" class="content-tab" style="display:none">
                 <div class="container">
@@ -59,16 +41,17 @@ function openTab(evt, tabName) {
                             </label>
                         </div>
                     </div>
-                    <div class="box">
-                        <figure class="image is-5by4">
+                    <div class="box" id="imgUploadedBox" style="display:none; position: relative; left: 0; top: 0;">
+                        <figure class="image is-5by4" style="position: relative; left: 0; top: 0;">
                                 <img id="imgUploaded">
                         </figure>
+                        <div id="canvasImage" style="position: absolute; top: 0px; left: 0px;"></div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card" style="margin-top: 2rem;margin-bottom: 2rem;">
-            <input class="button is-large is-fullwidth is-link is-outlined" id="snap" type="submit" value="Take A Picture" onclick="javascript:Shot()">
+            <input class="button is-large is-fullwidth is-link is-outlined" id="snap" type="submit" value="Take A Picture" onclick="javascript:Shot();">
         </div>
         <div id="canvas"></div>
         <div class="columns">
@@ -206,3 +189,6 @@ function openTab(evt, tabName) {
   </div>
 </div>
 </div>
+
+<script type="text/javascript" src="public/js/snapshot.js"></script>
+<script type="text/javascript" src="public/js/tabs.js"></script>

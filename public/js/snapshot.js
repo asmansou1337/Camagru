@@ -12,8 +12,8 @@ var is_video = true;
 var is_image = false;
 
 var current;
-//var PosX = 200;
-//var PosY = 200;
+// var PosX = 0;
+// var PosY = 0;
 var PosX = 270;
 var PosY = 70;
 
@@ -44,11 +44,15 @@ function errorCallback(err) {
     console.log("error : " + err);
 };
 
-localMediaStream.getTracks().forEach(function(track) {
-    track.stop();
-  });
+// localMediaStream.getTracks().forEach(function(track) {
+//     track.stop();
+//   });
 
 function Shot() {
+    // is_video = document.getElementById('is_video').value;
+    // is_image = document.getElementById('is_image').value;
+    console.log("video " + is_video);
+    console.log("image " + is_image);
     if (is_video == true || is_image == true) {
         var video = document.querySelector('video');
         var canvas = document.createElement('canvas');
@@ -63,12 +67,22 @@ function Shot() {
             else
                 cv.appendChild(canvas);
 
-            if (document.getElementById('imgUploaded').src) {
+            if (document.getElementById('is_video').value == 'false') {
                 var image = new Image();
                 image.src = document.getElementById('imgUploaded').src;
                 context.drawImage(image, 0, 0, 800, 460);
-            } else
+                // size = image.getBoundingClientRect().width;
+            } else {
                 context.drawImage(video, 0, 0, 800, 460);
+                // size = video.getBoundingClientRect().width;
+            }
+                
+
+            console.log("value " + document.getElementById('is_video').value);
+
+            // width = video.getBoundingClientRect().width;
+            
+
 
             var img = new Image();
             img.src = filter.value;
@@ -82,10 +96,9 @@ function Shot() {
             // var httpr = new XMLHttpRequest();
             // httpr.open('POST', 'dropimg.php', true);
             // httpr.send(fd);
-        } else
-            alert("Vous devez d'abord selectionner un filtre.");
+        }
     } else
-        alert("Vous devez d'abord activer votre webcam ou choisir une image.");
+        alert("You need to activate your Webcam or Upload an image.");
 }
 
 function readURL(input) {
@@ -102,8 +115,8 @@ function readURL(input) {
             //document.getElementById('video').style.display = "none";
         };
         reader.readAsDataURL(input.files[0]);
-        is_image = true;
-        is_video = false;
+        //is_image = true;
+        //is_video = false;
     } else {
         image.style.display = null;
         image.setAttribute('src', "");
@@ -112,26 +125,68 @@ function readURL(input) {
 }
 
 function myimage(img_url) {
-    if ((is_video == true || is_image == true) && img_url) {
-        current = img_url;
-        var element = document.getElementById("filtercanvas");
+    current = img_url;
+    if (document.getElementById('imgUploaded').src && img_url) {
+        var elementImg = document.getElementById("filtercanvasimg");
+        if (elementImg)
+            elementImg.parentNode.removeChild(elementImg);
+        var canvasImg = document.createElement('canvas');
+        var contextImg = canvasImg.getContext('2d');
+        canvasImg.width = document.getElementById('imgUploadedBox').getBoundingClientRect().width;
+        canvasImg.height = document.getElementById('imgUploadedBox').getBoundingClientRect().height;
+        canvasImg.draggable = true;
+        canvasImg.id = "filtercanvasimg";
+        document.getElementById("canvasImage").appendChild(canvasImg);
+        var img = new Image();
+        img.src = document.getElementById(img_url).value;
+        contextImg.drawImage(img, PosX, PosY, size, size);
+    }
+    if (is_video && img_url)
+    {
+        var element = document.getElementById("filtercanvasvid");
         if (element)
             element.parentNode.removeChild(element);
         var canvas = document.createElement('canvas');
-        var context = canvas.getContext('2d');
-        canvas.width = 800;
-        canvas.height = 460;
+        var contextVid = canvas.getContext('2d');
+        canvas.width = document.getElementById('video').getBoundingClientRect().width;
+        canvas.height = document.getElementById('video').getBoundingClientRect().height;
         canvas.draggable = true;
-        canvas.id = "filtercanvas";
-        //canvas.addEventListener("click", getClickPosition, false);
-        if (is_video)
-            document.getElementById("canvasvideo").appendChild(canvas);
-        if (is_image)
-            document.getElementById("canvasImage").appendChild(canvas);
-        var img = new Image();
-        img.src = document.getElementById(img_url).value;
-        context.drawImage(img, PosX, PosY, size, size);
+        canvas.id = "filtercanvasvid";
+        document.getElementById("canvasvideo").appendChild(canvas);
+        var imgVid = new Image();
+        imgVid.src = document.getElementById(img_url).value;
+        contextVid.drawImage(imgVid, PosX, PosY, size, size);
     }
+    document.getElementById('snap').disabled = false;
+
+    // if ((is_video == true || is_image == true) && img_url) {
+    //     var element = document.getElementById("filtercanvas");
+    //     if (element)
+    //         element.parentNode.removeChild(element);
+    //     var canvas = document.createElement('canvas');
+    //     var context = canvas.getContext('2d');
+    //     canvas.width = document.getElementById('video').getBoundingClientRect().width;
+    //     canvas.height = document.getElementById('video').getBoundingClientRect().height;
+    //     canvas.draggable = true;
+    //     canvas.id = "filtercanvas";
+    //     //canvas.style.display = "block";
+    //     //canvas.addEventListener("click", getClickPosition, false);
+    //     // if (is_video)
+    //     //     document.getElementById("canvasvideo").appendChild(canvas);
+    //     //if (is_image) 
+    //         document.getElementById("canvasImage").appendChild(canvas);
+    //     // } else {
+    //     //     document.getElementById("canvasvideo").appendChild(canvas);
+    //     // }
+
+    //     // if (is_video)
+    //         document.getElementById("canvasvideo").appendChild(canvas);
+
+
+    //     var img = new Image();
+    //     img.src = document.getElementById(img_url).value;
+    //     context.drawImage(img, PosX, PosY, size, size);
+    // }
 }
 
 // function getClickPosition(e) {
@@ -148,4 +203,3 @@ window.addEventListener("unload", function(){
         track.stop();
       });
 })
-

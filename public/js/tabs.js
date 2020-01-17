@@ -11,5 +11,16 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " is-active";
     if (tabName == "Webcam")
-        is_video = true;
+    {
+        image = document.getElementById('imgUploaded');
+        imageBox = document.getElementById('imgUploadedBox');
+        image.style.display = null;
+        image.setAttribute('src', "");
+        imageBox.style.display = "none";
+        document.getElementById('is_video').value = 'true';
+        document.getElementById('is_image').value = 'false';
+    } else {
+        document.getElementById('is_video').value = 'false';
+        document.getElementById('is_image').value = 'true';
+    }
   }

@@ -23,6 +23,7 @@
             <div id="Webcam" class="content-tab" style="position: relative; left: 0; top: 0;">
                 <video id="video" autoplay style="position: relative; left: 0; top: 0;"></video>
                 <div id="canvasvideo" style="position: absolute; top: 0px; left: 0px;"></div>
+                <div id="is_video" style="display:none" value="true"></div>
             </div>
             <div id="local" class="content-tab" style="display:none">
                 <div class="container">
@@ -46,12 +47,13 @@
                                 <img id="imgUploaded">
                         </figure>
                         <div id="canvasImage" style="position: absolute; top: 0px; left: 0px;"></div>
+                        <div id="is_image" style="display:none" value="false"></div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card" style="margin-top: 2rem;margin-bottom: 2rem;">
-            <input class="button is-large is-fullwidth is-link is-outlined" id="snap" type="submit" value="Take A Picture" onclick="javascript:Shot();">
+            <input class="button is-large is-fullwidth is-link is-outlined" id="snap" type="submit" value="Take A Picture" onclick="javascript:Shot();" disabled>
         </div>
         <div id="canvas"></div>
         <div class="columns">

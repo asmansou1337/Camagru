@@ -55,7 +55,9 @@
         <div class="card" style="margin-top: 2rem;margin-bottom: 2rem;">
             <input class="button is-large is-fullwidth is-link is-outlined" id="snap" type="submit" value="Take A Picture" onclick="javascript:Shot();" disabled>
         </div>
+        
         <div id="canvas"></div>
+
         <div class="columns">
             <div class="column">
                 <div>

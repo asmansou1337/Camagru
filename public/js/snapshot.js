@@ -110,8 +110,8 @@ function readURL(input) {
             imageBox.style.display = "";
             image.style.display = "";
             image.setAttribute('src', e.target.result);
-            // image.height = 460;
-            // image.width = 800;
+            image.height = 460;
+            image.width = 800;
             //document.getElementById('video').style.display = "none";
         };
         reader.readAsDataURL(input.files[0]);

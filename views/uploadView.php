@@ -58,6 +58,10 @@
         
         <div id="canvas"></div>
 
+        <form method="post" name="formWithImage" accept-charset='utf-8'>
+            <input id="imgToSend" name="imgToSend" type='hidden'>
+        </form>
+
         <div class="columns">
             <div class="column">
                 <div>

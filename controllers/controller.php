@@ -14,6 +14,7 @@ session_start();
 require_once('controllers/controllerSignUp.php');
 require_once('controllers/controllerSignIn.php');
 require_once('controllers/controllerProfile.php');
+require_once('controllers/controllerImage.php');
 
 class Controller 
 {
@@ -235,6 +236,7 @@ class Controller
                     require('views/galleryView.php');
                     break;
             case ($page === "upload"):
+                $this->accessControl("notlogged");
                     try 
                     {
                        
@@ -244,6 +246,25 @@ class Controller
                     } catch (Exception $e)
                     {
                                 $errors = $e->getMessage();
+                    }
+                    require('views/messageView.php');
+                    unset($_SESSION["message"]);
+                    require('views/uploadView.php');
+                    break;
+            case ($page === "uploadMergeImg"):
+                //$this->accessControl("notlogged");
+                try 
+                    {
+                        if(isset($_POST['imgToSend']))
+                        {
+                            $ctrl = new controllerImage();
+                            $ctrl->uploadMergeImg($this->pdo);
+                            if (isset($_SESSION["message"]))
+                                $message = $_SESSION["message"];
+                        }       
+                    } catch (Exception $e)
+                    {
+                        $errors = $e->getMessage();
                     }
                     require('views/messageView.php');
                     unset($_SESSION["message"]);

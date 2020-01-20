@@ -98,15 +98,10 @@ function Shot() {
             document.getElementById('imgToSend').value = imgMerged;
             document.getElementById('imgToSend').width = canvas.width;
             document.getElementById('imgToSend').height = canvas.height;
-           // document.getElementById('imgToSend').setAttribute('value', imgMerged);
-           // document.getElementById('imgToSend').setAttribute('width', canvas.width);
-           // document.getElementById('imgToSend').setAttribute('height', canvas.height);
-           // console.log("img " + document.getElementById('imgToSend').value);
-           // var form = document.forms.namedItem("formWithImage");
-            //var fd = new FormData(document.forms["form"]);
+            
             var data = new FormData(document.forms["formWithImage"]);
             var httpr = new XMLHttpRequest();
-            httpr.open('POST', 'index.php?page=uploadMergeImg', true);
+            httpr.open('POST', 'index.php?page=uploadMergeImg');
             httpr.send(data);
         }
     } else

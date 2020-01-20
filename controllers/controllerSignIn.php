@@ -13,7 +13,7 @@ class controllerSignIn
         } else {
             $userLogin = new UserManager();
             $userInfo = $userLogin->userLogin($pdo, $email, $password);
-            $user = new User($userInfo['username'], $userInfo['email'], $userInfo['password'], $userInfo['firstName'], $userInfo['lastName']);
+            $user = new User($userInfo['id'], $userInfo['username'], $userInfo['email'], $userInfo['password'], $userInfo['firstName'], $userInfo['lastName']);
             // $_SESSION['username'] = $user->getUsername();
             // $_SESSION['firstName'] = $user->getFirstName();
             // $_SESSION['lastName'] = $user->getLastName();

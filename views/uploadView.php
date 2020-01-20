@@ -179,20 +179,23 @@
   <!-- list of taken pictures -->
   <div class="column is-two-quarter">
     <div class="box">
-        <figure class="image is-square">
-            <img src="https://bulma.io/images/placeholders/256x256.png">
-            <button class="delete is-large"></button>
-        </figure>
+        <?php for($i = 0; $i < $count; $i++) { 
+           // echo $pics[$i]['img_path'];
+            ?>
+            <figure class="image is-5by3">
+                    <img src="<?php echo trim($pics[$i]['img_path']); ?>">
+                    <button class="delete is-large"></button>
+            </figure>
         <div class="block"></div>
-        <figure class="image is-square">
+
+       <?php }  ?>
+       <form method="post" name="" accept-charset='utf-8'>
+            <input id="delete" name="imgToDelete" >
+        </form>
+        <!--  <figure class="image is-square">
             <img src="https://bulma.io/images/placeholders/256x256.png">
             <button class="delete is-large"></button>
-        </figure>
-        <div class="block"></div>
-        <figure class="image is-square">
-            <img src="https://bulma.io/images/placeholders/256x256.png">
-            <button class="delete is-large"></button>
-        </figure>
+        </figure> -->
     </div>
   </div>
 </div>

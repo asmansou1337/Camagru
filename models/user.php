@@ -1,19 +1,26 @@
 <?php
 
 class User {
+    private $id;
     private $username;
     private $firstName;
     private $lastName;
     private $email;
     private $password;
 
-    public function __construct($username, $email, $password, $firstName, $lastName) {
+    public function __construct($id, $username, $email, $password, $firstName, $lastName) {
+        $this->setId($id);
         $this->setUsername($username);
         $this->setFirstName($firstName);
         $this->setLastName($lastName);
         $this->setEmail($email);
         $this->setPassword($password);
         
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     public function setUsername($username)
@@ -39,6 +46,11 @@ class User {
     public function setPassword($password)
     {
         $this->password = $password;
+    }
+
+    public function getId()
+    {
+       return $this->id;
     }
 
     public function getUsername()

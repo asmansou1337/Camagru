@@ -239,7 +239,9 @@ class Controller
                 $this->accessControl("notlogged");
                     try 
                     {
-                       
+                        $ctrl = new controllerImage();
+                        $pics = $ctrl->getLoggedUserImages($this->pdo);
+                        $count = count($pics);
                         if (isset($_SESSION["message"]))
                             $message = $_SESSION["message"];
                             

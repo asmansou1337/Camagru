@@ -272,6 +272,31 @@ class Controller
                     unset($_SESSION["message"]);
                     require('views/uploadView.php');
                     break;
+            case ($page === "deleteImg"):
+                echo "<script>console.log('yes working:' );</script>";
+                //$this->accessControl("notlogged");
+                try 
+                    {
+                        if(isset($_POST['imgToDelete']))
+                        {
+                           //echo "<script>console.log('Debug Objects: " . $_POST['delImg'] . "' );</script>";
+                            //echo $_POST['imgId'];
+                            $ctrl = new controllerImage();
+                            $ctrl->deleteImage($this->pdo, $_POST['delImgId'], $_POST['delImgName']);
+                            $pics = $ctrl->getLoggedUserImages($this->pdo);
+                            $count = count($pics);
+                            if (isset($_SESSION["message"]))
+                                $message = $_SESSION["message"];
+                            }
+                        //$message = "delete";     
+                        } catch (Exception $e)
+                        {
+                            $errors = $e->getMessage();
+                        }
+                        require('views/messageView.php');
+                        unset($_SESSION["message"]);
+                        require('views/uploadView.php');
+                        break;
             default:
                 require "views/homeView.php";
                 break;

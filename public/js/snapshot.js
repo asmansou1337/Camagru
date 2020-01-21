@@ -21,6 +21,9 @@ var PosY = 70;
 
 var size = 320;
 
+
+var httpr = new XMLHttpRequest();
+
 if (navigator.getUserMedia)
     navigator.getUserMedia(constraints, successCallback, errorCallback);
 else
@@ -100,7 +103,6 @@ function Shot() {
             document.getElementById('imgToSend').height = canvas.height;
             
             var data = new FormData(document.forms["formWithImage"]);
-            var httpr = new XMLHttpRequest();
             httpr.open('POST', 'index.php?page=uploadMergeImg');
             httpr.send(data);
         }
@@ -131,7 +133,7 @@ function readURL(input) {
     }
 }
 
-window.addEventListener('resize', function(event){
+/*window.addEventListener('resize', function(event){
     var cv=document.getElementById('filtercanvasvid');
     cv.setAttribute('width', window.innerWidth);
     cv.setAttribute('height', window.innerHeight);
@@ -140,7 +142,7 @@ window.addEventListener('resize', function(event){
     PosX = rect.top;
     PosY = rect.left;
     //console.log("posX = " + PosX + " PosY = " + PosY);
-  });
+  });*/
 
 function myimage(img_url) {
     current = img_url;
@@ -152,8 +154,8 @@ function myimage(img_url) {
         var contextImg = canvasImg.getContext('2d');
        // canvasImg.width = document.getElementById('imgUploadedBox').getBoundingClientRect().width;
        // canvasImg.height = document.getElementById('imgUploadedBox').getBoundingClientRect().height;
-        canvas.setAttribute('width', window.innerWidth);
-        canvas.setAttribute('height', window.innerHeight);
+        canvasImg.setAttribute('width', window.innerWidth);
+        canvasImg.setAttribute('height', window.innerHeight);
         canvasImg.draggable = true;
         canvasImg.id = "filtercanvasimg";
         document.getElementById("canvasImage").appendChild(canvasImg);
@@ -221,9 +223,21 @@ function myimage(img_url) {
 //         myimage(current);
 //     }
 // }
+function deleteImage(id, formName) {
+    console.log("clicked on " + id);
+    console.log("form  " + formName);
+    var data = new FormData(document.forms[formName]);
+    //data.append("imgId", id);
+   // var httpr = new XMLHttpRequest();
+    httpr.open('POST', 'index.php?page=deleteImg');
+    httpr.send(data);
+    //console.log( id);
 
-window.addEventListener("unload", function(){
+}
+
+/*window.addEventListener("unload", function(){
     localMediaStream.getTracks().forEach(function(track) {
         track.stop();
       });
-})
+})*/
+

@@ -179,19 +179,34 @@
   <!-- list of taken pictures -->
   <div class="column is-two-quarter">
     <div class="box">
-        <?php for($i = 0; $i < $count; $i++) { 
-           // echo $pics[$i]['img_path'];
-            ?>
-            <figure class="image is-5by3">
-                    <img src="<?php echo trim($pics[$i]['img_path']); ?>">
-                    <button class="delete is-large"></button>
-            </figure>
-        <div class="block"></div>
-
-       <?php }  ?>
-       <form method="post" name="" accept-charset='utf-8'>
-            <input id="delete" name="imgToDelete" >
-        </form>
+            <?php if ($count === 0) { ?>
+                <p>No Pictures Yet !!</p>
+            <?php
+            }
+            for($i = 0; $i < $count; $i++) {
+                $formName = "deleteForm".$i;
+               // $id = $pics[$i]['name'];
+            // echo $pics[$i]['img_path'];
+                ?>
+                <form method="POST" action="index.php?page=deleteImg">
+                <figure class="image is-5by3">
+                        <img src="<?php echo $pics[$i]['img_path']; ?>">
+                        <input style="display:hidden" name="delImgId" value="<?php echo $pics[$i]['id']; ?>">
+                        <input style="display:hidden" name="delImgName" value="<?php echo $pics[$i]['img_path']; ?>">
+                       <!-- <button class="button is-danger" type="submit" name="imgToDelete" onchange="deleteImage('1')">
+                            <span class="icon is-small">
+                            <i class="fas fa-times"></i>
+                            </span>
+                        </button> -->
+                </figure>
+                <div class="box is-centered">
+                    <input class="button is-danger"  name="imgToDelete" type="submit" value="Delete" >
+                </div>
+                
+            <div class="block"></div>
+            </form>
+        <?php }  ?>
+               <!-- <input class="button is-danger" type="submit" id="delete" name="imgToDelete" value="Delete"> -->
         <!--  <figure class="image is-square">
             <img src="https://bulma.io/images/placeholders/256x256.png">
             <button class="delete is-large"></button>

@@ -11,4 +11,9 @@ class controllerImage {
         $images = new ImageManager();
         return $images->getUserImages($pdo);
     }
+
+    public function deleteImage($pdo, $imgId, $imgName) {
+        $images = new ImageManager();
+        return $images->deleteUserImages($pdo, $imgId, $imgName);
+    }
 }

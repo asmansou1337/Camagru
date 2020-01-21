@@ -35,15 +35,27 @@ class ImageManager {
    public function getUserImages($pdo)
    {
         $id_user = unserialize($_SESSION['user'])->getId();
-        $query = "SELECT * from picture WHERE id_user = ?";
+        $query = "SELECT * from picture WHERE id_user = ? ORDER BY creation_date DESC";
         $Statement = $pdo->prepare($query);
         if(!$Statement->execute([$id_user]))
         {
             throw new Exception('Error Uploading the image, Please Try Again!');
         } else {
             $data = $Statement->fetchAll();
-            print_r($data);
+            //print_r($data);
             return $data;
+        }
+   }
+
+   public function deleteUserImages($pdo, $id, $name)
+   {
+        $query = "DELETE FROM picture WHERE id = ?";
+        $Statement = $pdo->prepare($query);
+        if(!$Statement->execute([$id]))
+        {
+            throw new Exception('Error Deleting the image, Please Try Again!');
+        } else {
+            unlink($name);
         }
    }
 }

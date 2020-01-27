@@ -223,7 +223,14 @@ class Controller
             case ($page === "gallery"):
                     try 
                     {
-                    
+                        $ctrl = new controllerImage();
+                        $nbpages = $ctrl->getTotalPages($this->pdo);
+                        $pics = $ctrl->getGalleryPage($this->pdo);
+                        $nbr = filter_input(INPUT_GET, 'nbr', FILTER_SANITIZE_SPECIAL_CHARS);
+                        //print_r($nbr);
+                        //print_r($count);
+                        //print_r($pics);
+                        //print_r($nbpages);
                         if (isset($_SESSION["message"]))
                             $message = $_SESSION["message"];
                             

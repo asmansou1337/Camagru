@@ -16,4 +16,31 @@ class controllerImage {
         $images = new ImageManager();
         return $images->deleteUserImages($pdo, $imgId, $imgName);
     }
+
+
+    public function getTotalPages($pdo) {
+        $images = new ImageManager();
+        $total = $images->getCountImages($pdo);
+        $imagePerPage = 4;
+        $nbrPages = ceil($total / $imagePerPage);
+        return $nbrPages;
+    }
+
+    public function getGalleryPage($pdo) {
+        $images = new ImageManager();
+        $nbrPages = $this->getTotalPages($pdo);
+        $imagePerPage = 4;
+        if (isset($_POST['nbr']))
+        {
+            if ($_POST['nbr'] > $nbrPages)
+                $currentPage = $nbrPages;
+            else
+                $currentPage = $_POST['nbr'];
+        } else {
+            $currentPage = 1;
+        }
+        $pics = $images->getPageImages($pdo, $currentPage, $imagePerPage);
+        //print_r($pics);
+        return $pics;
+    }
 }

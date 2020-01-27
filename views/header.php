@@ -33,7 +33,7 @@
       </span>
 
       <span class="navbar-item">
-        <a class="button is-black is-outlined" href="index.php?page=gallery">
+        <a class="button is-black is-outlined" href="index.php?page=gallery&nbr=1">
           <span class="icon">
               <i class="fa fa-images"></i>
           </span>

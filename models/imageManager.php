@@ -58,4 +58,33 @@ class ImageManager {
             unlink($name);
         }
    }
+
+   public function getCountImages($pdo)
+   {
+        $query = "SELECT count(*) AS totalImages from picture";
+        $Statement = $pdo->prepare($query);
+        if(!$Statement->execute())
+        {
+            throw new Exception('Error, Please Try Again!');
+        } else {
+            $count = $Statement->fetch();
+            //print_r($data);
+            return $count['totalImages'];
+        }
+   }
+
+   public function getPageImages($pdo, $currentPage, $imagePerPage)
+   {
+        $picLimit = ($currentPage - 1) * $imagePerPage;
+        $query = 'SELECT * FROM picture ORDER BY creation_date DESC LIMIT '.$picLimit.', '.$imagePerPage;
+        $Statement = $pdo->prepare($query);
+        if(!$Statement->execute())
+        {
+            throw new Exception('Error, Please Try Again!');
+        } else {
+            $pics = $Statement->fetchAll();
+            //print_r($data);
+            return $pics;
+        }
+   }
 }

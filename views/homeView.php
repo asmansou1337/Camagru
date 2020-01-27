@@ -3,8 +3,7 @@
     <h1 class="title"> About This Project </h1>
 </div>
 <article class="message is-info is-medium">
-  <div class="message-header">
-  </div>
+  
   <div class="message-body">
   Camagru is a web application allowing you to create beautiful and customize 
     montages using your webcam and a selection of predefined images.

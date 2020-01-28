@@ -26,21 +26,48 @@ class controllerImage {
         return $nbrPages;
     }
 
-    public function getGalleryPage($pdo) {
+    public function getGalleryPage($pdo, $nbr) {
         $images = new ImageManager();
         $nbrPages = $this->getTotalPages($pdo);
         $imagePerPage = 4;
-        if (isset($_POST['nbr']))
+        if (isset($nbr))
         {
-            if ($_POST['nbr'] > $nbrPages)
+            if ($nbr > $nbrPages)
                 $currentPage = $nbrPages;
             else
-                $currentPage = $_POST['nbr'];
+                $currentPage = $nbr;
         } else {
             $currentPage = 1;
         }
+        //print_r($currentPage);
         $pics = $images->getPageImages($pdo, $currentPage, $imagePerPage);
         //print_r($pics);
         return $pics;
+    }
+
+    public function getLikeStatus()
+    {
+        $image = new ImageManager();
+        // if (!$image->isLiked($pdo, $imageId, $ownerId)){
+        // }else {
+
+        // }
+    }
+
+    public function addLikeToImage($pdo, $imageId, $ownerId, $ownerUsername, $ownerEmail)
+    {
+        $image = new ImageManager();
+        if (!$image->isLiked($pdo, $imageId, $ownerId))
+        {
+            $image->addImageLike($pdo, $imageId);
+            if ($_POST['notify'] === 'ON') {
+                $subject = "Camagru: Like Notification";
+                $body = 'Hi '. $ownerUsername . '<br> The user '. unserialize($_SESSION['user'])->getUsername() .' liked your picture. <br>';
+                $sendEmail = new EmailManager();
+                $sendEmail->sendEmail($ownerEmail, $subject, $body);
+            }
+        }    
+        else
+            $image->delImageLike($pdo, $imageId);
     }
 }

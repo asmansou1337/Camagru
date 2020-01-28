@@ -76,15 +76,69 @@ class ImageManager {
    public function getPageImages($pdo, $currentPage, $imagePerPage)
    {
         $picLimit = ($currentPage - 1) * $imagePerPage;
-        $query = 'SELECT * FROM picture ORDER BY creation_date DESC LIMIT '.$picLimit.', '.$imagePerPage;
+        $query = 'SELECT p.id as picId, p.name, p.img_path, p.creation_date, u.id as userId, u.firstName, u.lastName,
+        u.username, u.email, u.notify  FROM picture p
+        INNER JOIN user_account u ON u.id = p.id_user
+        ORDER BY p.creation_date DESC LIMIT ? , ?';
         $Statement = $pdo->prepare($query);
-        if(!$Statement->execute())
+        if(!$Statement->execute([$picLimit, $imagePerPage]))
         {
             throw new Exception('Error, Please Try Again!');
         } else {
             $pics = $Statement->fetchAll();
             //print_r($data);
             return $pics;
+        }
+   }
+
+   public function isLiked($pdo, $picId, $userId) 
+   {
+        $query = "SELECT * from picture_like WHERE id_picture = ? AND id_user = ?";
+        $Statement = $pdo->prepare($query);
+        if(!$Statement->execute([$picId, $userId]))
+        {
+            throw new Exception('Error, Please Try Again!');
+        } else {
+            if ($Statement->rowcount() == 0)
+                return 0;
+            else 
+                return 1;
+        }
+   }
+
+   public function addImageLike($pdo, $picId) 
+   {
+        $id_user = unserialize($_SESSION['user'])->getId();
+        $query = "INSERT INTO picture_like (id_user, id_picture) VALUES (?, ?)";
+        $Statement=$pdo->prepare($query);
+        if(!$Statement->execute([$id_user, $picId]))
+        {
+            throw new Exception('Error, Please Try Again!');
+        } 
+   }
+
+   public function delImageLike($pdo, $picId) 
+   {
+        $id_user = unserialize($_SESSION['user'])->getId();
+        $query = "DELETE FROM picture_like WHERE id_picture = ? AND id_user = ?";
+        $Statement=$pdo->prepare($query);
+        if(!$Statement->execute([$picId, $id_user]))
+        {
+            throw new Exception('Error, Please Try Again!');
+        } 
+   }
+
+   public function getImageLike($pdo)
+   {
+        $query = "SELECT like_nbr from picture_like WHERE id_picture = ?";
+        $Statement = $pdo->prepare($query);
+        if(!$Statement->execute())
+        {
+            throw new Exception('Error, Please Try Again!');
+        } else {
+            $count = $Statement->fetch();
+            //print_r($data);
+            return $count['like_nbr'];
         }
    }
 }

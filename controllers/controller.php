@@ -225,12 +225,11 @@ class Controller
                     {
                         $ctrl = new controllerImage();
                         $nbpages = $ctrl->getTotalPages($this->pdo);
-                        $pics = $ctrl->getGalleryPage($this->pdo);
                         $nbr = filter_input(INPUT_GET, 'nbr', FILTER_SANITIZE_SPECIAL_CHARS);
-                        //print_r($nbr);
-                        //print_r($count);
+                        $pics = $ctrl->getGalleryPage($this->pdo, $nbr);
+                        
                         //print_r($pics);
-                        //print_r($nbpages);
+                      
                         if (isset($_SESSION["message"]))
                             $message = $_SESSION["message"];
                             
@@ -260,6 +259,38 @@ class Controller
                     unset($_SESSION["message"]);
                     require('views/uploadView.php');
                     break;
+            case ($page === "addLike"):
+                //$this->accessControl("notlogged");
+                    try 
+                        {
+                            if (isset($_POST['like']))
+                            {
+                                $ctrl = new controllerImage();
+                                $ctrl->addLikeToImage($this->pdo, $_POST['picId'], $_POST['ownerId'], $_POST['ownerUsername'], $_POST['ownerEmail']);
+                                if (isset($_SESSION["message"]))
+                                    $message = $_SESSION["message"];
+                                header('Location: index.php?page=gallery');
+                                // print_r('yes');
+                                // print_r($_POST['picId']);
+
+                            }
+                            //$notify = "";
+                            // $ctrl = new controllerProfile();
+                            // if(isset($_POST['editNotifications']))
+                            //     {
+                            //         $ctrl->changeNotification($this->pdo);
+                            //         if (isset($_SESSION["message"]))
+                            //             $message = $_SESSION["message"];
+                            //     }
+                            //     $notify = $ctrl->getNotificationSetting($this->pdo);
+                        } catch (Exception $e)
+                        {
+                            $errors = $e->getMessage();
+                        }
+                        require('views/messageView.php');
+                        unset($_SESSION["message"]);
+                        require('views/galleryView.php');
+                        break;
             case ($page === "uploadMergeImg"):
                 //$this->accessControl("notlogged");
                 try 

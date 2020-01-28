@@ -15,7 +15,7 @@ class controllerProfile {
                 throw new Exception("Email should not be empty !");
             $user = new UserManager();
             $user->editProfile($pdo, $username, $firstName, $lastName, $email);
-            $user = new User($username, $email, unserialize($_SESSION['user'])->getPassword(), $firstName, $lastName);
+            $user = new User(unserialize($_SESSION['user'])->getId(), $username, $email, unserialize($_SESSION['user'])->getPassword(), $firstName, $lastName);
             $_SESSION['user'] = serialize($user);
     }
 

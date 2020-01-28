@@ -29,7 +29,7 @@ class controllerImage {
     public function getGalleryPage($pdo, $nbr) {
         $images = new ImageManager();
         $nbrPages = $this->getTotalPages($pdo);
-        $imagePerPage = 4;
+        $imagePerPage = 6;
         if (isset($nbr))
         {
             if ($nbr > $nbrPages)
@@ -45,6 +45,14 @@ class controllerImage {
         return $pics;
     }
 
+    public function getImageDetailPage($pdo, $imgId)
+    {
+        $image = new ImageManager();
+        $pic = $image->getImageById($pdo, $imgId);
+       // print_r($pic);
+        return $pic[0];
+    }
+
     public function getLikeStatus()
     {
         $image = new ImageManager();
@@ -57,7 +65,7 @@ class controllerImage {
     public function addLikeToImage($pdo, $imageId, $ownerId, $ownerUsername, $ownerEmail)
     {
         $image = new ImageManager();
-        if (!$image->isLiked($pdo, $imageId, $ownerId))
+        if (!$image->isLiked($pdo, $imageId, unserialize($_SESSION['user'])->getId()))
         {
             $image->addImageLike($pdo, $imageId);
             if ($_POST['notify'] === 'ON') {
@@ -67,7 +75,14 @@ class controllerImage {
                 $sendEmail->sendEmail($ownerEmail, $subject, $body);
             }
         }    
-        else
+        else {
             $image->delImageLike($pdo, $imageId);
+            if ($_POST['notify'] === 'ON') {
+                $subject = "Camagru: Unlike Notification";
+                $body = 'Hi '. $ownerUsername . '<br> The user '. unserialize($_SESSION['user'])->getUsername() .' unliked your picture. <br>';
+                $sendEmail = new EmailManager();
+                $sendEmail->sendEmail($ownerEmail, $subject, $body);
+            }
+        }
     }
 }

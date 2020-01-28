@@ -31,7 +31,10 @@
 </div> -->
 <!-- start of image section -->
 <?php for($i = 0; $i < sizeof($pics); $i++) { ?>
-  <div class="column ">
+    <?php if($i % 3 == 0) { ?>
+        </div><div class="columns">
+    <?php  }  ?>
+  <div class="column is-one-third">
         <div class="card">
             <div class="card-image">
                 <figure class="image is-4by3">
@@ -52,7 +55,7 @@
                             <span class="icon is-small is-left">
                                 <i class="fa fa-thumbs-up"></i>
                             </span>
-                        Likes <span> 26 </span>
+                        Likes <span> <?php echo $pics[$i]['countLikes'] ?> </span>
                         </div>
                         <div class="column">
                         <span class="icon is-small is-left">
@@ -64,16 +67,19 @@
                 </div>
             </div>
             <footer class="card-footer">
-                <form action="index.php?page=addLike" method="post">
+                <form action="index.php?page=addLike" method="post" class="card-footer-item">
                     <input type="hidden" name="picId" value="<?php echo $pics[$i]['picId'] ?>">
                     <input type="hidden" name="ownerId" value="<?php echo $pics[$i]['userId'] ?>">
                     <input type="hidden" name="ownerUsername" value="<?php echo $pics[$i]['username'] ?>">
                     <input type="hidden" name="ownerEmail" value="<?php echo $pics[$i]['email'] ?>">
                     <input type="hidden" name="notify" value="<?php echo $pics[$i]['notify'] ?>">
-                    <input class="button card-footer-item" value="Like" type="submit" name="like">
-
+                    <input class="button is-medium is-fullwidth" value="<?php echo  ($pics[$i]['isLiked'] === 0 ? "Like" : "Unlike") ; ?>" type="submit" name="like">
                 </form>
-                <a href="#" class="card-footer-item">View</a>
+              
+                <form action="index.php?page=viewImageDetails" method="post" class="card-footer-item">
+                    <input type="hidden" name="picId" value="<?php echo $pics[$i]['picId'] ?>">
+                    <input class="button  is-medium is-fullwidth is-primary" value="View" type="submit" name="view">
+                </form>
             </footer>
         </div>
   </div>

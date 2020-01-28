@@ -270,19 +270,7 @@ class Controller
                                 if (isset($_SESSION["message"]))
                                     $message = $_SESSION["message"];
                                 header('Location: index.php?page=gallery');
-                                // print_r('yes');
-                                // print_r($_POST['picId']);
-
                             }
-                            //$notify = "";
-                            // $ctrl = new controllerProfile();
-                            // if(isset($_POST['editNotifications']))
-                            //     {
-                            //         $ctrl->changeNotification($this->pdo);
-                            //         if (isset($_SESSION["message"]))
-                            //             $message = $_SESSION["message"];
-                            //     }
-                            //     $notify = $ctrl->getNotificationSetting($this->pdo);
                         } catch (Exception $e)
                         {
                             $errors = $e->getMessage();
@@ -290,6 +278,27 @@ class Controller
                         require('views/messageView.php');
                         unset($_SESSION["message"]);
                         require('views/galleryView.php');
+                        break;
+            case ($page === "viewImageDetails"):
+                //$this->accessControl("notlogged");
+                    try 
+                        {
+                            if (isset($_POST['view']))
+                                {
+                                    $ctrl = new controllerImage();
+                                    $pic = $ctrl->getImageDetailPage($this->pdo, $_POST['picId']);
+                                    //$ctrl->addLikeToImage($this->pdo, $_POST['picId'], $_POST['ownerId'], $_POST['ownerUsername'], $_POST['ownerEmail']);
+                                    if (isset($_SESSION["message"]))
+                                        $message = $_SESSION["message"];
+                                    //header('Location: index.php?page=gallery');
+                                }
+                        } catch (Exception $e)
+                        {
+                            $errors = $e->getMessage();
+                        }
+                        require('views/messageView.php');
+                        unset($_SESSION["message"]);
+                        require('views/imageDetailView.php');
                         break;
             case ($page === "uploadMergeImg"):
                 //$this->accessControl("notlogged");

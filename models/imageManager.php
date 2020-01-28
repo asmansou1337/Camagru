@@ -75,13 +75,35 @@ class ImageManager {
 
    public function getPageImages($pdo, $currentPage, $imagePerPage)
    {
+        $id_user = unserialize($_SESSION['user'])->getId();
         $picLimit = ($currentPage - 1) * $imagePerPage;
         $query = 'SELECT p.id as picId, p.name, p.img_path, p.creation_date, u.id as userId, u.firstName, u.lastName,
-        u.username, u.email, u.notify  FROM picture p
+        u.username, u.email, u.notify, (SELECT count(id_picture) FROM picture_like WHERE id_picture = p.id) countLikes,
+        (SELECT count(*) FROM picture_like WHERE id_picture = p.id AND id_user = ?) isLiked
+        FROM picture p
         INNER JOIN user_account u ON u.id = p.id_user
         ORDER BY p.creation_date DESC LIMIT ? , ?';
         $Statement = $pdo->prepare($query);
-        if(!$Statement->execute([$picLimit, $imagePerPage]))
+        if(!$Statement->execute([$id_user, $picLimit, $imagePerPage]))
+        {
+            throw new Exception('Error, Please Try Again!');
+        } else {
+            $pics = $Statement->fetchAll();
+            //print_r($data);
+            return $pics;
+        }
+   }
+
+   public function getImageById($pdo, $imgId)
+   {
+        $id_user = unserialize($_SESSION['user'])->getId();
+        $query = 'SELECT p.id as picId, p.name, p.img_path, p.creation_date, u.id as userId, u.firstName, u.lastName,
+        u.username, u.email, u.notify, (SELECT count(id_picture) FROM picture_like WHERE id_picture = p.id) countLikes,
+        (SELECT count(*) FROM picture_like WHERE id_picture = p.id AND id_user = ?) isLiked
+        FROM picture p
+        INNER JOIN user_account u ON u.id = p.id_user AND p.id = ?';
+        $Statement = $pdo->prepare($query);
+        if(!$Statement->execute([$id_user, $imgId]))
         {
             throw new Exception('Error, Please Try Again!');
         } else {

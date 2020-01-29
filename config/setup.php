@@ -49,7 +49,8 @@ class Setup {
         "id INT(12) UNSIGNED AUTO_INCREMENT PRIMARY KEY, ".
         "id_user INT(12) , ".
         "id_picture INT(12), ".
-        "comment VARCHAR(255)); ";
+        "comment VARCHAR(255), ".
+        "creation_date DATETIME NOT NULL);";
         if($this->pdo->query($sql) === FALSE)
         {
             throw new Exception("Unable to create comment table");

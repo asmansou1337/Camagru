@@ -15,6 +15,7 @@ require_once('controllers/controllerSignUp.php');
 require_once('controllers/controllerSignIn.php');
 require_once('controllers/controllerProfile.php');
 require_once('controllers/controllerImage.php');
+require_once('controllers/controllerComment.php');
 
 class Controller 
 {
@@ -279,14 +280,91 @@ class Controller
                         unset($_SESSION["message"]);
                         require('views/galleryView.php');
                         break;
+            case ($page === "addLikeDetail"):
+                            //$this->accessControl("notlogged");
+                                try 
+                                    {
+                                        if (isset($_POST['like']))
+                                        {
+                                            $ctrl = new controllerImage();
+                                            $ctrlComment = new controllerComment();
+                                            $ctrl->addLikeToImage($this->pdo, $_POST['picId'], $_POST['ownerId'], $_POST['ownerUsername'], $_POST['ownerEmail']);
+                                            $pic = $ctrl->getImageDetailPage($this->pdo, $_POST['picId']);
+                                            $comment = $ctrlComment->getCommentList($this->pdo, $_POST['picId']);
+                                            if (isset($_SESSION["message"]))
+                                                $message = $_SESSION["message"];
+                                            //header('Location: index.php?page=viewImageDetails');
+                                        }
+                                    } catch (Exception $e)
+                                    {
+                                        $errors = $e->getMessage();
+                                    }
+                                    require('views/messageView.php');
+                                    unset($_SESSION["message"]);
+                                    require('views/imageDetailView.php');
+                                    break;
+            case ($page === "addComment"):
+                //$this->accessControl("notlogged");
+                try 
+                {
+                    if (isset($_POST['addComment']))
+                        {
+                            $ctrl = new controllerComment();
+                            $ctrlImg = new controllerImage();
+                            //$pic = $ctrl->getImageDetailPage($this->pdo, $_POST['picId']);
+                            //$ctrl->addLikeToImage($this->pdo, $_POST['picId'], $_POST['ownerId'], $_POST['ownerUsername'], $_POST['ownerEmail']);
+                            $ctrl->addNewComment($this->pdo);
+                            $pic = $ctrlImg->getImageDetailPage($this->pdo, $_POST['CommentedPicId']);
+                            $comment = $ctrl->getCommentList($this->pdo, $_POST['CommentedPicId']);
+                            //print_r($comment);
+                            if (isset($_SESSION["message"]))
+                                $message = $_SESSION["message"];
+                            //header('Location: index.php?page=gallery');
+                        }
+                } catch (Exception $e)
+                {
+                    $errors = $e->getMessage();
+                }
+                require('views/messageView.php');
+                unset($_SESSION["message"]);
+                require('views/imageDetailView.php');
+                break;
+            case ($page === "delComment"):
+                    //$this->accessControl("notlogged");
+                    try 
+                    {
+                        if (isset($_POST['delComment']))
+                            {
+                                $ctrl = new controllerComment();
+                                $ctrlImg = new controllerImage();
+                                //$pic = $ctrl->getImageDetailPage($this->pdo, $_POST['picId']);
+                                //$ctrl->addLikeToImage($this->pdo, $_POST['picId'], $_POST['ownerId'], $_POST['ownerUsername'], $_POST['ownerEmail']);
+                                $ctrl->delSelectedComment($this->pdo);
+                                $pic = $ctrlImg->getImageDetailPage($this->pdo, $_POST['CommentedPicId']);
+                                $comment = $ctrl->getCommentList($this->pdo, $_POST['CommentedPicId']);
+                                //print_r($comment);
+                                if (isset($_SESSION["message"]))
+                                    $message = $_SESSION["message"];
+                                //header('Location: index.php?page=gallery');
+                            }
+                    } catch (Exception $e)
+                    {
+                        $errors = $e->getMessage();
+                    }
+                    require('views/messageView.php');
+                    unset($_SESSION["message"]);
+                    require('views/imageDetailView.php');
+                    break;
             case ($page === "viewImageDetails"):
                 //$this->accessControl("notlogged");
                     try 
                         {
                             if (isset($_POST['view']))
                                 {
+                                    $ctrlComment = new controllerComment();
                                     $ctrl = new controllerImage();
                                     $pic = $ctrl->getImageDetailPage($this->pdo, $_POST['picId']);
+                                    $comment = $ctrlComment->getCommentList($this->pdo, $_POST['picId']);
                                     //$ctrl->addLikeToImage($this->pdo, $_POST['picId'], $_POST['ownerId'], $_POST['ownerUsername'], $_POST['ownerEmail']);
                                     if (isset($_SESSION["message"]))
                                         $message = $_SESSION["message"];

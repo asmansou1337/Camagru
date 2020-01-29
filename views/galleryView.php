@@ -57,25 +57,26 @@
                             </span>
                         Likes <span> <?php echo $pics[$i]['countLikes'] ?> </span>
                         </div>
-                        <div class="column">
+                       <!--  <div class="column">
                         <span class="icon is-small is-left">
                                 <i class="fas fa-comments"></i>
                             </span>
-                        Comments <span> 14 </span>
-                        </div>
+                       Comments <span> 14 </span> 
+                        </div>-->
                     </div>   
                 </div>
             </div>
             <footer class="card-footer">
+                <?php if (isset($_SESSION['loggedIn'])) { ?>
                 <form action="index.php?page=addLike" method="post" class="card-footer-item">
                     <input type="hidden" name="picId" value="<?php echo $pics[$i]['picId'] ?>">
                     <input type="hidden" name="ownerId" value="<?php echo $pics[$i]['userId'] ?>">
                     <input type="hidden" name="ownerUsername" value="<?php echo $pics[$i]['username'] ?>">
                     <input type="hidden" name="ownerEmail" value="<?php echo $pics[$i]['email'] ?>">
                     <input type="hidden" name="notify" value="<?php echo $pics[$i]['notify'] ?>">
-                    <input class="button is-medium is-fullwidth" value="<?php echo  ($pics[$i]['isLiked'] === 0 ? "Like" : "Unlike") ; ?>" type="submit" name="like">
+                    <input class="button is-medium is-fullwidth is-info" value="<?php echo  ($pics[$i]['isLiked'] === 0 ? "Like" : "Unlike") ; ?>" type="submit" name="like">
                 </form>
-              
+                <?php } ?>
                 <form action="index.php?page=viewImageDetails" method="post" class="card-footer-item">
                     <input type="hidden" name="picId" value="<?php echo $pics[$i]['picId'] ?>">
                     <input class="button  is-medium is-fullwidth is-primary" value="View" type="submit" name="view">

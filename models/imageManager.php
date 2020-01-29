@@ -75,7 +75,7 @@ class ImageManager {
 
    public function getPageImages($pdo, $currentPage, $imagePerPage)
    {
-        $id_user = unserialize($_SESSION['user'])->getId();
+        isset($_SESSION['loggedIn']) ? $id_user = unserialize($_SESSION['user'])->getId(): $id_user = '';
         $picLimit = ($currentPage - 1) * $imagePerPage;
         $query = 'SELECT p.id as picId, p.name, p.img_path, p.creation_date, u.id as userId, u.firstName, u.lastName,
         u.username, u.email, u.notify, (SELECT count(id_picture) FROM picture_like WHERE id_picture = p.id) countLikes,
@@ -96,7 +96,7 @@ class ImageManager {
 
    public function getImageById($pdo, $imgId)
    {
-        $id_user = unserialize($_SESSION['user'])->getId();
+        isset($_SESSION['loggedIn']) ? $id_user = unserialize($_SESSION['user'])->getId(): $id_user = '';
         $query = 'SELECT p.id as picId, p.name, p.img_path, p.creation_date, u.id as userId, u.firstName, u.lastName,
         u.username, u.email, u.notify, (SELECT count(id_picture) FROM picture_like WHERE id_picture = p.id) countLikes,
         (SELECT count(*) FROM picture_like WHERE id_picture = p.id AND id_user = ?) isLiked

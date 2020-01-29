@@ -8,7 +8,7 @@ class controllerComment {
             $comment = trim($_POST['comment']);
             $userId = unserialize($_SESSION['user'])->getId();
             $cm = new CommentManager();
-            $cm->addComment($pdo, $_POST['CommentedPicId'], $userId, $comment);
+            $cm->addComment($pdo, $_POST['picId'], $userId, $comment);
             // send email if notification is ON
             if ($_POST['notify'] === 'ON') {
                $subject = "Camagru: Comment Notification";
@@ -19,10 +19,11 @@ class controllerComment {
         }
    }
 
-   public function getCommentList($pdo, $picId)
+   public function getCommentList($pdo)
    {
-        $cm = new CommentManager();
-        return $cm->getCommentsByPic($pdo, $picId);
+          $picId = $_POST['picId'];
+          $cm = new CommentManager();
+          return $cm->getCommentsByPic($pdo, $picId);
    }
 
    public function delSelectedComment($pdo)

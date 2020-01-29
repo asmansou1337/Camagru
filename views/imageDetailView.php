@@ -63,7 +63,7 @@
                 <div class="field">
                 <p class="control">
                     <textarea class="textarea is-info" placeholder="Add a comment..." name="comment"></textarea>
-                    <input type="hidden" name="CommentedPicId" value="<?php echo $pic['picId'] ?>">
+                    <input type="hidden" name="picId" value="<?php echo $pic['picId'] ?>">
                     <input type="hidden" name="ownerUsername" value="<?php echo $pic['username'] ?>">
                     <input type="hidden" name="ownerEmail" value="<?php echo $pic['email'] ?>">
                     <input type="hidden" name="notify" value="<?php echo $pic['notify'] ?>">
@@ -111,7 +111,7 @@
                 <form action="index.php?page=delComment" method="post">
                          <div class="media-right">
                             <input class="button is-danger" value="Delete" type="submit" name="delComment">
-                            <input type="hidden" name="CommentedPicId" value="<?php echo $pic['picId'] ?>">
+                            <input type="hidden" name="picId" value="<?php echo $pic['picId'] ?>">
                             <input type="hidden" name="CommentId" value="<?php echo $comment[$i]['commentId'] ?>">
                         </div>
                 </form> 

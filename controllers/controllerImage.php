@@ -45,11 +45,11 @@ class controllerImage {
         return $pics;
     }
 
-    public function getImageDetailPage($pdo, $imgId)
+    public function getImageDetailPage($pdo)
     {
+        $imgId = $_POST['picId'];
         $image = new ImageManager();
         $pic = $image->getImageById($pdo, $imgId);
-       // print_r($pic);
         return $pic[0];
     }
 
@@ -62,9 +62,13 @@ class controllerImage {
         // }
     }
 
-    public function addLikeToImage($pdo, $imageId, $ownerId, $ownerUsername, $ownerEmail)
+    public function addLikeToImage($pdo)
     {
         $image = new ImageManager();
+        $imageId = $_POST['picId'];
+        $ownerId = $_POST['ownerId'];
+        $ownerUsername = $_POST['ownerUsername'];
+        $ownerEmail = $_POST['ownerEmail'];
         if (!$image->isLiked($pdo, $imageId, unserialize($_SESSION['user'])->getId()))
         {
             $image->addImageLike($pdo, $imageId);

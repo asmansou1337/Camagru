@@ -231,17 +231,7 @@ function myimage(img_url) {
 //         myimage(current);
 //     }
 // }
-function deleteImage(id, formName) {
-    // console.log("clicked on " + id);
-    // console.log("form  " + formName);
-    var data = new FormData(document.forms[formName]);
-    //data.append("imgId", id);
-   // var httpr = new XMLHttpRequest();
-    httpr.open('POST', 'index.php?page=deleteImg');
-    httpr.send(data);
-    //console.log( id);
 
-}
 
 /*window.addEventListener("unload", function(){
     localMediaStream.getTracks().forEach(function(track) {

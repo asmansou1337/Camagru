@@ -22,7 +22,7 @@
         <div class="container ">
             <div id="Webcam" class="content-tab" style="position: relative; left: 0; top: 0;">
                 <video id="video" autoplay style="position: relative; left: 0; top: 0;"></video>
-                <div id="canvasvideo" style="position: absolute; top: 0px; left: 0px;"></div>
+                <!-- <div id="canvasvideo" style="position: absolute; top: 0px; left: -340px;"></div>-->
                 <div id="is_video" style="display:none" value="true"></div>
             </div>
             <div id="local" class="content-tab" style="display:none">

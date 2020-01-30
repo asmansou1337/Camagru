@@ -14,10 +14,10 @@ var w;
 var h;
 
 var current;
-// var PosX = 0;
-// var PosY = 0;
-var PosX = 270;
-var PosY = 70;
+ var PosX = 0;
+ var PosY = 0;
+//var PosX = 270;
+//var PosY = 70;
 
 var size = 320;
 
@@ -141,6 +141,7 @@ function readURL(input) {
     var rect = document.getElementById('video').getBoundingClientRect();
     PosX = rect.top;
     PosY = rect.left;
+    myimage(current);
     //console.log("posX = " + PosX + " PosY = " + PosY);
   });*/
 
@@ -178,10 +179,16 @@ function myimage(img_url) {
         //canvas.height = h;
         canvas.draggable = true;
         canvas.id = "filtercanvasvid";
-        document.getElementById("canvasvideo").appendChild(canvas);
+        canvas.style = "position: absolute; top: 0px; left: 0px;"
+        document.getElementById("Webcam").appendChild(canvas);
         var imgVid = new Image();
         imgVid.src = document.getElementById(img_url).value;
-        contextVid.drawImage(imgVid, PosX, PosY, size, size);
+        //imgVid.width = canvas.width / 2;
+        //imgVid.height = canvas.height / 2;
+        imgVid.size = canvas.width / 3;
+        PosX = 0;
+        PosY = 0;
+        contextVid.drawImage(imgVid, PosX, PosY, imgVid.size, imgVid.size);
     }
     document.getElementById('snap').disabled = false;
 

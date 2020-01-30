@@ -24,13 +24,14 @@
                 <video id="video" autoplay style="position: relative; left: 0; top: 0;"></video>
                 <!-- <div id="canvasvideo" style="position: absolute; top: 0px; left: -340px;"></div>-->
                 <div id="is_video" style="display:none" value="true"></div>
+                <div id="canvasvideo"></div>
             </div>
             <div id="local" class="content-tab" style="display:none">
                 <div class="container">
                     <div class="container" style="margin-bottom: 2rem;">
                         <div class="file is-centered">
                             <label class="file-label">
-                                <input class="file-input" name="localImage" type='file' accept="image/*" onchange="readURL(this);" />
+                                <input class="file-input" name="localImage" id="localImage" type='file' accept="image/*" onchange="readURL(this);" />
                                     <span class="file-cta">
                                         <span class="file-icon">
                                             <i class="fas fa-upload"></i>
@@ -184,9 +185,6 @@
             <?php
             }
             for($i = 0; $i < $count; $i++) {
-                $formName = "deleteForm".$i;
-               // $id = $pics[$i]['name'];
-            // echo $pics[$i]['img_path'];
                 ?>
                 <form method="POST" action="index.php?page=deleteImg">
                 <figure class="image is-5by3">

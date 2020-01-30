@@ -367,13 +367,18 @@ class Controller
                 //$this->accessControl("notlogged");
                 try 
                     {
+                        echo "<script>console.log('sending:' );</script>";
                         if(isset($_POST['imgToSend']))
                         {
                             $ctrl = new controllerImage();
                             $ctrl->uploadMergeImg($this->pdo);
+                            $pics = $ctrl->getLoggedUserImages($this->pdo);
+                            print_r($pics);
+                            $count = count($pics);
                             if (isset($_SESSION["message"]))
                                 $message = $_SESSION["message"];
-                        }       
+                        }
+                        header('Location: index.php?page=upload');
                     } catch (Exception $e)
                     {
                         $errors = $e->getMessage();
@@ -383,7 +388,7 @@ class Controller
                     require('views/uploadView.php');
                     break;
             case ($page === "deleteImg"):
-                echo "<script>console.log('yes working:' );</script>";
+                //echo "<script>console.log('yes working:' );</script>";
                 //$this->accessControl("notlogged");
                 try 
                     {

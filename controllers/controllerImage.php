@@ -26,29 +26,29 @@ class controllerImage {
         $filterPng = imageCreateFromPng($filterImg);
         $imgPng = imageCreateFromPng($fileTmpName);
         imagecopy($imgPng, $filterPng, 0, 0, 0, 0, 665, 180);
-        $data = base64_decode($imgPng);
+        //$data = base64_decode($imgPng);
 
-        // $allowed = array('jpg', 'jpeg', 'png');
+        $allowed = array('jpg', 'jpeg', 'png');
 
-        // if(in_array($fileActualExt, $allowed)) {
-        //     if ($fileError === 0) {
-        //         if ($fileSize < 50000000) {
-        //             $fileName = date('m-d-', time()).uniqid();
-        //             $fileDestination = $upload_dir.$fileName.'.png';
-        //             // need to add mkdir of upload if not exist
-        //             //imagepng($imgPng, $fileName);
-        //             file_put_contents($fileDestination, $data);
-        //             //move_uploaded_file($imgPng, $fileDestination);
-        //             //header("Location: index.php?uploadSucess");
-        //         } else {
-        //             throw new Exception("Image size should not be over 50 MB.!");
-        //         }
-        //     } else {
-        //         throw new Exception("There was an error uploading your file!! Please Try Again");
-        //     }
-        // } else {
-        //     throw new Exception("Only the following extentions are allowed: PNG, JPG, JPEG!");
-        // }
+        if(in_array($fileActualExt, $allowed)) {
+            if ($fileError === 0) {
+                if ($fileSize < 50000000) {
+                    $fileName = date('m-d-', time()).uniqid();
+                    $fileDestination = $upload_dir.$fileName.'.png';
+                    // need to add mkdir of upload if not exist
+                    //imagepng($imgPng, $fileDestination);
+                    file_put_contents($fileDestination, imagepng($imgPng, $fileDestination));
+                    //move_uploaded_file($imgPng, $fileDestination);
+                    //header("Location: index.php?uploadSucess");
+                } else {
+                    throw new Exception("Image size should not be over 50 MB.!");
+                }
+            } else {
+                throw new Exception("There was an error uploading your file!! Please Try Again");
+            }
+        } else {
+            throw new Exception("Only the following extentions are allowed: PNG, JPG, JPEG!");
+        }
 
     //    $img = $_FILES['imgUploaded'];
     //     $img = str_replace('data:image/png;base64,', '', $img);

@@ -368,17 +368,17 @@ class Controller
                 try 
                     {
                         echo "<script>console.log('sending:' );</script>";
-                        if(isset($_POST['imgToSend']))
+                        if(isset($_POST['submit']))
                         {
                             $ctrl = new controllerImage();
                             $ctrl->uploadMergeImg($this->pdo);
                             $pics = $ctrl->getLoggedUserImages($this->pdo);
-                            print_r($pics);
+                            //print_r($pics);
                             $count = count($pics);
                             if (isset($_SESSION["message"]))
                                 $message = $_SESSION["message"];
                         }
-                        header('Location: index.php?page=upload');
+                        //header('Location: index.php?page=upload');
                     } catch (Exception $e)
                     {
                         $errors = $e->getMessage();

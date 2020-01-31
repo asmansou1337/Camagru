@@ -19,49 +19,51 @@
                 </li>
             </ul>
         </div>
-        <div class="container ">
-            <div id="Webcam" class="content-tab" style="position: relative; left: 0; top: 0;">
-                <video id="video" autoplay style="position: relative; left: 0; top: 0;"></video>
-                <!-- <div id="canvasvideo" style="position: absolute; top: 0px; left: -340px;"></div>-->
-                <div id="is_video" style="display:none" value="true"></div>
-                <div id="canvasvideo"></div>
-            </div>
-            <div id="local" class="content-tab" style="display:none">
+
+        <form method="post" name="formWithImage" enctype="multipart/form-data" action="index.php?page=uploadMergeImg">
                 <div class="container">
-                    <div class="container" style="margin-bottom: 2rem;">
-                        <div class="file is-centered">
-                            <label class="file-label">
-                                <input class="file-input" name="localImage" id="localImage" type='file' accept="image/*" onchange="readURL(this);" />
-                                    <span class="file-cta">
-                                        <span class="file-icon">
-                                            <i class="fas fa-upload"></i>
-                                        </span>
-                                        <span class="file-label">
-                                            Choose a file…
-                                        </span>
-                                    </span>
-                            </label>
+                    <div id="Webcam" class="content-tab" style="position: relative; left: 0; top: 0;">
+                        <video id="video" autoplay style="position: relative; left: 0; top: 0;"></video>
+                        <!-- <div id="canvasvideo" style="position: absolute; top: 0px; left: -340px;"></div>-->
+                        <div id="is_video" style="display:none"></div>
+                        <div id="canvasvideo"></div>
+                    </div>
+                    <div id="local" class="content-tab" style="display:none">
+                        <div class="container">
+                            <div class="container" style="margin-bottom: 2rem;">
+                                <div class="file is-centered">
+                                    <label class="file-label">
+                                        <input class="file-input" name="localImage" id="localImage" type='file' accept="image/*" onchange="readURL(this);" />
+                                            <span class="file-cta">
+                                                <span class="file-icon">
+                                                    <i class="fas fa-upload"></i>
+                                                </span>
+                                                <span class="file-label">
+                                                    Choose a file…
+                                                </span>
+                                            </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="box" id="imgUploadedBox" style="display:none; position: relative; left: 0; top: 0;">
+                                <figure class="image is-5by4" style="position: relative; left: 0; top: 0;">
+                                        <img id="imgUploaded" name="imgUploaded">
+                                </figure>
+                                <div id="canvasImage" style="position: absolute; top: 0px; left: 0px;"></div>
+                                <div id="is_image" style="display:none"></div>
+                                <div id="canvasupload"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="box" id="imgUploadedBox" style="display:none; position: relative; left: 0; top: 0;">
-                        <figure class="image is-5by4" style="position: relative; left: 0; top: 0;">
-                                <img id="imgUploaded">
-                        </figure>
-                        <div id="canvasImage" style="position: absolute; top: 0px; left: 0px;"></div>
-                        <div id="is_image" style="display:none" value="false"></div>
-                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="card" style="margin-top: 2rem;margin-bottom: 2rem;">
-            <input class="button is-large is-fullwidth is-link is-outlined" id="snap" type="submit" value="Take A Picture" onclick="javascript:Shot();" disabled>
-        </div>
-        
-        <div id="canvas"></div>
+                <div class="card" style="margin-top: 2rem;margin-bottom: 2rem;">
+                    <input class="button is-large is-fullwidth is-link is-outlined" name="submit" id="snap" type="submit" value="Take A Picture" disabled>
+                </div>
+                
+                <div id="canvas"></div>
 
-        <form method="post" name="formWithImage" accept-charset='utf-8'>
-            <input id="imgToSend" name="imgToSend" type='hidden'>
-        </form>
+                    <input id="imgToSend" name="imgToSend" type='hidden'>
+        
 
         <div class="columns">
             <div class="column">
@@ -175,6 +177,7 @@
                 </div>
             </div>
         </div>
+        </form>
     </div>
   </div>
   <!-- list of taken pictures -->

@@ -3,8 +3,59 @@ require_once('models/imageManager.php');
 class controllerImage {
 
     public function uploadMergeImg($pdo){ 
+        if (!file_exists('uploads')) {
+            mkdir('uploads', 0775, true);
+        }
+        $upload_dir = 'uploads/';
        $upload = new ImageManager();
-       $upload->uploadImage($pdo);
+    //    print_r('image src -- ');
+    //    print_r($_FILES['localImage']);
+    //    print_r('image filter -- ');
+    //    print_r($_POST['img_filter']);
+    //    print_r(base64_encode($_FILES['localImage']['tmp_name']));
+       $fileName = $_FILES['localImage']['name'];
+       $fileTmpName = $_FILES['localImage']['tmp_name'];
+        $fileSize = $_FILES['localImage']['size'];
+        $fileError = $_FILES['localImage']['error'];
+        $fileType = $_FILES['localImage']['type'];
+        $fileExt = explode('.', $fileName);
+        $fileActualExt = strtolower(end($fileExt));
+
+        $filterImg = $_POST['img_filter'];
+
+        $filterPng = imageCreateFromPng($filterImg);
+        $imgPng = imageCreateFromPng($fileTmpName);
+        imagecopy($imgPng, $filterPng, 0, 0, 0, 0, 665, 180);
+        $data = base64_decode($imgPng);
+
+        // $allowed = array('jpg', 'jpeg', 'png');
+
+        // if(in_array($fileActualExt, $allowed)) {
+        //     if ($fileError === 0) {
+        //         if ($fileSize < 50000000) {
+        //             $fileName = date('m-d-', time()).uniqid();
+        //             $fileDestination = $upload_dir.$fileName.'.png';
+        //             // need to add mkdir of upload if not exist
+        //             //imagepng($imgPng, $fileName);
+        //             file_put_contents($fileDestination, $data);
+        //             //move_uploaded_file($imgPng, $fileDestination);
+        //             //header("Location: index.php?uploadSucess");
+        //         } else {
+        //             throw new Exception("Image size should not be over 50 MB.!");
+        //         }
+        //     } else {
+        //         throw new Exception("There was an error uploading your file!! Please Try Again");
+        //     }
+        // } else {
+        //     throw new Exception("Only the following extentions are allowed: PNG, JPG, JPEG!");
+        // }
+
+    //    $img = $_FILES['imgUploaded'];
+    //     $img = str_replace('data:image/png;base64,', '', $img);
+    //     $img = str_replace(' ', '+', $img);
+    //     $data = base64_decode($img);
+    //     print_r($data);
+       //$upload->uploadImage($pdo);
     }
 
     public function getLoggedUserImages($pdo) {

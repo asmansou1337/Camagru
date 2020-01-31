@@ -15,7 +15,7 @@ function openTab(evt, tabName) {
         image = document.getElementById('imgUploaded');
         imageBox = document.getElementById('imgUploadedBox');
         image.style.display = null;
-        image.setAttribute('src', "");
+        image.setAttribute('src', null);
         imageBox.style.display = "none";
         document.getElementById('is_video').value = 'true';
         document.getElementById('is_image').value = 'false';

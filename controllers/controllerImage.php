@@ -23,9 +23,20 @@ class controllerImage {
 
         $filterImg = $_POST['img_filter'];
 
-        $filterPng = imageCreateFromPng($filterImg);
-        $imgPng = imageCreateFromPng($fileTmpName);
-        imagecopy($imgPng, $filterPng, 0, 0, 0, 0, 665, 180);
+       // $filterPng = imageCreateFromPng($filterImg);
+       // $imgPng = imageCreateFromPng($fileTmpName);
+      //  imagecopy($imgPng, $filterPng, 0, 0, 0, 0, 120, 120);
+
+
+        $final_img = imagecreate(640, 480); // where x and y are the dimensions of the final image
+
+$image_1 = imagecreatefrompng($fileTmpName);
+$image_2 = imagecreatefrompng($filterImg);
+imagecopy($final_img, $image_1, 0, 0, 0, 0, 640, 480);
+imagecopy($final_img, $image_2, 0, 0, 0, 0, 640, 480);
+
+imagealphablending($final_img, false);
+imagesavealpha($final_img, true);
         //$data = base64_decode($imgPng);
 
         $allowed = array('jpg', 'jpeg', 'png');
@@ -36,8 +47,10 @@ class controllerImage {
                     $fileName = date('m-d-', time()).uniqid();
                     $fileDestination = $upload_dir.$fileName.'.png';
                     // need to add mkdir of upload if not exist
-                    //imagepng($imgPng, $fileDestination);
-                    file_put_contents($fileDestination, imagepng($imgPng, $fileDestination));
+                   // imagepng($imgPng, $fileDestination);
+
+                    imagepng($final_img, $fileDestination);
+                    //file_put_contents($fileDestination, imagepng($imgPng, $fileDestination));
                     //move_uploaded_file($imgPng, $fileDestination);
                     //header("Location: index.php?uploadSucess");
                 } else {

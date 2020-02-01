@@ -57,7 +57,7 @@ function Shot() {
             
 
             if (document.getElementById('is_image').value == 'true') {
-                canvas.width = imageUploaded.getBoundingClientRect().width;
+            canvas.width = imageUploaded.getBoundingClientRect().width;
             canvas.height = imageUploaded.getBoundingClientRect().height;
             canvas.id = "cimg";
             element = document.getElementById("cimg");
@@ -107,8 +107,9 @@ function Shot() {
 
 function readURL(input) {
     var PicUploadPath = document.getElementById('localImage').value;
+    var canvas = document.createElement('canvas');
     var Extension = PicUploadPath.substring(PicUploadPath.lastIndexOf('.') + 1).toLowerCase();
-
+    var context = canvas.getContext('2d');
     if (Extension == "png" || Extension == "jpeg" || Extension == "jpg") {
         if (input.files && input.files[0]) {
             //console.log("size = " + input.files[0].size);
@@ -130,10 +131,20 @@ function readURL(input) {
                 // document.getElementById('imgToSend').value = image.src;
                 // document.getElementById('imgToSend').width = image.width;
                 // document.getElementById('imgToSend').height = image.height;
+
+                canvas.width = image.getBoundingClientRect().width;
+                canvas.height = image.getBoundingClientRect().height;
+                canvas.id = "cimg";
+                var img = new Image();
+                img.src = document.querySelector('input[name = "img_filter"]:checked').value;
+                size = width / 3;
+                context.drawImage(img, 0, 0, size, size);
+
                 width = document.getElementById('imgUploaded').getBoundingClientRect().width;
                 height = document.getElementById('imgUploaded').getBoundingClientRect().height;
-                console.log(width);
-                console.log(height);
+                document.getElementById('filterpp').value = canvas.toDataURL('image/png');
+                // console.log(width);
+                // console.log(height);
                 document.getElementById('imgUploadedWidth').value = width;
                 document.getElementById('imgUploadedHeight').value = height;
                 };

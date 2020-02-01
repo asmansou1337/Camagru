@@ -89,29 +89,41 @@ class controllerImage {
         $fileExt = explode('.', $fileName);
         $fileActualExt = strtolower(end($fileExt));
 
-        $filterImg = $_POST['img_filter'];
-        //print_r($fileType);
+        $filterImg = $_POST['filterpp'];
+        
 
 
 
-         print_r("width ".$_POST['imgUploadedWidth']);
-         print_r("height ".$_POST['imgUploadedHeight']);
+        //  print_r("width ".$_POST['imgUploadedWidth']);
+        //  print_r("height ".$_POST['imgUploadedHeight']);
         
         //list($filterWidth, $filterHeight) = getimagesize($filterImg);
         list($picWidth, $picHeight) = getimagesize($fileTmpName);
-        $ss = ceil($_POST['imgUploadedWidth'] / 3);
-        $sy = ceil($picHeight / 3);
+        // $ss = ceil($_POST['imgUploadedWidth'] / 3);
+        // $sy = ceil($picHeight / 3);
        // $filterPng = $this->resize_image($filterImg, $_POST['imgUploadedWidth'] / 3, $_POST['imgUploadedWidth'] / 3);
         
         //print_r(getimagesize($filterImg));
-        $filterresize = $this->resize($filterImg, $upload_dir.'filter1.png', 'image/png', $ss, $ss);
-        list($filterWidth, $filterHeight) = getimagesize($filterresize);
+        //$filterresize = $this->resize($filterImg, $upload_dir.'filter1.png', 'image/png', $ss, $ss);
+        
+        $filterImg = str_replace('data:image/png;base64,', '', $filterImg);
+        //print_r($filterImg);
+        $filterImg = str_replace(' ', '+', $filterImg);
+        $data = base64_decode($filterImg);
+        $file = $upload_dir . uniqid() . '.png';
+	    $success = file_put_contents($file, $data);
+    
 
+        //list($filterWidth, $filterHeight) = getimagesize($filterresize);
+        //$pp = file_put_contents($upload_dir.'myFilter.png', $data);
+        $newFilter = imagecreatefromstring($data);
+        
+        list($filterWidth, $filterHeight) = getimagesize($newFilter);
         if ($fileType == 'image/jpeg')
         {
            // print_r(base64_encode(file_get_contents($filterImg)));
             $image1 = imagecreatefromstring(file_get_contents($fileTmpName));
-            $image2 = imagecreatefromstring(file_get_contents($filterresize));
+            //$image2 = imagecreatefromstring(file_get_contents($filterresize));
             $merged_image = imagecreatetruecolor($picWidth, $picHeight);
             imagealphablending($merged_image, false);
             imagesavealpha($merged_image, true);
@@ -121,8 +133,8 @@ class controllerImage {
             imagealphablending($merged_image, true);
             // imagesavealpha($image2, true);
     //         // imagecolortransparent($image2, imagecolorat($image2,0,0));
-            imagecopy($merged_image, $image2, 50, 50, 0, 0, $filterWidth, $filterHeight);
-            imagepng($merged_image, $upload_dir.'atest.png');
+            imagecopy($merged_image, $newFilter, 50, 50, 0, 0, $filterWidth, $filterHeight);
+            imagejpeg($merged_image, $upload_dir.'atest.png');
 
 
     //         $image1 = imagecreatefromstring(file_get_contents($fileTmpName));
@@ -162,11 +174,11 @@ class controllerImage {
     } else if ($fileType == 'image/png') {
 
 
-            $filterPng = imagecreatefrompng($filterImg);
-       $imgPng = imagecreatefrompng($fileTmpName);
-       imagesavealpha($filterPng, true);
-        imagecolortransparent($filterPng, imagecolorat($filterPng,0,0));
-       imagecopymerge($imgPng, $filterPng, 0, 0, 0, 0, $filterWidth, $filterHeight, 100);
+    //         $filterPng = imagecreatefrompng($filterImg);
+    //    $imgPng = imagecreatefrompng($fileTmpName);
+    //    imagesavealpha($filterPng, true);
+    //     imagecolortransparent($filterPng, imagecolorat($filterPng,0,0));
+    //    imagecopymerge($imgPng, $filterPng, 0, 0, 0, 0, $filterWidth, $filterHeight, 100);
         }
 
     //    imagealphablending($imgPng, false);

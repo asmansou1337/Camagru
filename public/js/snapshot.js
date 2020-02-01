@@ -124,11 +124,18 @@ function readURL(input) {
                     image.setAttribute('src', e.target.result);
                     image.height = 460;
                     image.width = 800;
+                
                     //document.getElementById('video').style.display = "none";
                 //     // send image uploaded to server 
                 // document.getElementById('imgToSend').value = image.src;
                 // document.getElementById('imgToSend').width = image.width;
                 // document.getElementById('imgToSend').height = image.height;
+                width = document.getElementById('imgUploaded').getBoundingClientRect().width;
+                height = document.getElementById('imgUploaded').getBoundingClientRect().height;
+                console.log(width);
+                console.log(height);
+                document.getElementById('imgUploadedWidth').value = width;
+                document.getElementById('imgUploadedHeight').value = height;
                 };
                 reader.readAsDataURL(input.files[0]);
             }

@@ -48,6 +48,9 @@
                             <div class="box" id="imgUploadedBox" style="display:none; position: relative; left: 0; top: 0;">
                                 <figure class="image is-5by4" style="position: relative; left: 0; top: 0;">
                                         <img id="imgUploaded" name="imgUploaded">
+                                        <input type="hidden" name="imgUploadedWidth" id="imgUploadedWidth">
+                                        <input type="hidden" name="imgUploadedHeight" id="imgUploadedHeight">
+                                        <input type="hidden" name="filterpp" id="filterpp">
                                 </figure>
                                 <div id="canvasImage" style="position: absolute; top: 0px; left: 0px;"></div>
                                 <div id="is_image" style="display:none"></div>

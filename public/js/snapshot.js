@@ -264,7 +264,7 @@ function myimage(img_url) {
         canvasImg.height = document.getElementById('imgUploaded').getBoundingClientRect().height;
         canvasImg.draggable = true;
         canvasImg.id = "filtercanvasimg";
-        canvasImg.style = "position: absolute; top: 0px; left: 0px;"
+        canvasImg.style = "position: absolute; top: 20px; left: 20px;"
         document.getElementById("imgUploadedBox").appendChild(canvasImg);
         var img = new Image();
         img.src = document.getElementById(img_url).value;

@@ -16,8 +16,8 @@ var w;
 var h;
 
 var current;
- var PosX = 50;
- var PosY = 50;
+ var PosX = 0;
+ var PosY = 0;
 //var PosX = 270;
 //var PosY = 70;
 
@@ -39,6 +39,7 @@ function successCallback(localMediaStream) {
 
 function errorCallback(err) {
     is_video = false;
+    document.getElementById('is_video').value = 'false';
     console.log("error : " + err);
 };
 
@@ -75,7 +76,7 @@ function Shot() {
                 size = width / 3;
                 context.drawImage(img, PosX, PosY, size, size);
             } else if (document.getElementById('is_video').value == 'true') {
-                canvas.width = video.getBoundingClientRect().width;
+            canvas.width = video.getBoundingClientRect().width;
             canvas.height = video.getBoundingClientRect().height;
             canvas.id = "cvideo";
             element = document.getElementById("cvideo");
@@ -105,11 +106,118 @@ function Shot() {
         alert("You need to activate your Webcam or Upload an image.");
 }
 
+function shotFromVideo() {
+    if (is_video == true) {
+        var video = document.querySelector('video');
+        var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d');
+        var filter = document.querySelector('input[name = "img_filter"]:checked');
+        if (filter) {
+            if (document.getElementById('is_video').value == 'true') {
+                canvas.width = video.getBoundingClientRect().width;
+                canvas.height = video.getBoundingClientRect().height;
+                canvas.id = "cvideo";
+                // element = document.getElementById("cvideo");
+                // if (element)
+                //     element.parentNode.removeChild(element);
+                // document.getElementById("canvasvideo").appendChild(canvas);
+                    width = document.getElementById('video').getBoundingClientRect().width;
+                    height = document.getElementById('video').getBoundingClientRect().height;
+                    context.drawImage(video, 0, 0, width, height);
+                }
+            var imgMerged = canvas.toDataURL('image/png');
+            canvas.setAttribute('src', imgMerged);
+            document.getElementById('imgToSend').value = imgMerged;
+            document.getElementById('imgToSend').width = canvas.width;
+            document.getElementById('imgToSend').height = canvas.height;
+        }
+    } else
+        alert("You need to activate your Webcam or Upload an image.");
+}
+
+
+function createFilterToUpload() {
+    var canvas = document.createElement('canvas');
+    var imageUploaded = document.getElementById('imgUploaded');
+    var context = canvas.getContext('2d');
+    var filter = document.querySelector('input[name = "img_filter"]:checked');
+    if (filter) {
+        
+
+        if (document.getElementById('is_image').value == 'true') {
+        canvas.width = imageUploaded.getBoundingClientRect().width;
+        canvas.height = imageUploaded.getBoundingClientRect().height;
+        canvas.id = "cimg";
+        // element = document.getElementById("cimg");
+        // if (element)
+        //     element.parentNode.removeChild(element);
+        // document.getElementById("canvasupload").appendChild(canvas);
+           // console.log("yes");
+            var img = new Image();
+            img.src = filter.value;
+            size = canvas.width / 3;
+            context.drawImage(img, PosX, PosY, size, size);
+        } 
+
+        var imgMerged = canvas.toDataURL('image/png');
+        //canvas.setAttribute('src', imgMerged);
+        document.getElementById('filterpp').value = imgMerged;
+        document.getElementById('filterWidth').value = canvas.width;
+        document.getElementById('filterHeight').value = canvas.height;
+        
+       
+    }}
+
+    function createFilterToWebcam() {
+        var canvas = document.createElement('canvas');
+        var video = document.getElementById('video');
+        var context = canvas.getContext('2d');
+        var filter = document.querySelector('input[name = "img_filter"]:checked');
+        if (filter) {
+            
+    
+            if (document.getElementById('is_video').value == 'true') {
+            canvas.width = video.getBoundingClientRect().width;
+            canvas.height = video.getBoundingClientRect().height;
+            var img = new Image();
+            img.src = filter.value;
+            size = canvas.width / 3;
+            context.drawImage(img, PosX, PosY, size, size);
+            } 
+    
+            var imgMerged = canvas.toDataURL('image/png');
+            //canvas.setAttribute('src', imgMerged);
+            document.getElementById('filterpp').value = imgMerged;
+            document.getElementById('filterWidth').value = canvas.width;
+            document.getElementById('filterHeight').value = canvas.height;
+            
+           
+        }}
+    
+    function createImageToUpload() {
+        var canvas = document.createElement('canvas');
+        var imageUploaded = document.getElementById('imgUploaded');
+        var context = canvas.getContext('2d');
+      
+            if (document.getElementById('is_image').value == 'true') {
+            canvas.width = imageUploaded.getBoundingClientRect().width;
+            canvas.height = imageUploaded.getBoundingClientRect().height;
+
+                var img = new Image();
+                img.src = imageUploaded.src;
+                context.drawImage(img, 0, 0, canvas.width, canvas.height);
+            } 
+    
+            var imgMerged = canvas.toDataURL('image/jpeg');
+            //canvas.setAttribute('src', imgMerged);
+            document.getElementById('imgToSend').value = imgMerged;
+            document.getElementById('imgToSend').width = canvas.width;
+            document.getElementById('imgToSend').height = canvas.height;
+    }
+
 function readURL(input) {
     var PicUploadPath = document.getElementById('localImage').value;
-    var canvas = document.createElement('canvas');
     var Extension = PicUploadPath.substring(PicUploadPath.lastIndexOf('.') + 1).toLowerCase();
-    var context = canvas.getContext('2d');
     if (Extension == "png" || Extension == "jpeg" || Extension == "jpg") {
         if (input.files && input.files[0]) {
             //console.log("size = " + input.files[0].size);
@@ -123,30 +231,12 @@ function readURL(input) {
                     imageBox.style.display = "";
                     image.style.display = "";
                     image.setAttribute('src', e.target.result);
-                    image.height = 460;
-                    image.width = 800;
-                
-                    //document.getElementById('video').style.display = "none";
-                //     // send image uploaded to server 
-                // document.getElementById('imgToSend').value = image.src;
-                // document.getElementById('imgToSend').width = image.width;
-                // document.getElementById('imgToSend').height = image.height;
-
-                canvas.width = image.getBoundingClientRect().width;
-                canvas.height = image.getBoundingClientRect().height;
-                canvas.id = "cimg";
-                var img = new Image();
-                img.src = document.querySelector('input[name = "img_filter"]:checked').value;
-                size = width / 3;
-                context.drawImage(img, 0, 0, size, size);
-
-                width = document.getElementById('imgUploaded').getBoundingClientRect().width;
-                height = document.getElementById('imgUploaded').getBoundingClientRect().height;
-                document.getElementById('filterpp').value = canvas.toDataURL('image/png');
-                // console.log(width);
-                // console.log(height);
-                document.getElementById('imgUploadedWidth').value = width;
-                document.getElementById('imgUploadedHeight').value = height;
+                    image.height = input.files[0].height;
+                    image.width = input.files[0].width;
+                    document.getElementById('imgToSend').value = image.src;
+                    document.getElementById('imgToSend').width = image.width;
+                    document.getElementById('imgToSend').height = image.height;
+                    //createImageToUpload();
                 };
                 reader.readAsDataURL(input.files[0]);
             }
@@ -180,8 +270,9 @@ function myimage(img_url) {
         img.src = document.getElementById(img_url).value;
         img.size = canvasImg.width / 3;
         contextImg.drawImage(img, PosX, PosY, img.size, img.size);
+        createFilterToUpload();
     }
-    if (is_video && img_url)
+    if ((document.getElementById('is_video').value == 'true') && img_url)
     {
         var element = document.getElementById("filtercanvasvid");
         if (element)
@@ -198,6 +289,8 @@ function myimage(img_url) {
         imgVid.src = document.getElementById(img_url).value;
         imgVid.size = canvas.width / 3;
         contextVid.drawImage(imgVid, PosX, PosY, imgVid.size, imgVid.size);
+        shotFromVideo();
+        createFilterToWebcam();
     }
     document.getElementById('snap').disabled = false;
 

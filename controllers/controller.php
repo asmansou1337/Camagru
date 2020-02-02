@@ -372,13 +372,18 @@ class Controller
                         {
                             $ctrl = new controllerImage();
                             $ctrl->uploadMergeImg($this->pdo);
-                            $pics = $ctrl->getLoggedUserImages($this->pdo);
-                            //print_r($pics);
-                            $count = count($pics);
-                            if (isset($_SESSION["message"]))
-                                $message = $_SESSION["message"];
                         }
                         //header('Location: index.php?page=upload');
+                    } catch (Exception $e)
+                    {
+                        $errors = $e->getMessage();
+                    }
+                    try {
+                        $pics = $ctrl->getLoggedUserImages($this->pdo);
+                        //print_r($pics);
+                        $count = count($pics);
+                        if (isset($_SESSION["message"]))
+                            $message = $_SESSION["message"];
                     } catch (Exception $e)
                     {
                         $errors = $e->getMessage();

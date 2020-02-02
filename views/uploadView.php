@@ -26,7 +26,7 @@
                         <video id="video" autoplay style="position: relative; left: 0; top: 0;"></video>
                         <!-- <div id="canvasvideo" style="position: absolute; top: 0px; left: -340px;"></div>-->
                         <div id="is_video" style="display:none"></div>
-                        <div id="canvasvideo"></div>
+                        <div id="canvasvideo" type="hidden"></div>
                     </div>
                     <div id="local" class="content-tab" style="display:none">
                         <div class="container">
@@ -46,10 +46,10 @@
                                 </div>
                             </div>
                             <div class="box" id="imgUploadedBox" style="display:none; position: relative; left: 0; top: 0;">
-                                <figure class="image is-5by4" style="position: relative; left: 0; top: 0;">
+                                <figure class="image" style="position: relative; left: 0; top: 0;">
                                         <img id="imgUploaded" name="imgUploaded">
-                                        <input type="hidden" name="imgUploadedWidth" id="imgUploadedWidth">
-                                        <input type="hidden" name="imgUploadedHeight" id="imgUploadedHeight">
+                                        <input type="hidden" name="filterWidth" id="filterWidth">
+                                        <input type="hidden" name="filterHeight" id="filterHeight">
                                         <input type="hidden" name="filterpp" id="filterpp">
                                 </figure>
                                 <div id="canvasImage" style="position: absolute; top: 0px; left: 0px;"></div>
@@ -64,10 +64,7 @@
                 </div>
                 
                 <div id="canvas"></div>
-
                     <input id="imgToSend" name="imgToSend" type='hidden'>
-        
-
         <div class="columns">
             <div class="column">
                 <div>

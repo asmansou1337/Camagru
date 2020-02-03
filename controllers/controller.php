@@ -378,9 +378,12 @@ class Controller
                     {
                         $errors = $e->getMessage();
                     }
+                    /*
+                    * we still need to retrieve the list of miniatures images even if merge return error
+                    * that's why we have another try catch block
+                    */
                     try {
                         $pics = $ctrl->getLoggedUserImages($this->pdo);
-                        //print_r($pics);
                         $count = count($pics);
                         if (isset($_SESSION["message"]))
                             $message = $_SESSION["message"];

@@ -13,6 +13,13 @@ class Validation {
         return $email;
     }
 
+    public function validateStringOrigin($str)
+    {
+        // Remove all illegal characters from string
+        $str = filter_var($str, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        return $str;
+    }
+
     public function validateString($str)
     {
         // Remove all illegal characters from string

@@ -1,3 +1,4 @@
+
 function openTab(evt, tabName) {
     var i, x, tablinks;
     x = document.getElementsByClassName("content-tab");
@@ -12,6 +13,11 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " is-active";
     if (tabName == "Webcam")
     {
+        // document.getElementById('imgUploaded').src != null;
+        document.getElementById('infoblock').style.display = '';
+        document.getElementById('imgToSend').value = "";
+        document.getElementById('title').value = "";
+        document.getElementById('description').value = "";
         image = document.getElementById('imgUploaded');
         imageBox = document.getElementById('imgUploadedBox');
         image.style.display = null;
@@ -20,6 +26,10 @@ function openTab(evt, tabName) {
         document.getElementById('is_video').value = 'true';
         document.getElementById('is_image').value = 'false';
     } else {
+        document.getElementById('imgToSend').value = "";
+        document.getElementById('title').value = "";
+        document.getElementById('description').value = "";
+        document.getElementById('infoblock').style.display = 'none';
         document.getElementById('is_video').value = 'false';
         document.getElementById('is_image').value = 'true';
     }

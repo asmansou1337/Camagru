@@ -11,7 +11,7 @@ var constraints = {
 var is_video = true;
 var is_image = false;
 document.getElementById('is_video').value = 'true';
-        document.getElementById('is_image').value = 'false';
+document.getElementById('is_image').value = 'false';
 var w;
 var h;
 
@@ -24,7 +24,7 @@ var current;
 var size = 320;
 
 
-var httpr = new XMLHttpRequest();
+//var httpr = new XMLHttpRequest();
 
 if (navigator.getUserMedia)
     navigator.getUserMedia(constraints, successCallback, errorCallback);
@@ -32,79 +32,81 @@ else
     console.error("getUserMedia not supported");
 
 function successCallback(localMediaStream) {
-    var video = document.querySelector('video');
+    var video = document.getElementById('video');
     video.srcObject = localMediaStream;
     video.play();
+    document.getElementById('infoblock').style.display = '';
 };
 
 function errorCallback(err) {
     is_video = false;
     document.getElementById('is_video').value = 'false';
-    console.log("error : " + err);
+    document.getElementById('infoblock').style.display = 'none';
+    //console.log("error : " + err);
 };
 
 // localMediaStream.getTracks().forEach(function(track) {
 //     track.stop();
 //   });
 
-function Shot() {
-    if (is_video == true || is_image == true) {
-        var video = document.querySelector('video');
-        var canvas = document.createElement('canvas');
-        var imageUploaded = document.getElementById('imgUploaded');
-        var context = canvas.getContext('2d');
-        var filter = document.querySelector('input[name = "img_filter"]:checked');
-        if (filter) {
+// function Shot() {
+//     if (is_video == true || is_image == true) {
+//         var video = document.querySelector('video');
+//         var canvas = document.createElement('canvas');
+//         var imageUploaded = document.getElementById('imgUploaded');
+//         var context = canvas.getContext('2d');
+//         var filter = document.querySelector('input[name = "img_filter"]:checked');
+//         if (filter) {
             
 
-            if (document.getElementById('is_image').value == 'true') {
-            canvas.width = imageUploaded.getBoundingClientRect().width;
-            canvas.height = imageUploaded.getBoundingClientRect().height;
-            canvas.id = "cimg";
-            element = document.getElementById("cimg");
-            if (element)
-                element.parentNode.removeChild(element);
-            document.getElementById("canvasupload").appendChild(canvas);
-               // console.log("yes");
-                var image = new Image();
-                image.src = document.getElementById('imgUploaded').src;
-                width = document.getElementById('imgUploaded').getBoundingClientRect().width;
-                height = document.getElementById('imgUploaded').getBoundingClientRect().height;
-                context.drawImage(image, 0, 0, width, height);
-                var img = new Image();
-                img.src = filter.value;
-                size = width / 3;
-                context.drawImage(img, PosX, PosY, size, size);
-            } else if (document.getElementById('is_video').value == 'true') {
-            canvas.width = video.getBoundingClientRect().width;
-            canvas.height = video.getBoundingClientRect().height;
-            canvas.id = "cvideo";
-            element = document.getElementById("cvideo");
-            if (element)
-                element.parentNode.removeChild(element);
-            document.getElementById("canvasvideo").appendChild(canvas);
-                width = document.getElementById('video').getBoundingClientRect().width;
-                height = document.getElementById('video').getBoundingClientRect().height;
-                context.drawImage(video, 0, 0, width, height);
-                var img = new Image();
-                img.src = filter.value;
-                size = width / 3;
-                context.drawImage(img, PosX, PosY, size, size);
-            }
+//             if (document.getElementById('is_image').value == 'true') {
+//             canvas.width = imageUploaded.getBoundingClientRect().width;
+//             canvas.height = imageUploaded.getBoundingClientRect().height;
+//             canvas.id = "cimg";
+//             element = document.getElementById("cimg");
+//             if (element)
+//                 element.parentNode.removeChild(element);
+//             document.getElementById("canvasupload").appendChild(canvas);
+//                // console.log("yes");
+//                 var image = new Image();
+//                 image.src = document.getElementById('imgUploaded').src;
+//                 width = document.getElementById('imgUploaded').getBoundingClientRect().width;
+//                 height = document.getElementById('imgUploaded').getBoundingClientRect().height;
+//                 context.drawImage(image, 0, 0, width, height);
+//                 var img = new Image();
+//                 img.src = filter.value;
+//                 size = width / 3;
+//                 context.drawImage(img, PosX, PosY, size, size);
+//             } else if (document.getElementById('is_video').value == 'true') {
+//             canvas.width = video.getBoundingClientRect().width;
+//             canvas.height = video.getBoundingClientRect().height;
+//             canvas.id = "cvideo";
+//             element = document.getElementById("cvideo");
+//             if (element)
+//                 element.parentNode.removeChild(element);
+//             document.getElementById("canvasvideo").appendChild(canvas);
+//                 width = document.getElementById('video').getBoundingClientRect().width;
+//                 height = document.getElementById('video').getBoundingClientRect().height;
+//                 context.drawImage(video, 0, 0, width, height);
+//                 var img = new Image();
+//                 img.src = filter.value;
+//                 size = width / 3;
+//                 context.drawImage(img, PosX, PosY, size, size);
+//             }
 
-            var imgMerged = canvas.toDataURL('image/png');
-            canvas.setAttribute('src', imgMerged);
-            document.getElementById('imgToSend').value = imgMerged;
-            document.getElementById('imgToSend').width = canvas.width;
-            document.getElementById('imgToSend').height = canvas.height;
+//             var imgMerged = canvas.toDataURL('image/png');
+//             canvas.setAttribute('src', imgMerged);
+//             document.getElementById('imgToSend').value = imgMerged;
+//             document.getElementById('imgToSend').width = canvas.width;
+//             document.getElementById('imgToSend').height = canvas.height;
             
-            var data = new FormData(document.forms["formWithImage"]);
-            httpr.open('POST', 'index.php?page=uploadMergeImg');
-            httpr.send(data);
-        }
-    } else
-        alert("You need to activate your Webcam or Upload an image.");
-}
+//             var data = new FormData(document.forms["formWithImage"]);
+//             httpr.open('POST', 'index.php?page=uploadMergeImg');
+//             httpr.send(data);
+//         }
+//     } else
+//         alert("You need to activate your Webcam or Upload an image.");
+// }
 
 function shotFromVideo() {
     if (is_video == true) {
@@ -162,8 +164,8 @@ function createFilterToUpload() {
         var imgMerged = canvas.toDataURL('image/png');
         //canvas.setAttribute('src', imgMerged);
         document.getElementById('filterpp').value = imgMerged;
-        document.getElementById('filterWidth').value = canvas.width;
-        document.getElementById('filterHeight').value = canvas.height;
+        // document.getElementById('filterWidth').value = canvas.width;
+        // document.getElementById('filterHeight').value = canvas.height;
         
        
     }}
@@ -188,32 +190,32 @@ function createFilterToUpload() {
             var imgMerged = canvas.toDataURL('image/png');
             //canvas.setAttribute('src', imgMerged);
             document.getElementById('filterpp').value = imgMerged;
-            document.getElementById('filterWidth').value = canvas.width;
-            document.getElementById('filterHeight').value = canvas.height;
+            // document.getElementById('filterWidth').value = canvas.width;
+            // document.getElementById('filterHeight').value = canvas.height;
             
            
         }}
     
-    function createImageToUpload() {
-        var canvas = document.createElement('canvas');
-        var imageUploaded = document.getElementById('imgUploaded');
-        var context = canvas.getContext('2d');
+    // function createImageToUpload() {
+    //     var canvas = document.createElement('canvas');
+    //     var imageUploaded = document.getElementById('imgUploaded');
+    //     var context = canvas.getContext('2d');
       
-            if (document.getElementById('is_image').value == 'true') {
-            canvas.width = imageUploaded.getBoundingClientRect().width;
-            canvas.height = imageUploaded.getBoundingClientRect().height;
+    //         if (document.getElementById('is_image').value == 'true') {
+    //         canvas.width = imageUploaded.getBoundingClientRect().width;
+    //         canvas.height = imageUploaded.getBoundingClientRect().height;
 
-                var img = new Image();
-                img.src = imageUploaded.src;
-                context.drawImage(img, 0, 0, canvas.width, canvas.height);
-            } 
+    //             var img = new Image();
+    //             img.src = imageUploaded.src;
+    //             context.drawImage(img, 0, 0, canvas.width, canvas.height);
+    //         } 
     
-            var imgMerged = canvas.toDataURL('image/jpeg');
-            //canvas.setAttribute('src', imgMerged);
-            document.getElementById('imgToSend').value = imgMerged;
-            document.getElementById('imgToSend').width = canvas.width;
-            document.getElementById('imgToSend').height = canvas.height;
-    }
+    //         var imgMerged = canvas.toDataURL('image/jpeg');
+    //         //canvas.setAttribute('src', imgMerged);
+    //         document.getElementById('imgToSend').value = imgMerged;
+    //         document.getElementById('imgToSend').width = canvas.width;
+    //         document.getElementById('imgToSend').height = canvas.height;
+    // }
 
 function readURL(input) {
     var PicUploadPath = document.getElementById('localImage').value;
@@ -236,6 +238,7 @@ function readURL(input) {
                     document.getElementById('imgToSend').value = image.src;
                     document.getElementById('imgToSend').width = image.width;
                     document.getElementById('imgToSend').height = image.height;
+                    document.getElementById('infoblock').style.display = '';
                     //createImageToUpload();
                 };
                 reader.readAsDataURL(input.files[0]);
@@ -254,6 +257,7 @@ window.addEventListener('resize', function(event){
 
 function myimage(img_url) {
     current = img_url;
+    document.getElementById('snap').disabled = false;
     if (document.getElementById('imgUploaded').src && img_url) {
         var elementImg = document.getElementById("filtercanvasimg");
         if (elementImg)
@@ -274,6 +278,7 @@ function myimage(img_url) {
     }
     if ((document.getElementById('is_video').value == 'true') && img_url)
     {
+        shotFromVideo();
         var element = document.getElementById("filtercanvasvid");
         if (element)
             element.parentNode.removeChild(element);
@@ -289,10 +294,8 @@ function myimage(img_url) {
         imgVid.src = document.getElementById(img_url).value;
         imgVid.size = canvas.width / 3;
         contextVid.drawImage(imgVid, PosX, PosY, imgVid.size, imgVid.size);
-        shotFromVideo();
         createFilterToWebcam();
     }
-    document.getElementById('snap').disabled = false;
 
     // if ((is_video == true || is_image == true) && img_url) {
     //     var element = document.getElementById("filtercanvas");

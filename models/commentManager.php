@@ -5,7 +5,7 @@ class CommentManager {
    public function addComment($pdo, $picId, $userId, $comment)
    {
     $val = new Validation();
-    $comment = $val->validateString($comment);
+    $comment = $val->validateStringOrigin($comment);
     $query = "INSERT INTO comment (id_user, id_picture, comment, creation_date) VALUES (?, ?, ?, NOW())";
     $Statement = $pdo->prepare($query);
     if(!$Statement->execute([$userId, $picId, $comment]))

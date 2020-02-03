@@ -51,6 +51,23 @@
             </footer>
         </div>
         <div class="block"></div>
+        <div class="box">
+        <!-- title & description -->
+            <article class="media">
+                <div class="media-content">
+                    <div class="content">
+                        <?php if ($pic['title'] !== '') { ?>
+                        <h2 class="title is-4" style="color: mediumaquamarine">Title: &nbsp; <?php echo $pic['title'] ?></h2> 
+                        <?php } ?>
+                        <?php if ($pic['description'] !== '') { ?>
+                       <h2 class="title is-4" style="color: mediumaquamarine">Description: </h2>
+                       <h5 class="title is-5"><?php echo $pic['description']  ?></h5>
+                       <?php } ?>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <div class="block"></div>
         <?php if (isset($_SESSION['loggedIn'])) { ?>
         <form action="index.php?page=addComment" method="post">
         <article class="media">

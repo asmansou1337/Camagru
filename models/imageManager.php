@@ -1,4 +1,5 @@
 <?php
+require_once('models/Validation.php');
 class ImageManager {
 //    public function uploadImage($pdo)
 //    {
@@ -21,12 +22,18 @@ class ImageManager {
 //             $this->saveToDB($pdo, $fileName, $file);
 //    }
 
-   public function saveToDB($pdo, $fileName, $path)
+   public function saveToDB($pdo, $fileName, $path, $title, $description)
    {
+        $validation = new Validation();
+        if ($title != '' || $description != '')
+        {
+            $title = $validation->validateStringOrigin($title);
+            $description = $validation->validateStringOrigin($description);
+        }
         $id_user = unserialize($_SESSION['user'])->getId();
-        $query = "INSERT INTO picture (id_user, name, img_path, creation_date) VALUES (?, ?, ?, NOW())";
+        $query = "INSERT INTO picture (id_user, name, img_path, title, description, creation_date) VALUES (?, ?, ?, ?, ?, NOW())";
         $Statement=$pdo->prepare($query);
-        if(!$Statement->execute([$id_user, $fileName, $path]))
+        if(!$Statement->execute([$id_user, $fileName, $path, $title, $description]))
         {
             throw new Exception('Error Uploading the image, Please Try Again!');
         } 
@@ -97,7 +104,7 @@ class ImageManager {
    public function getImageById($pdo, $imgId)
    {
         isset($_SESSION['loggedIn']) ? $id_user = unserialize($_SESSION['user'])->getId(): $id_user = '';
-        $query = 'SELECT p.id as picId, p.name, p.img_path, p.creation_date, u.id as userId, u.firstName, u.lastName,
+        $query = 'SELECT p.id as picId, p.name, p.img_path, p.title, p.description, p.creation_date, u.id as userId, u.firstName, u.lastName,
         u.username, u.email, u.notify, (SELECT count(id_picture) FROM picture_like WHERE id_picture = p.id) countLikes,
         (SELECT count(*) FROM picture_like WHERE id_picture = p.id AND id_user = ?) isLiked
         FROM picture p

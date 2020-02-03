@@ -48,8 +48,6 @@
                             <div class="box" id="imgUploadedBox" style="display:none; position: relative; left: 0; top: 0;">
                                 <figure class="image" style="position: relative; left: 0; top: 0;">
                                         <img id="imgUploaded" name="imgUploaded">
-                                        <input type="hidden" name="filterWidth" id="filterWidth">
-                                        <input type="hidden" name="filterHeight" id="filterHeight">
                                         <input type="hidden" name="filterpp" id="filterpp">
                                 </figure>
                                 <div id="canvasImage" style="position: absolute; top: 0px; left: 0px;"></div>
@@ -59,6 +57,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="block"></div>
+                <div class="block" style="display:none;" id="infoblock">
+                        <div class="field" >
+                            <input type="text" class="input is-primary" name="title" id="title" placeholder="Enter Title ..." value="">
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input type="textarea" class="textarea is-primary" name="description" id="description" placeholder="Enter Description ..." value=""></textarea>
+                            </div>
+                        </div>
+                        </div>
                 <div class="card" style="margin-top: 2rem;margin-bottom: 2rem;">
                     <input class="button is-large is-fullwidth is-link is-outlined" name="submit" id="snap" type="submit" value="Take A Picture" disabled>
                 </div>

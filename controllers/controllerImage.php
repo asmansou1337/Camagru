@@ -16,28 +16,21 @@ class controllerImage {
         return $result;
     }
 
-    public function check_base64_image($uploadedImage)
-    {
-        if (!base64_decode($uploadedImage, true))
-            return false;
-    }
-
     public function uploadMergeImg($pdo){ 
         if (!file_exists('uploads')) {
             mkdir('uploads', 0775, true);
         }
         $upload_dir = 'uploads/';
         $upload = new ImageManager();
-        //$allowed = array('jpg', 'jpeg', 'png');
-         //print_r($_POST['imgToSend']);
-        // $_POST['imgToSend'] = '';
         if (isset($_POST['imgToSend']) && $_POST['imgToSend'] != '') {
             $uploadedImage = $_POST['imgToSend'];
-            // if (!(base64_encode(base64_decode($uploadedImage, true)) === $uploadedImage))
-            //     throw new Exception("Invalid Image, Please Try Again!");
+            if (@getimagesize($uploadedImage) == false)
+                throw new Exception("Invalid Image, Please Try Again!");
             $imageSize = getimagesize($uploadedImage);
             if (isset($_POST['filterpp']) && !empty($_POST['filterpp'])){
                 $filterImg = $_POST['filterpp'];
+                if (@getimagesize($filterImg) == false)
+                    throw new Exception("Invalid Filter, Please Try Again!");
                 list($filterWidth, $filterHeight) = getimagesize($filterImg);
                 // $filterWidth = $_POST['filterWidth'];
                 // $filterHeight = $_POST['filterHeight'];
@@ -62,7 +55,12 @@ class controllerImage {
                 } else
                     throw new Exception("Only the following extentions are allowed: PNG, JPG, JPEG!");
                     // upload image info to DB
-                    $upload ->saveToDB($pdo, $fileName, $fileDestination);
+                    if (isset($_POST['title']) && isset($_POST['description']))
+                    {
+                        $title = $_POST['title'];
+                        $description = $_POST['description'];
+                        $upload ->saveToDB($pdo, $fileName, $fileDestination, $title, $description);
+                    }
             } else 
                 throw new Exception("Error Reading Filter, Please Try Again!");
         } else

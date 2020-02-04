@@ -1,15 +1,4 @@
 <?php
-//require('views/header.php');
-//require('views/messageView.php');
-//require('views/signUpView.php');
-//require('views/loginView.php');
-//require('views/reinitialisationEmailView.php');
-//require('views/reinitialisationPasswordView.php');
-//require('views/editProfileView.php');
-//require('views/editPasswordView.php');
-//require('views/notificationView.php');
-//require('views/galleryView.php');
-//require('views/footer.php');
 session_start();
 require_once('controllers/controllerSignUp.php');
 require_once('controllers/controllerSignIn.php');
@@ -20,11 +9,7 @@ require_once('controllers/controllerComment.php');
 class Controller 
 {
     private $pdo;
-    // private $ctrl;
-    // private $view;
-    // private $message;
-    // private $errors;
-    
+
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
@@ -34,14 +19,14 @@ class Controller
         $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_SPECIAL_CHARS);
         $title = $page;
         require('views/header.php');
+        // Call the right class automatically
         spl_autoload_register(function($class){
             require_once('models/'.$class.'.php');
           });
-
+        
+        // Depending on the page requested a certain traitement is done
         switch ($page) {
             case ($page === "home"):
-               // if (isset($_SESSION['loggedIn']))
-               //     echo "<script>console.log('Debug Objects: " . $_SESSION['loggedIn'] . "' );</script>";
                 require('views/homeView.php');
                 break;
             case ($page === "signup"):
@@ -364,16 +349,14 @@ class Controller
                         require('views/imageDetailView.php');
                         break;
             case ($page === "uploadMergeImg"):
-                //$this->accessControl("notlogged");
+                $this->accessControl("notlogged");
                 try 
                     {
-                        echo "<script>console.log('sending:' );</script>";
                         if(isset($_POST['submit']))
                         {
                             $ctrl = new controllerImage();
                             $ctrl->uploadMergeImg($this->pdo);
                         }
-                        //header('Location: index.php?page=upload');
                     } catch (Exception $e)
                     {
                         $errors = $e->getMessage();
@@ -396,22 +379,18 @@ class Controller
                     require('views/uploadView.php');
                     break;
             case ($page === "deleteImg"):
-                //echo "<script>console.log('yes working:' );</script>";
-                //$this->accessControl("notlogged");
+                $this->accessControl("notlogged");
                 try 
                     {
                         if(isset($_POST['imgToDelete']))
                         {
-                           //echo "<script>console.log('Debug Objects: " . $_POST['delImg'] . "' );</script>";
-                            //echo $_POST['imgId'];
                             $ctrl = new controllerImage();
                             $ctrl->deleteImage($this->pdo, $_POST['delImgId'], $_POST['delImgName']);
                             $pics = $ctrl->getLoggedUserImages($this->pdo);
                             $count = count($pics);
                             if (isset($_SESSION["message"]))
                                 $message = $_SESSION["message"];
-                            }
-                        //$message = "delete";     
+                            }    
                         } catch (Exception $e)
                         {
                             $errors = $e->getMessage();
@@ -427,31 +406,7 @@ class Controller
         require('views/footer.php');
     }
 
-    // private function routing($controller, $function , $type)
-    // {
-    //     if ($type === "post")
-    //         $par = $_POST[$function];
-    //     if ($type === "get")
-    //         $par = $_GET[$function];
-    //     try 
-    //         {
-    //             if(isset($par))
-    //             {
-    //                 $var = "controller".$controller;
-    //                 $ctrl = new $var();
-    //                 $ctrl->$function($this->pdo);
-    //                 if (isset($_SESSION["message"]))
-    //                     $message = $_SESSION["message"];
-    //             }
-    //     } catch (Exception $e)
-    //     {
-    //         $errors = $e->getMessage();
-    //     }
-    //     require('views/messageView.php');
-    //     unset($_SESSION["message"]);
-    // }
-
-    private function accessControl($access)
+private function accessControl($access)
     {
         if($access == "logged")
         {

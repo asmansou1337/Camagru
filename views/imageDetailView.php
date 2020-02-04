@@ -3,19 +3,35 @@
 <!-- start of image section -->
   <div class="column is-10 ">
         <div class="card">
+            <!-- Printing the image card -->
             <div class="card-image">
                 <figure class="image is-4by3">
                 <img src='<?php echo $pic['img_path'] ?>' alt='<?php echo $pic['name'] ?>'>
                 </figure>
             </div>
+            <!-- Printing the user username + firstname + lastname + the image title, description, date of creation -->
             <div class="card-content">
                 <div class="media">
                     <div class="media-content">
                         <p class="title is-4"><?php echo $pic['firstName'].' '.$pic['lastName']?></p>
                         <p class="subtitle is-6"><?php echo '@'.$pic['username'] ?></p>
-                        <p><time datetime="2016-1-1"><?php echo $pic['creation_date'] ?></time></p>
+                         <!-- title & description -->
+                    <article class="media">
+                        <div class="media-content">
+                            <div class="content">
+                                <?php if ($pic['title'] !== '') { ?>
+                                <h2 class="title is-4" style="color: mediumaquamarine"><?php echo $pic['title'] ?></h2> 
+                                <?php } ?>
+                                <?php if ($pic['description'] !== '') { ?>
+                            <h5 class="title is-5"><?php echo $pic['description']  ?></h5>
+                            <?php } ?>
+                            </div>
+                        </div>
+                    </article>
+                        <p><time datetime=""><?php echo $pic['creation_date'] ?></time></p>
                     </div>
                 </div>
+                <!-- Listing the count of likes & comments -->
                 <div class="content">
                     <div class="columns">
                         <div class="column is-half" style="color: blue">
@@ -33,6 +49,7 @@
                     </div>   
                 </div>
             </div>
+            <!-- the like/unlike button  -->
             <footer class="card-footer">
             <?php if (isset($_SESSION['loggedIn'])) { ?>
                 <form action="index.php?page=addLikeDetail" method="post" class="card-footer-item">
@@ -44,38 +61,13 @@
                     <input class="button is-medium is-fullwidth is-info" value="<?php echo  ($pic['isLiked'] === 0 ? "Like" : "Unlike") ; ?>" type="submit" name="like">
                 </form>
                 <?php } ?>
-                <!-- <form action="index.php?page=viewImageDetails" method="post" class="card-footer-item">
-                    <input type="hidden" name="picId" value="<?php echo $pic['picId'] ?>">
-                    <input class="button  is-medium is-fullwidth is-primary" value="View" type="submit" name="view">
-                </form> -->
             </footer>
         </div>
         <div class="block"></div>
-        <div class="box">
-        <!-- title & description -->
-            <article class="media">
-                <div class="media-content">
-                    <div class="content">
-                        <?php if ($pic['title'] !== '') { ?>
-                        <h2 class="title is-4" style="color: mediumaquamarine">Title: &nbsp; <?php echo $pic['title'] ?></h2> 
-                        <?php } ?>
-                        <?php if ($pic['description'] !== '') { ?>
-                       <h2 class="title is-4" style="color: mediumaquamarine">Description: </h2>
-                       <h5 class="title is-5"><?php echo $pic['description']  ?></h5>
-                       <?php } ?>
-                    </div>
-                </div>
-            </article>
-        </div>
-        <div class="block"></div>
+        <!-- placement for the user to enter his comment / only the logged in users can see this section-->
         <?php if (isset($_SESSION['loggedIn'])) { ?>
         <form action="index.php?page=addComment" method="post">
         <article class="media">
-            <!-- <figure class="media-left">
-                <p class="image is-64x64">
-                <img src="https://bulma.io/images/placeholders/128x128.png">
-                </p>
-            </figure> -->
             <div class="media-content">
                 <div class="field">
                 <p class="control">
@@ -92,13 +84,6 @@
                     <input class="button is-info" value="Submit" type="submit" name="addComment">
                     </div>
                 </div>
-                <!-- <div class="level-right">
-                    <div class="level-item">
-                    <label class="checkbox">
-                        <input type="checkbox"> Press enter to submit
-                    </label>
-                    </div>
-                </div> -->
                 </nav>
             </div>
         </article>
@@ -123,6 +108,7 @@
                     </p>
                     </div>
                 </div>
+                <!-- The user can delete his own comments if his logged in-->
                 <?php if (isset($_SESSION['loggedIn'])) { ?>
                 <?php if (unserialize($_SESSION['user'])->getId() === $comment[$i]['userId']) { ?>
                 <form action="index.php?page=delComment" method="post">
@@ -136,14 +122,6 @@
             </article>
         <?php } ?>
         </div>
-
-
-
-
-
-
-
-
   </div>
   <!-- end of image section -->
 </div>

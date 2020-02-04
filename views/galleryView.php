@@ -1,39 +1,11 @@
 <div class='container'>
 <div class="columns">
-<!-- <div class="column is-one-third">
-    <div class="card">
-    <div class="card-image">
-        <figure class="image is-4by3">
-        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-        </figure>
-    </div>
-    <div class="card-content">
-        <div class="media">
-        <div class="media-content">
-            <p class="title is-4">John Smith</p>
-            <p class="subtitle is-6">@johnsmith</p>
-        </div>
-        </div>
-
-        <div class="content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-        <a href="#">#css</a> <a href="#">#responsive</a>
-        <br>
-        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-        </div>
-    </div>
-    <footer class="card-footer">
-        <a href="#" class="card-footer-item">Like</a>
-        <a href="#" class="card-footer-item">Comment</a>
-    </footer>
-    </div>
-</div> -->
-<!-- start of image section -->
+<!-- start of gallery section -->
 <?php for($i = 0; $i < sizeof($pics); $i++) { ?>
     <?php if($i % 3 == 0) { ?>
         </div><div class="columns">
     <?php  }  ?>
+    <!-- Image section -->
   <div class="column is-one-third">
         <div class="card">
             <div class="card-image">
@@ -41,6 +13,7 @@
                 <img src='<?php echo $pics[$i]['img_path'] ?>' alt='<?php echo $pics[$i]['name'] ?>'>
                 </figure>
             </div>
+            <!-- printing the owner name & username + date of creation of the image -->
             <div class="card-content">
                 <div class="media">
                     <div class="media-content">
@@ -49,6 +22,7 @@
                         <p><time datetime="2016-1-1"><?php echo $pics[$i]['creation_date'] ?></time></p>
                     </div>
                 </div>
+                 <!-- Count of likes & comments per image -->
                 <div class="content">
                     <div class="columns">
                         <div class="column is-half">
@@ -57,15 +31,16 @@
                             </span>
                         Likes <span> <?php echo $pics[$i]['countLikes'] ?> </span>
                         </div>
-                       <!--  <div class="column">
+                        <div class="column">
                         <span class="icon is-small is-left">
                                 <i class="fas fa-comments"></i>
                             </span>
-                       Comments <span> 14 </span> 
-                        </div>-->
+                       Comments <span> <?php echo $pics[$i]['countComments'] ?> </span> 
+                        </div>
                     </div>   
                 </div>
             </div>
+             <!-- Showing the like/unlike button for the logged in users only + view button for all users  -->
             <footer class="card-footer">
                 <?php if (isset($_SESSION['loggedIn'])) { ?>
                 <form action="index.php?page=addLike" method="post" class="card-footer-item">
@@ -87,15 +62,15 @@
 <?php } ?>
   <!-- end of image section -->
 </div>
-
 <div class="block">
 </div>
+ <!-- Pagination section -->
 <nav class="pagination is-centered" role="navigation" aria-label="pagination">
 <?= ($nbr - 1) < 1 ? "<a class='pagination-previous' disabled>Previous</a>" : "<a class='pagination-previous' href=\"index.php?page=gallery&nbr=".($nbr - 1)."\">Previous</a>" ?>
 <?= ($nbr + 1) > $nbpages ? "<a class='pagination-next' disabled>Next page</a>" : "<a class='pagination-next' href=\"index.php?page=gallery&nbr=".($nbr + 1)."\">Next page</a>" ?>
   
   <ul class="pagination-list">
-    <?php for ($i = 1; $i <= $nbpages; $i++) { 
+    <?php for ($i = 1; $i <= $nbpages; $i++) {
         if ($i == $nbr) {
         ?>
         <li><a class="pagination-link is-current"> <?php echo $i; ?></a></li>

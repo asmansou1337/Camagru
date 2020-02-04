@@ -81,7 +81,7 @@ class controllerImage {
     public function getTotalPages($pdo) {
         $images = new ImageManager();
         $total = $images->getCountImages($pdo);
-        $imagePerPage = 4;
+        $imagePerPage = 6;
         $nbrPages = ceil($total / $imagePerPage);
         return $nbrPages;
     }

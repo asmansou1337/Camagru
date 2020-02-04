@@ -46,8 +46,8 @@
                                 </div>
                             </div>
                             <div class="box" id="imgUploadedBox" style="display:none; position: relative; left: 0; top: 0;">
-                                <figure class="image" style="position: relative; left: 0; top: 0;">
-                                        <img id="imgUploaded" name="imgUploaded">
+                                <figure class="image">
+                                        <img id="imgUploaded" name="imgUploaded" style="position: relative; left: 0; top: 0;">
                                         <input type="hidden" name="filterpp" id="filterpp">
                                 </figure>
                                 <div id="canvasImage" style="position: absolute; top: 0px; left: 0px;"></div>
@@ -69,7 +69,7 @@
                         </div>
                         </div>
                 <div class="card" style="margin-top: 2rem;margin-bottom: 2rem;">
-                    <input class="button is-large is-fullwidth is-link is-outlined" name="submit" id="snap" type="submit" value="Take A Picture" disabled>
+                    <input class="button is-large is-fullwidth is-link is-outlined" name="submit" id="snap" type="submit" value="Take A Picture" disabled onclick="takeShot();">
                 </div>
                 
                 <div id="canvas"></div>

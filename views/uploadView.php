@@ -3,6 +3,7 @@
 <div class="columns">
   <div class="column is-three-quarters">
     <div class="box is-centered">
+        <!-- tabs content (Webcam + upload from computer)-->
         <div class="tabs is-centered is-boxed">
             <ul>
                 <li class="tab is-active" onclick="openTab(event,'Webcam')" >
@@ -19,15 +20,16 @@
                 </li>
             </ul>
         </div>
-
+        <!-- Form to send background image + filter image -->
         <form method="post" name="formWithImage" enctype="multipart/form-data" action="index.php?page=uploadMergeImg">
                 <div class="container">
+                    <!-- Content showing when webcam tab is showing -->
                     <div id="Webcam" class="content-tab" style="position: relative; left: 0; top: 0;">
                         <video id="video" autoplay style="position: relative; left: 0; top: 0;"></video>
-                        <!-- <div id="canvasvideo" style="position: absolute; top: 0px; left: -340px;"></div>-->
                         <div id="is_video" style="display:none"></div>
                         <div id="canvasvideo" type="hidden"></div>
                     </div>
+                    <!-- Content showing when upload tab is showing -->
                     <div id="local" class="content-tab" style="display:none">
                         <div class="container">
                             <div class="container" style="margin-bottom: 2rem;">
@@ -45,6 +47,7 @@
                                     </label>
                                 </div>
                             </div>
+                            <!-- box showing the uploaded image-->
                             <div class="box" id="imgUploadedBox" style="display:none; position: relative; left: 0; top: 0;">
                                 <figure class="image">
                                         <img id="imgUploaded" name="imgUploaded" style="position: relative; left: 0; top: 0;">
@@ -71,9 +74,10 @@
                 <div class="card" style="margin-top: 2rem;margin-bottom: 2rem;">
                     <input class="button is-large is-fullwidth is-link is-outlined" name="submit" id="snap" type="submit" value="Take A Picture" disabled onclick="takeShot();">
                 </div>
-                
+                <!-- the final background image sended to server -->
                 <div id="canvas"></div>
                     <input id="imgToSend" name="imgToSend" type='hidden'>
+        <!-- List of filters -->
         <div class="columns">
             <div class="column">
                 <div>
@@ -203,11 +207,6 @@
                         <img src="<?php echo $pics[$i]['img_path']; ?>">
                         <input style="display:hidden" name="delImgId" value="<?php echo $pics[$i]['id']; ?>">
                         <input style="display:hidden" name="delImgName" value="<?php echo $pics[$i]['img_path']; ?>">
-                       <!-- <button class="button is-danger" type="submit" name="imgToDelete" onchange="deleteImage('1')">
-                            <span class="icon is-small">
-                            <i class="fas fa-times"></i>
-                            </span>
-                        </button> -->
                 </figure>
                 <div class="box is-centered">
                     <input class="button is-danger"  name="imgToDelete" type="submit" value="Delete" >
@@ -216,11 +215,6 @@
             <div class="block"></div>
             </form>
         <?php }  ?>
-               <!-- <input class="button is-danger" type="submit" id="delete" name="imgToDelete" value="Delete"> -->
-        <!--  <figure class="image is-square">
-            <img src="https://bulma.io/images/placeholders/256x256.png">
-            <button class="delete is-large"></button>
-        </figure> -->
     </div>
   </div>
 </div>

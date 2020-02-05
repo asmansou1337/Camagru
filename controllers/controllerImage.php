@@ -42,16 +42,16 @@ class controllerImage {
                     $fileName = date('m-d-', time()).uniqid();
                     $fileDestination = $upload_dir . $fileName.'.jpeg';
                     imagejpeg($result, $fileDestination);
-                    //unlink($upload_dir.'filter.png');
-                    //unlink($upload_dir.'tempImage.jpeg');
+                    unlink($upload_dir.'filter.png');
+                    unlink($upload_dir.'tempImage.jpeg');
                 } else if ($imageSize['mime'] == 'image/png') {
                     $result = $this->createImage($uploadedImage, $upload_dir, 'png', 'tempImage');
                     imagecopy($result, $finalFilter, 0, 0, 0, 0, $filterWidth, $filterHeight);
                     $fileName = date('m-d-', time()).uniqid();
                     $fileDestination = $upload_dir . $fileName.'.png';
                     imagepng($result, $fileDestination);
-                    //unlink($upload_dir.'filter.png');
-                    //unlink($upload_dir.'tempImage.png');
+                    unlink($upload_dir.'filter.png');
+                    unlink($upload_dir.'tempImage.png');
                 } else
                     throw new Exception("Only the following extentions are allowed: PNG, JPG, JPEG!");
                     // upload image info to DB
@@ -99,9 +99,7 @@ class controllerImage {
         } else {
             $currentPage = 1;
         }
-        //print_r($currentPage);
         $pics = $images->getPageImages($pdo, $currentPage, $imagePerPage);
-        //print_r($pics);
         return $pics;
     }
 
@@ -113,20 +111,11 @@ class controllerImage {
         return $pic[0];
     }
 
-    public function getLikeStatus()
-    {
-        $image = new ImageManager();
-        // if (!$image->isLiked($pdo, $imageId, $ownerId)){
-        // }else {
-
-        // }
-    }
 
     public function addLikeToImage($pdo)
     {
         $image = new ImageManager();
         $imageId = $_POST['picId'];
-        $ownerId = $_POST['ownerId'];
         $ownerUsername = $_POST['ownerUsername'];
         $ownerEmail = $_POST['ownerEmail'];
         if (!$image->isLiked($pdo, $imageId, unserialize($_SESSION['user'])->getId()))

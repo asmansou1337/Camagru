@@ -1,5 +1,5 @@
 <?php
-
+//  ATTR_EMULATE_PREPARES : get syntax errors at prepare-time rather than at execute-time
 $DB_HOST = 'localhost';
 $DB_USER = 'root';
 $DB_PASSWORD = '';

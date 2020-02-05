@@ -6,7 +6,11 @@ class UserManager {
     private $validation;
 
     
-
+    /*
+    ** verify data entred in signup form 
+    ** add user to database
+    ** send activation link to the email provided by the user
+    */
     public function addNewUser($pdo, $username, $email, $password)
     {
         $this->validation = new Validation();
@@ -17,7 +21,6 @@ class UserManager {
         $this->validation->verifyEmailExists($pdo, $email);
         $hashedPassword = $this->hashPassword($password);
         $this->token = $this->createToken();
-        // Add User to database
         $query = "INSERT INTO user_account (username, email, password, token, active, notify) VALUES (?, ?, ?, ?, ?, ?)";
         $Statement=$pdo->prepare($query);
         if(!$Statement->execute([$username, $email, $hashedPassword, $this->token, 'OFF', 'ON']))

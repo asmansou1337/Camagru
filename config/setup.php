@@ -38,8 +38,7 @@ class Setup {
         $sql = "CREATE TABLE IF NOT EXISTS picture_like( ".
         "id INT(12) UNSIGNED AUTO_INCREMENT PRIMARY KEY, ".
         "id_user INT(12) , ".
-        "id_picture INT(12) , ".
-        "like_nbr INT(255)); ";
+        "id_picture INT(12)); ";
         if($this->pdo->query($sql) === FALSE)
         {
             throw new Exception("Unable to create picture_like table");
@@ -61,16 +60,12 @@ class Setup {
         "id_user INT(12) , ".
         "name VARCHAR(100) , ".
         "img_path VARCHAR(100) , ".
+        "title VARCHAR(256) , ".
+        "description VARCHAR(256) , ".
         "creation_date DATETIME NOT NULL);";
         if($this->pdo->query($sql) === FALSE)
         {
             throw new Exception("Unable to create picture table");
         }
-
-       /* if ($this->pdo->query($sql) === TRUE) {
-            echo "Table MyGuests created successfully";
-        } else {
-            echo "Error creating table: ";
-        }*/
     }
 }

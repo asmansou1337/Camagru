@@ -9,7 +9,7 @@
 <form action="" method="post" class="form">
 <div class="field">
   <p class="control has-icons-left">
-    <input class="input" type="password" placeholder="New Password" name="password">
+    <input class="input" type="password" placeholder="New Password" name="password" autocomplete>
     <span class="icon is-small is-left">
       <i class="fas fa-lock"></i>
     </span>
@@ -17,7 +17,7 @@
 </div>
 <div class="field">
   <p class="control has-icons-left">
-    <input class="input" type="password" placeholder="Confirm New Password" name="Confirmpassword">
+    <input class="input" type="password" placeholder="Confirm New Password" name="Confirmpassword" autocomplete>
     <span class="icon is-small is-left">
       <i class="fas fa-lock"></i>
     </span>

@@ -52,24 +52,13 @@
     </span>
     </div>
     <div class="navbar-end">
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          Welcome &nbsp; <strong> <?php echo (isset($_SESSION['user']) ? unserialize($_SESSION['user'])->getUsername() : ''); ?> </strong>
-        </a>
-
-        <div class="navbar-dropdown is-hidden-mobile is-boxed">
-          <!-- Other navbar items -->
-          <a class="navbar-item" href="index.php?page=editProfile">
+      <div class="navbar-item">
+      <button class="button is-outlined "><strong> Welcome &nbsp; <?php echo (isset($_SESSION['user']) ? unserialize($_SESSION['user'])->getUsername() : ''); ?> </strong></button>
+      </div>
+      <div class="navbar-item">
+          <a class="button is-black is-outlined" href="index.php?page=editProfile">
             Edit Profile
           </a>
-          <a class="navbar-item" href="index.php?page=changePassword">
-            Change Password
-          </a>
-          <a class="navbar-item" href="index.php?page=notifications">
-            Notifications
-          </a>
-        </div>
-        
       </div>
       <div class="navbar-item">
         <div class="buttons">

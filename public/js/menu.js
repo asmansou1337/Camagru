@@ -24,8 +24,8 @@ if ($navbarBurgers.length > 0) {
 
 });
 
-document.querySelectorAll('.navbar-link').forEach(function(navbarLink){
-    navbarLink.addEventListener('click', function(){
-      navbarLink.nextElementSibling.classList.toggle('is-hidden-mobile');
-    })
-  });
+// document.querySelectorAll('.navbar-link').forEach(function(navbarLink){
+//     navbarLink.addEventListener('click', function(){
+//       navbarLink.nextElementSibling.classList.toggle('is-hidden-mobile');
+//     })
+//   });

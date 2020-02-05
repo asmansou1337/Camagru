@@ -14,7 +14,7 @@
 </div>
 <div class="field">
   <p class="control has-icons-left">
-    <input class="input" type="password" placeholder="Password" name="password">
+    <input class="input" type="password" placeholder="Password" name="password" autocomplete>
     <span class="icon is-small is-left">
       <i class="fas fa-lock"></i>
     </span>

@@ -151,10 +151,20 @@ class Controller
                 $this->accessControl("notlogged");
                     try 
                     {   
+                        $notify = "";
+                        $ctrl = new controllerProfile();
                         if(isset($_POST['editProfile']))
                         {
-                            $ctrl = new controllerProfile();
+                            $ctrl->changeNotification($this->pdo);
                             $ctrl->editUserProfile($this->pdo);
+                            if (isset($_SESSION["message"]))
+                                $message = $_SESSION["message"];
+                        }
+                        $notify = $ctrl->getNotificationSetting($this->pdo);
+                        if(isset($_POST['editPassword']))
+                        {
+                            $ctrl = new controllerProfile();
+                            $ctrl->changePassword($this->pdo);
                             if (isset($_SESSION["message"]))
                                 $message = $_SESSION["message"];
                         }

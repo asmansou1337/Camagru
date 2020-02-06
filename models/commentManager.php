@@ -35,9 +35,10 @@ class CommentManager {
 
    public function deleteComment($pdo, $commentId)
    {
-        $query = 'DELETE FROM comment WHERE id = ?';
+        $id_user = unserialize($_SESSION['user'])->getId();
+        $query = 'DELETE FROM comment WHERE id = ? AND id_user = ?';
         $Statement = $pdo->prepare($query);
-        if(!$Statement->execute([$commentId]))
+        if(!$Statement->execute([$commentId, $id_user]))
         {
             throw new Exception('Error, Please Try Again!');
         }

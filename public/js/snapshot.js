@@ -33,8 +33,6 @@ else
 
 function successCallback(localMediaStream) {
     var video = document.getElementById('video');
-    // video.srcObject = localMediaStream;
-    // video.src = localMediaStream;
     if ("srcObject" in video) {
         video.srcObject = localMediaStream;
       } else {
@@ -120,8 +118,8 @@ function takeShot() {
     }
 }
 function shotFromVideo() {
-    if (is_video == true) {
-        var video = document.querySelector('video');
+   // if (is_video == true) {
+        var video = document.getElementById('video');
         var canvas = document.createElement('canvas');
         var context = canvas.getContext('2d');
         var filter = document.querySelector('input[name = "img_filter"]:checked');
@@ -134,18 +132,18 @@ function shotFromVideo() {
                 // if (element)
                 //     element.parentNode.removeChild(element);
                 // document.getElementById("canvasvideo").appendChild(canvas);
-                    width = document.getElementById('video').getBoundingClientRect().width;
-                    height = document.getElementById('video').getBoundingClientRect().height;
-                    context.drawImage(video, 0, 0, width, height);
+                    // width = document.getElementById('video').getBoundingClientRect().width;
+                    // height = document.getElementById('video').getBoundingClientRect().height;
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
                 }
-            var imgMerged = canvas.toDataURL('image/png');
-            canvas.setAttribute('src', imgMerged);
-            document.getElementById('imgToSend').value = imgMerged;
+            var imgFromWebcam = canvas.toDataURL('image/png');
+            canvas.setAttribute('src', imgFromWebcam);
+            document.getElementById('imgToSend').value = imgFromWebcam;
             document.getElementById('imgToSend').width = canvas.width;
             document.getElementById('imgToSend').height = canvas.height;
         }
-    } else
-        alert("You need to activate your Webcam or Upload an image.");
+    // } else
+    //     alert("You need to activate your Webcam or Upload an image.");
 }
 
 
@@ -158,8 +156,8 @@ function createFilterToUpload() {
         
 
         if (document.getElementById('is_image').value == 'true') {
-        canvas.width = imageUploaded.getBoundingClientRect().width;
-        canvas.height = imageUploaded.getBoundingClientRect().height;
+        canvas.width = document.getElementById("filterwidth").value;
+        canvas.height = document.getElementById("filterheight").value;
         //canvas.id = "cimg";
         // element = document.getElementById("cimg");
         // if (element)
@@ -232,23 +230,42 @@ function readURL(input) {
             //console.log("size = " + input.files[0].size);
             if (input.files[0].size > 50000000) {
                 alert('Image size should not be over 50 MB.');
+            } else if (input.files[0].size <= 0) {
+                alert('Invalid Image.');
             } else {
                 var reader = new FileReader();
+                reader.readAsDataURL(input.files[0]);
                 image = document.getElementById('imgUploaded');
                 imageBox = document.getElementById('imgUploadedBox');
                 reader.onload = function(e) {
-                    imageBox.style.display = "";
-                    image.style.display = "";
-                    image.setAttribute('src', e.target.result);
-                    image.height = input.files[0].height;
-                    image.width = input.files[0].width;
-                    document.getElementById('imgToSend').value = image.src;
-                    document.getElementById('imgToSend').width = image.width;
-                    document.getElementById('imgToSend').height = image.height;
+                    var img = new Image();
+                    img.src = e.target.result;
+                    img.onload = function (e){
+                        // img.width = 720;
+                        // img.height = 480;
+                        document.getElementById("filterwidth").value = img.width;
+                        document.getElementById("filterheight").value = img.height;
+                        // var height = this.height;
+                        // var width = this.width;
+                        
+                        imageBox.style.display = "";
+                        image.style.display = "";
+                        // image.height = height;
+                        // image.width = width;
+                        // console.log("width1 - " + image.width);
+                        // console.log("height1 - " + image.height);
+                        // img.width = image.width;
+                        // img.height = image.height;
+                        image.setAttribute('src', img.src);
+                        // console.log("width - " + img.width);
+                        // console.log("height - " + img.height);
+                        document.getElementById('imgToSend').value = img.src;
+                        document.getElementById('imgToSend').width = img.width;
+                        document.getElementById('imgToSend').height = img.height;
+                    }
                     document.getElementById('infoblock').style.display = '';
                     //createImageToUpload();
                 };
-                reader.readAsDataURL(input.files[0]);
             }
         } else {
             image.style.display = null;
@@ -300,7 +317,10 @@ function myimage(img_url) {
         imgVid.src = document.getElementById(img_url).value;
         imgVid.size = canvas.width / 3;
         contextVid.drawImage(imgVid, PosX, PosY, imgVid.size, imgVid.size);
-        createFilterToWebcam();
+        // Create Filter image to send
+        var imgFilter = canvas.toDataURL('image/png');
+        document.getElementById('filterpp').value = imgFilter;
+        //createFilterToWebcam();
     }
 
     // if ((is_video == true || is_image == true) && img_url) {

@@ -51,6 +51,8 @@
                             <div class="box" id="imgUploadedBox" style="display:none; position: relative; left: 0; top: 0;">
                                 <figure class="image">
                                         <img id="imgUploaded" name="imgUploaded" style="position: relative; left: 0; top: 0;">
+                                        <input type="hidden" name="filterwidth" id="filterwidth">
+                                        <input type="hidden" name="filterheight" id="filterheight">
                                         <input type="hidden" name="filterpp" id="filterpp">
                                 </figure>
                                 <div id="canvasImage" style="position: absolute; top: 0px; left: 0px;"></div>

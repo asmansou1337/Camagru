@@ -16,7 +16,7 @@ class controllerImage {
         return $result;
     }
 
-    public function uploadMergeImg($pdo){ 
+    public function uploadMergeImg($pdo){
         if (!file_exists('uploads')) {
             mkdir('uploads', 0775, true);
         }

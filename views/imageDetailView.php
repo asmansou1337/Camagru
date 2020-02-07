@@ -54,7 +54,6 @@
             <?php if (isset($_SESSION['loggedIn'])) { ?>
                 <form action="index.php?page=addLikeDetail" method="post" class="card-footer-item">
                     <input type="hidden" name="picId" value="<?php echo $pic['picId'] ?>">
-                    <input type="hidden" name="ownerId" value="<?php echo $pic['userId'] ?>">
                     <input type="hidden" name="ownerUsername" value="<?php echo $pic['username'] ?>">
                     <input type="hidden" name="ownerEmail" value="<?php echo $pic['email'] ?>">
                     <input type="hidden" name="notify" value="<?php echo $pic['notify'] ?>">

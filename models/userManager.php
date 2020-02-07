@@ -168,9 +168,6 @@ class UserManager {
         {
             throw new Exception('Something Went Wrong, Please Try Again!');
         }
-        else {
-            $_SESSION["message"] = "Your notification setting has changed successfuly.";
-        }
     }
 
     public function getNotification($pdo, $token)

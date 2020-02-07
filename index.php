@@ -2,7 +2,6 @@
     $title = 'Home';
     require('controllers/controller.php');
     require('config/setup.php');
-
     require('config/database.php');
     $pdoDB = new PDO($DSN_1, $DB_USER, $DB_PASSWORD, $DB_OPTIONS);
     $setupDB = new Setup($pdoDB);

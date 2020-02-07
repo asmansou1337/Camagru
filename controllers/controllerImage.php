@@ -94,7 +94,9 @@ class controllerImage {
         {
             if ($nbr > $nbrPages)
                 $currentPage = $nbrPages;
-            else
+            else if ($nbr < 1) {
+                $currentPage = 1;
+            } else
                 $currentPage = $nbr;
         } else {
             $currentPage = 1;
@@ -107,8 +109,11 @@ class controllerImage {
     {
         $imgId = $_POST['picId'];
         $image = new ImageManager();
-        $pic = $image->getImageById($pdo, $imgId);
-        return $pic[0];
+        if (isset($imgId) && !empty($imgId)){
+            $pic = $image->getImageById($pdo, $imgId);
+            return $pic[0];
+        } else
+            throw new Exception("Error, Please Try Again!");
     }
 
 
@@ -118,24 +123,29 @@ class controllerImage {
         $imageId = $_POST['picId'];
         $ownerUsername = $_POST['ownerUsername'];
         $ownerEmail = $_POST['ownerEmail'];
-        if (!$image->isLiked($pdo, $imageId, unserialize($_SESSION['user'])->getId()))
-        {
-            $image->addImageLike($pdo, $imageId);
-            if ($_POST['notify'] === 'ON') {
-                $subject = "Camagru: Like Notification";
-                $body = 'Hi '. $ownerUsername . '<br> The user '. unserialize($_SESSION['user'])->getUsername() .' liked your picture. <br>';
-                $sendEmail = new EmailManager();
-                $sendEmail->sendEmail($ownerEmail, $subject, $body);
+        if (isset($imageId) && isset($ownerUsername) && isset($ownerEmail) && isset($_POST['notify']) 
+        && !empty($imageId) && !empty($ownerUsername) && !empty($ownerEmail) && !empty($_POST['notify'])) {
+             if (!$image->isLiked($pdo, $imageId, unserialize($_SESSION['user'])->getId()))
+            {
+                $image->addImageLike($pdo, $imageId);
+                if ($_POST['notify'] === 'ON') {
+                    $subject = "Camagru: Like Notification";
+                    $body = 'Hi '. $ownerUsername . '<br> The user '. unserialize($_SESSION['user'])->getUsername() .' liked your picture. <br>';
+                    $sendEmail = new EmailManager();
+                    $sendEmail->sendEmail($ownerEmail, $subject, $body);
+                }
+            }    
+            else {
+                $image->delImageLike($pdo, $imageId);
+                if ($_POST['notify'] === 'ON') {
+                    $subject = "Camagru: Unlike Notification";
+                    $body = 'Hi '. $ownerUsername . '<br> The user '. unserialize($_SESSION['user'])->getUsername() .' unliked your picture. <br>';
+                    $sendEmail = new EmailManager();
+                    $sendEmail->sendEmail($ownerEmail, $subject, $body);
+                }
             }
-        }    
-        else {
-            $image->delImageLike($pdo, $imageId);
-            if ($_POST['notify'] === 'ON') {
-                $subject = "Camagru: Unlike Notification";
-                $body = 'Hi '. $ownerUsername . '<br> The user '. unserialize($_SESSION['user'])->getUsername() .' unliked your picture. <br>';
-                $sendEmail = new EmailManager();
-                $sendEmail->sendEmail($ownerEmail, $subject, $body);
-            }
+        } else {
+            throw new Exception("Error, Please Try Again!");
         }
     }
 }

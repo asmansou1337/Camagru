@@ -45,7 +45,6 @@
                 <?php if (isset($_SESSION['loggedIn'])) { ?>
                 <form action="index.php?page=addLike" method="post" class="card-footer-item">
                     <input type="hidden" name="picId" value="<?php echo $pics[$i]['picId'] ?>">
-                    <input type="hidden" name="ownerId" value="<?php echo $pics[$i]['userId'] ?>">
                     <input type="hidden" name="ownerUsername" value="<?php echo $pics[$i]['username'] ?>">
                     <input type="hidden" name="ownerEmail" value="<?php echo $pics[$i]['email'] ?>">
                     <input type="hidden" name="notify" value="<?php echo $pics[$i]['notify'] ?>">

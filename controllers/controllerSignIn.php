@@ -23,7 +23,6 @@ class controllerSignIn
 
     public function logout($pdo)
     {
-        setcookie("SettingEmail", null, time() - 86400);
         $_SESSION["user"]  = null;
         $_SESSION['token'] = null;
         $_SESSION['loggedIn'] = null;

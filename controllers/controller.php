@@ -20,9 +20,9 @@ class Controller
         $title = $page;
         require('views/header.php');
         // Call the right class automatically
-        spl_autoload_register(function($class){
-            require_once('models/'.$class.'.php');
-          });
+        // spl_autoload_register(function($class){
+        //     require_once('models/'.$class.'.php');
+        //   });
         
         // Depending on the page requested a certain traitement is done
         switch ($page) {
@@ -79,10 +79,6 @@ class Controller
                         $ctrl->login($this->pdo);
                         if (isset($_SESSION["message"]))
                             $message = $_SESSION["message"];
-                        if (isset($_POST["RememberMe"]))
-                        {
-                            setcookie("SettingEmail", unserialize($_SESSION['user'])->getEmail() , time() + 86400);
-                        }
                         header('Location: index.php?page=home');
                     }
                 } catch (Exception $e)
@@ -176,46 +172,6 @@ class Controller
                     unset($_SESSION["message"]);
                     require('views/editProfileView.php');
                     break;
-            case ($page === "changePassword"):
-                $this->accessControl("notlogged");
-                    try 
-                    {   
-                        if(isset($_POST['editPassword']))
-                        {
-                            $ctrl = new controllerProfile();
-                            $ctrl->changePassword($this->pdo);
-                            if (isset($_SESSION["message"]))
-                                $message = $_SESSION["message"];
-                        }
-                    } catch (Exception $e)
-                    {
-                        $errors = $e->getMessage();
-                    }
-                    require('views/messageView.php');
-                    unset($_SESSION["message"]);
-                    require('views/editPasswordView.php');
-                    break;
-            case ($page === "notifications"):
-                $this->accessControl("notlogged");
-                try 
-                    {
-                        $notify = "";
-                        $ctrl = new controllerProfile();
-                        if(isset($_POST['editNotifications']))
-                        {
-                            $ctrl->changeNotification($this->pdo);
-                            if (isset($_SESSION["message"]))
-                                $message = $_SESSION["message"];
-                        }
-                        $notify = $ctrl->getNotificationSetting($this->pdo);
-                    } catch (Exception $e)
-                    {
-                        $errors = $e->getMessage();
-                    }
-                    require('views/messageView.php');
-                    unset($_SESSION["message"]);
-                    require('views/notificationView.php');
-                    break;
             case ($page === "gallery"):
                     try 
                     {
@@ -267,6 +223,7 @@ class Controller
                         } catch (Exception $e)
                         {
                             $errors = $e->getMessage();
+                            header('Location: index.php?page=gallery');
                         }
                         require('views/messageView.php');
                         unset($_SESSION["message"]);
@@ -289,6 +246,7 @@ class Controller
                 } catch (Exception $e)
                 {
                     $errors = $e->getMessage();
+                    header('Location: index.php?page=gallery');
                 }
                 require('views/messageView.php');
                 unset($_SESSION["message"]);
@@ -311,6 +269,7 @@ class Controller
                 } catch (Exception $e)
                 {
                     $errors = $e->getMessage();
+                    header('Location: index.php?page=gallery');
                 }
                 require('views/messageView.php');
                 unset($_SESSION["message"]);
@@ -333,6 +292,7 @@ class Controller
                     } catch (Exception $e)
                     {
                         $errors = $e->getMessage();
+                        header('Location: index.php?page=gallery');
                     }
                     require('views/messageView.php');
                     unset($_SESSION["message"]);
@@ -353,6 +313,7 @@ class Controller
                         } catch (Exception $e)
                         {
                             $errors = $e->getMessage();
+                            header('Location: index.php?page=gallery');
                         }
                         require('views/messageView.php');
                         unset($_SESSION["message"]);

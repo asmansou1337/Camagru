@@ -15,7 +15,7 @@ class Validation {
 
     public function validateStringOrigin($str)
     {
-        // Remove all illegal characters from string
+        // Change all illegal characters from string
         $str = filter_var($str, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         return $str;
     }

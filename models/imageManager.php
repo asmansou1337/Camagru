@@ -1,26 +1,6 @@
 <?php
 require_once('models/Validation.php');
 class ImageManager {
-//    public function uploadImage($pdo)
-//    {
-//         if (!file_exists('uploads')) {
-//             mkdir('uploads', 0775, true);
-//         }
-//         $upload_dir = 'uploads/';
-//         $img = $_POST['imgToSend'];
-//         $img = str_replace('data:image/png;base64,', '', $img);
-//         $img = str_replace(' ', '+', $img);
-//         $data = base64_decode($img);
-//         // $fileName = date('Y-m-d-H:i:s', time());
-//         $fileName = date('m-d-', time()).uniqid();
-//         $file = $upload_dir.$fileName.'.png';
-//         $success = file_put_contents($file, $data);
-//         if (!$success)
-//         {
-//             throw new Exception("Error Uploading the image to server, Please try again !");
-//         } else
-//             $this->saveToDB($pdo, $fileName, $file);
-//    }
 
    public function saveToDB($pdo, $fileName, $path, $title, $description)
    {
@@ -49,7 +29,6 @@ class ImageManager {
             throw new Exception('Error Uploading the image, Please Try Again!');
         } else {
             $data = $Statement->fetchAll();
-            //print_r($data);
             return $data;
         }
    }
@@ -75,7 +54,6 @@ class ImageManager {
             throw new Exception('Error, Please Try Again!');
         } else {
             $count = $Statement->fetch();
-            //print_r($data);
             return $count['totalImages'];
         }
    }
@@ -97,7 +75,6 @@ class ImageManager {
             throw new Exception('Error, Please Try Again!');
         } else {
             $pics = $Statement->fetchAll();
-            //print_r($data);
             return $pics;
         }
    }
@@ -116,7 +93,6 @@ class ImageManager {
             throw new Exception('Error, Please Try Again!');
         } else {
             $pics = $Statement->fetchAll();
-            //print_r($data);
             return $pics;
         }
    }
@@ -167,7 +143,6 @@ class ImageManager {
             throw new Exception('Error, Please Try Again!');
         } else {
             $count = $Statement->fetch();
-            //print_r($data);
             return $count['like_nbr'];
         }
    }

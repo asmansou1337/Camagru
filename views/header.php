@@ -24,18 +24,18 @@
   <div class="navbar-menu" id="navbarMenu">
     <div class="navbar-start">
       <span class="navbar-item">
-        <a class="button is-black is-outlined" href="index.php?page=home">
+        <a class="fa button is-black is-outlined" href="index.php?page=home">
           <span class="icon">
-              <i class="fa fa-home"></i>
+              <i class="fa-home"></i>
           </span>
           <span>Home</span>
         </a>
       </span>
 
       <span class="navbar-item">
-        <a class="button is-black is-outlined" href="index.php?page=gallery&nbr=1">
+        <a class="fa button is-black is-outlined" href="index.php?page=gallery&nbr=1">
           <span class="icon">
-              <i class="fa fa-images"></i>
+              <i class="fa-images"></i>
           </span>
           <span>Gallery</span>
         </a>
@@ -43,9 +43,9 @@
 
       <?php if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === 'yes') {?>
         <span class="navbar-item">
-      <a class="button is-black is-outlined" href="index.php?page=upload">
+      <a class="fa button is-black is-outlined" href="index.php?page=upload">
         <span class="icon">
-            <i class="fa fa-download"></i>
+            <i class="fa-download"></i>
         </span>
         <span>Upload</span>
       </a>

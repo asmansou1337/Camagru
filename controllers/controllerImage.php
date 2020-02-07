@@ -23,46 +23,48 @@ class controllerImage {
         $upload_dir = 'uploads/';
         $upload = new ImageManager();
         if (isset($_POST['imgToSend']) && $_POST['imgToSend'] != '') {
-            $uploadedImage = $_POST['imgToSend'];
-            if (@getimagesize($uploadedImage) == false)
-                throw new Exception("Invalid Image, Please Try Again!");
-            $imageSize = getimagesize($uploadedImage);
-            if (isset($_POST['filterpp']) && !empty($_POST['filterpp'])){
-                $filterImg = $_POST['filterpp'];
-                if (@getimagesize($filterImg) == false)
-                    throw new Exception("Invalid Filter, Please Try Again!");
-                list($filterWidth, $filterHeight) = getimagesize($filterImg);
-                // $filterWidth = $_POST['filterWidth'];
-                // $filterHeight = $_POST['filterHeight'];
-                $finalFilter = $this->createImage($filterImg, $upload_dir, 'png', 'filter');
-                if ($imageSize['mime'] == 'image/jpeg' || $imageSize['mime'] == 'image/jpg')
-                {
-                    $result = $this->createImage($uploadedImage, $upload_dir, 'jpeg', 'tempImage');
-                    imagecopy($result, $finalFilter, 0, 0, 0, 0, $filterWidth, $filterHeight);
-                    $fileName = date('m-d-', time()).uniqid();
-                    $fileDestination = $upload_dir . $fileName.'.jpeg';
-                    imagejpeg($result, $fileDestination);
-                    unlink($upload_dir.'filter.png');
-                    unlink($upload_dir.'tempImage.jpeg');
-                } else if ($imageSize['mime'] == 'image/png') {
-                    $result = $this->createImage($uploadedImage, $upload_dir, 'png', 'tempImage');
-                    imagecopy($result, $finalFilter, 0, 0, 0, 0, $filterWidth, $filterHeight);
-                    $fileName = date('m-d-', time()).uniqid();
-                    $fileDestination = $upload_dir . $fileName.'.png';
-                    imagepng($result, $fileDestination);
-                    unlink($upload_dir.'filter.png');
-                    unlink($upload_dir.'tempImage.png');
-                } else
-                    throw new Exception("Only the following extentions are allowed: PNG, JPG, JPEG!");
-                    // upload image info to DB
-                    if (isset($_POST['title']) && isset($_POST['description']))
+            if (isset($_POST['title']) && isset($_POST['description']))
+            {
+                $uploadedImage = $_POST['imgToSend'];
+                if (@getimagesize($uploadedImage) == false)
+                    throw new Exception("Invalid Image, Please Try Again!");
+                $imageSize = getimagesize($uploadedImage);
+                if (isset($_POST['filterpp']) && !empty($_POST['filterpp'])){
+                    $filterImg = $_POST['filterpp'];
+                    if (@getimagesize($filterImg) == false)
+                        throw new Exception("Invalid Filter, Please Try Again!");
+                    list($filterWidth, $filterHeight) = getimagesize($filterImg);
+                    $finalFilter = $this->createImage($filterImg, $upload_dir, 'png', 'filter');
+                    if ($imageSize['mime'] == 'image/jpeg' || $imageSize['mime'] == 'image/jpg')
                     {
-                        $title = $_POST['title'];
-                        $description = $_POST['description'];
-                        $upload ->saveToDB($pdo, $fileName, $fileDestination, $title, $description);
-                    }
+                        $result = $this->createImage($uploadedImage, $upload_dir, 'jpeg', 'tempImage');
+                        imagecopy($result, $finalFilter, 0, 0, 0, 0, $filterWidth, $filterHeight);
+                        $fileName = date('m-d-', time()).uniqid();
+                        $fileDestination = $upload_dir . $fileName.'.jpeg';
+                        imagejpeg($result, $fileDestination);
+                        unlink($upload_dir.'filter.png');
+                        unlink($upload_dir.'tempImage.jpeg');
+                    } else if ($imageSize['mime'] == 'image/png') {
+                        $result = $this->createImage($uploadedImage, $upload_dir, 'png', 'tempImage');
+                        imagecopy($result, $finalFilter, 0, 0, 0, 0, $filterWidth, $filterHeight);
+                        $fileName = date('m-d-', time()).uniqid();
+                        $fileDestination = $upload_dir . $fileName.'.png';
+                        imagepng($result, $fileDestination);
+                        unlink($upload_dir.'filter.png');
+                        unlink($upload_dir.'tempImage.png');
+                    } else
+                        throw new Exception("Only the following extentions are allowed: PNG, JPG, JPEG!");
+                        // upload image info to DB
+                        if (isset($_POST['title']) && isset($_POST['description']))
+                        {
+                            $title = $_POST['title'];
+                            $description = $_POST['description'];
+                            $upload ->saveToDB($pdo, $fileName, $fileDestination, $title, $description);
+                        }
             } else 
                 throw new Exception("Error Reading Filter, Please Try Again!");
+            } else 
+                throw new Exception("Error, Please Try Again!");
         } else
             throw new Exception("Error Reading Image, Please Try Again!");
     }
@@ -72,9 +74,15 @@ class controllerImage {
         return $images->getUserImages($pdo);
     }
 
-    public function deleteImage($pdo, $imgId, $imgName) {
+    public function deleteImage($pdo) {
+        $imgId = $_POST['delImgId'];
+        $imgName =  $_POST['delImgName'];
+        if (isset($imgId) && !empty($imgId) && isset($imgName) && !empty($imgName)){
         $images = new ImageManager();
         return $images->deleteUserImages($pdo, $imgId, $imgName);
+        } else {
+            throw new Exception("Error, Please Try Again!");
+        }
     }
 
 

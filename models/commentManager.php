@@ -16,7 +16,6 @@ class CommentManager {
 
    public function getCommentsByPic($pdo, $imgId)
    {
-        //$id_user = unserialize($_SESSION['user'])->getId();
         $query = 'SELECT c.id as commentId, c.comment, c.creation_date, u.id as userId, u.firstName, u.lastName,
         u.username, u.email, u.notify, (SELECT count(comment) FROM comment WHERE id_picture = ?) countComments
         FROM comment c
@@ -28,7 +27,6 @@ class CommentManager {
             throw new Exception('Error, Please Try Again!');
         } else {
             $pics = $Statement->fetchAll();
-            //print_r($pics);
             return $pics;
         }
    }

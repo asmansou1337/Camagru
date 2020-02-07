@@ -20,10 +20,7 @@
     </span>
   </p>
 </div>
-<label class="checkbox">
-  <input type="checkbox" name="RememberMe">
-  Remember me
-</label>
+
 <div class="content has-text-right">
     <a href="index.php?page=forgotPassword"> Forgot Your Password?</a>
 </div>

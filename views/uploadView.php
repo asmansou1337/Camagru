@@ -8,7 +8,7 @@
             <ul>
                 <li class="tab is-active" onclick="openTab(event,'Webcam')" >
                 <a>
-                    <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
+                    <span class="icon is-small"><i class="fas fa-camera" aria-hidden="true"></i></span>
                     <span>Webcam</span>
                 </a>
                 </li>
@@ -27,7 +27,6 @@
                     <div id="Webcam" class="content-tab" style="position: relative; left: 0; top: 0;">
                         <video id="video" autoplay style="position: relative; left: 0; top: 0;"></video>
                         <div id="is_video" style="display:none"></div>
-                        <div id="canvasvideo" type="hidden"></div>
                     </div>
                     <!-- Content showing when upload tab is showing -->
                     <div id="local" class="content-tab" style="display:none">
@@ -55,9 +54,7 @@
                                         <input type="hidden" name="filterheight" id="filterheight">
                                         <input type="hidden" name="filterpp" id="filterpp">
                                 </figure>
-                                <div id="canvasImage" style="position: absolute; top: 0px; left: 0px;"></div>
                                 <div id="is_image" style="display:none"></div>
-                                <div id="canvasupload"></div>
                             </div>
                         </div>
                     </div>
@@ -77,7 +74,7 @@
                     <input class="button is-large is-fullwidth is-link is-outlined" name="submit" id="snap" type="submit" value="Take A Picture" disabled onclick="takeShot();">
                 </div>
                 <!-- the final background image sended to server -->
-                <div id="canvas"></div>
+                
                     <input id="imgToSend" name="imgToSend" type='hidden'>
         <!-- List of filters -->
         <div class="columns">

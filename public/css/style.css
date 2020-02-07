@@ -13,3 +13,55 @@
       background-color: lightsteelblue !important;
       padding: 1rem 1rem 1rem !important;
   }
+
+  .fa-images { 
+    background:url(../images/images-icon.svg) left top; 
+    width:16px; 
+    height:16px;
+    display: block;
+    float: left;
+}
+
+.fa-home { 
+  background:url(../images/home-icon.svg) left top; 
+  width:16px; 
+  height:16px;
+  display: block;
+  float: left;
+}
+
+.fa-download { 
+  background:url(../images/download-icon.svg) left top; 
+  width:16px; 
+  height:16px;
+  display: block;
+  float: left;
+}
+
+.fa-thumbs-up { 
+  background:url(../images/thumbs-up-icon.svg) left top; 
+  width:16px; 
+  height:16px;
+  display: block;
+  float: left;
+}
+
+.fa-comments { 
+  background:url(../images/comments-icon.svg) left top; 
+  width:16px; 
+  height:16px;
+  display: block;
+  float: left;
+}
+
+.fa-camera { 
+  background:url(../images/camera-icon.svg) left top; 
+  width:16px; 
+  height:16px;
+  display: block;
+  float: left;
+}
+
+.fa {
+    float: left;
+}

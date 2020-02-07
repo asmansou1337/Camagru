@@ -19,10 +19,6 @@ class Controller
         $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_SPECIAL_CHARS);
         $title = $page;
         require('views/header.php');
-        // Call the right class automatically
-        // spl_autoload_register(function($class){
-        //     require_once('models/'.$class.'.php');
-        //   });
         
         // Depending on the page requested a certain traitement is done
         switch ($page) {
@@ -356,7 +352,7 @@ class Controller
                         if(isset($_POST['imgToDelete']))
                         {
                             $ctrl = new controllerImage();
-                            $ctrl->deleteImage($this->pdo, $_POST['delImgId'], $_POST['delImgName']);
+                            $ctrl->deleteImage($this->pdo);
                             $pics = $ctrl->getLoggedUserImages($this->pdo);
                             $count = count($pics);
                             if (isset($_SESSION["message"]))
@@ -365,6 +361,7 @@ class Controller
                         } catch (Exception $e)
                         {
                             $errors = $e->getMessage();
+                            header('Location: index.php?page=upload');
                         }
                         require('views/messageView.php');
                         unset($_SESSION["message"]);

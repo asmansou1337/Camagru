@@ -15,8 +15,7 @@ class controllerSignIn
             $userInfo = $userLogin->userLogin($pdo, $email, $password);
             $user = new User($userInfo['id'], $userInfo['username'], $userInfo['email'], $userInfo['password'], $userInfo['firstName'], $userInfo['lastName']);
             $_SESSION['token'] = $userInfo['token'];
-            $_SESSION['user'] = serialize($user);
-            
+            $_SESSION['user'] = serialize($user);    
             $_SESSION['loggedIn'] = 'yes';
         }
     }

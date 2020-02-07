@@ -27,13 +27,13 @@
                     <div class="columns">
                         <div class="column is-half">
                             <span class="icon is-small is-left">
-                                <i class="fa fa-thumbs-up"></i>
+                                <i class="fa-thumbs-up"></i>
                             </span>
                         Likes <span> <?php echo $pics[$i]['countLikes'] ?> </span>
                         </div>
                         <div class="column">
                         <span class="icon is-small is-left">
-                                <i class="fas fa-comments"></i>
+                                <i class="fa-comments"></i>
                             </span>
                        Comments <span> <?php echo $pics[$i]['countComments'] ?> </span> 
                         </div>

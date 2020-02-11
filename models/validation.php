@@ -3,13 +3,12 @@
 class Validation {
     public function validateEmail($email)
     {
-        // Remove all illegal characters from email
-        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-
         // Validate e-mail
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
            throw new Exception("Please Enter a Valid Email Address !");
         }
+        // Remove all illegal characters from email
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
         return $email;
     }
 
@@ -25,6 +24,15 @@ class Validation {
         // Remove all illegal characters from string
         $str = filter_var($str, FILTER_SANITIZE_STRING);
         return $str;
+    }
+
+    public function validateUsername($username)
+    {
+        $username = $this->validateString($username);
+        if(!preg_match('/^\w{3,}$/', $username)) {
+            throw new Exception("Please Enter a Valid Username (Should be 3 caracteres or more) !");
+        }
+        return $username;
     }
 
     public function validatePassowrd($password)
@@ -49,10 +57,10 @@ class Validation {
         $query = "SELECT * FROM user_account WHERE username = ?";
         $Statement=$pdo->prepare($query);
         $Statement->execute([$username]);
-        $ErrorInformation = $Statement->errorInfo();
-        if(isset($ErrorInformation[2])){
-            throw new Exception($ErrorInformation[2]);
-        }
+        // $ErrorInformation = $Statement->errorInfo();
+        // if(isset($ErrorInformation[2])){
+        //     throw new Exception($ErrorInformation[2]);
+        // }
         if ($Statement->rowCount() > 0)
         {
             throw new Exception('Username Exists Already, Choose another one !');
@@ -64,10 +72,10 @@ class Validation {
         $query = "SELECT * FROM user_account WHERE email = ?";
         $Statement=$pdo->prepare($query);
         $Statement->execute([$email]);
-        $ErrorInformation = $Statement->errorInfo();
-        if(isset($ErrorInformation[2])){
-            throw new Exception($ErrorInformation[2]);
-        }
+        // $ErrorInformation = $Statement->errorInfo();
+        // if(isset($ErrorInformation[2])){
+        //     throw new Exception($ErrorInformation[2]);
+        // }
         if ($Statement->rowCount() > 0)
         {
             throw new Exception('Email Exists Already, Choose another one !');
@@ -79,10 +87,10 @@ class Validation {
         $query = "SELECT * FROM user_account WHERE password = ?";
         $Statement=$pdo->prepare($query);
         $Statement->execute([$password]);
-        $ErrorInformation = $Statement->errorInfo();
-        if(isset($ErrorInformation[2])){
-            throw new Exception($ErrorInformation[2]);
-        }
+        // $ErrorInformation = $Statement->errorInfo();
+        // if(isset($ErrorInformation[2])){
+        //     throw new Exception($ErrorInformation[2]);
+        // }
         if ($Statement->rowCount() === 0)
         {
             throw new Exception('The old password is wrong, Try Again !');
@@ -94,10 +102,10 @@ class Validation {
         $query = "SELECT * FROM user_account WHERE email = ?";
         $Statement=$pdo->prepare($query);
         $Statement->execute([$email]);
-        $ErrorInformation = $Statement->errorInfo();
-        if(isset($ErrorInformation[2])){
-            throw new Exception($ErrorInformation[2]);
-        }
+        // $ErrorInformation = $Statement->errorInfo();
+        // if(isset($ErrorInformation[2])){
+        //     throw new Exception($ErrorInformation[2]);
+        // }
         if ($Statement->rowCount() === 0)
         {
             throw new Exception('This Email does not Exist!');
@@ -133,10 +141,10 @@ class Validation {
         $query = "SELECT * FROM user_account WHERE token = ? AND active = 'ON'";
         $Statement = $pdo->prepare($query);
         $Statement->execute([$token]);
-        $ErrorInformation = $Statement->errorInfo();
-        if(isset($ErrorInformation[2])){
-            throw new Exception($ErrorInformation[2]);
-        }
+        // $ErrorInformation = $Statement->errorInfo();
+        // if(isset($ErrorInformation[2])){
+        //     throw new Exception($ErrorInformation[2]);
+        // }
         return $Statement;
     }
 }

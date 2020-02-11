@@ -19,7 +19,6 @@
     width:16px; 
     height:16px;
     display: block;
-    float: left;
 }
 
 .fa-home { 
@@ -27,7 +26,6 @@
   width:16px; 
   height:16px;
   display: block;
-  float: left;
 }
 
 .fa-download { 
@@ -35,7 +33,6 @@
   width:16px; 
   height:16px;
   display: block;
-  float: left;
 }
 
 .fa-thumbs-up { 
@@ -43,7 +40,6 @@
   width:16px; 
   height:16px;
   display: block;
-  float: left;
 }
 
 .fa-comments { 
@@ -51,7 +47,6 @@
   width:16px; 
   height:16px;
   display: block;
-  float: left;
 }
 
 .fa-camera { 
@@ -59,9 +54,5 @@
   width:16px; 
   height:16px;
   display: block;
-  float: left;
 }
 
-.fa {
-    float: left;
-}

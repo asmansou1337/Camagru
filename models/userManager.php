@@ -14,7 +14,9 @@ class UserManager {
     public function addNewUser($pdo, $username, $email, $password)
     {
         $this->validation = new Validation();
-        $username = $this->validation->validateString($username);
+        //$username = $this->validation->validateString($username);
+
+        $username = $this->validation->validateUsername($username);
         $email = $this->validation->validateEmail($email);
         $password = $this->validation->validatePassowrd($password);
         $this->validation->verifyUsernameExists($pdo, $username);

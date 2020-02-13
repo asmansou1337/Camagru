@@ -84,9 +84,10 @@ class Validation {
 
     public function verifyPasswordExists($pdo, $password)
     {
-        $query = "SELECT * FROM user_account WHERE password = ?";
+        $id_user = unserialize($_SESSION['user'])->getId();
+        $query = "SELECT * FROM user_account WHERE password = ? AND id = ?";
         $Statement=$pdo->prepare($query);
-        $Statement->execute([$password]);
+        $Statement->execute([$password, $id_user]);
         // $ErrorInformation = $Statement->errorInfo();
         // if(isset($ErrorInformation[2])){
         //     throw new Exception($ErrorInformation[2]);
@@ -122,6 +123,15 @@ class Validation {
         } else {
             throw new Exception('Wrong Password!');
         }
+    }
+
+    public function validateToken($token)
+    {
+        $token = $this->validateString($token);
+        if(!preg_match('/^\w{40,}$/', $token)) {
+            throw new Exception("Unvalid link, Please try again !");
+        }
+        return $token;
     }
 
     public function verifyTokenExist($pdo, $token)

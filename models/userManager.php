@@ -54,7 +54,7 @@ class UserManager {
     public function activateUserAccount($pdo, $token)
     {
         $this->validation = new Validation();
-        $token = filter_var($token, FILTER_SANITIZE_STRING);
+        $token = $this->validation->validateToken($token);
         $activated = $this->validation->verifyAccountActivated($pdo, $token);
         if ($activated->rowCount() > 0)
         {
@@ -114,10 +114,10 @@ class UserManager {
     public function updatePassword($pdo, $password, $token)
     {
         $this->validation = new Validation();
+        $token = $this->validation->validateToken($token);
+        $this->validation->verifyTokenExist($pdo, $token);
         $password = $this->validation->validatePassowrd($password);
         $hashedPassword = $this->hashPassword($password);
-        $this->validation->validateString($token);
-        $this->validation->verifyTokenExist($pdo, $token);
         $query = "UPDATE user_account SET password = ? WHERE token = ?";
         $Statement=$pdo->prepare($query);
         if(!$Statement->execute([$hashedPassword, $token]))
@@ -132,7 +132,7 @@ class UserManager {
     public function editProfile($pdo, $username, $firstName, $lastName, $email)
     {
         $this->validation = new Validation();
-        $username = $this->validation->validateString($username);
+        $username = $this->validation->validateUsername($username);
         $firstName = $this->validation->validateString($firstName);
         $lastName = $this->validation->validateString($lastName);
         if (!empty($firstName) && !ctype_alpha($firstName))

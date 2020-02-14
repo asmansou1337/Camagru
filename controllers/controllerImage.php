@@ -128,15 +128,19 @@ class controllerImage {
     public function addLikeToImage($pdo)
     {
         $image = new ImageManager();
-        $imageId = $_POST['picId'];
-        $ownerUsername = $_POST['ownerUsername'];
-        $ownerEmail = $_POST['ownerEmail'];
-        if (isset($imageId) && isset($ownerUsername) && isset($ownerEmail) && isset($_POST['notify']) 
-        && !empty($imageId) && !empty($ownerUsername) && !empty($ownerEmail) && !empty($_POST['notify'])) {
+        $img = unserialize($_POST['pic']);
+        print_r($img);
+        $imageId = $img->getId();
+        $ownerUsername = $img->getOwnerUsername();
+        $ownerEmail = $img->getOwnerEmail();
+        $notify = $img->getOwnerNotify();
+        $isLiked = $img->getIsLiked();
+        if (isset($imageId) && isset($ownerUsername) && isset($ownerEmail) && isset($notify)
+        && !empty($imageId) && !empty($ownerUsername) && !empty($ownerEmail) && !empty($notify)) {
              if (!$image->isLiked($pdo, $imageId, unserialize($_SESSION['user'])->getId()))
             {
                 $image->addImageLike($pdo, $imageId);
-                if ($_POST['notify'] === 'ON') {
+                if ($notify === 'ON') {
                     $subject = "Camagru: Like Notification";
                     $body = 'Hi '. $ownerUsername . '<br> The user '. unserialize($_SESSION['user'])->getUsername() .' liked your picture. <br>';
                     $sendEmail = new EmailManager();
@@ -145,7 +149,7 @@ class controllerImage {
             }    
             else {
                 $image->delImageLike($pdo, $imageId);
-                if ($_POST['notify'] === 'ON') {
+                if ($notify === 'ON') {
                     $subject = "Camagru: Unlike Notification";
                     $body = 'Hi '. $ownerUsername . '<br> The user '. unserialize($_SESSION['user'])->getUsername() .' unliked your picture. <br>';
                     $sendEmail = new EmailManager();

@@ -1,5 +1,6 @@
 <?php
 require_once('models/Validation.php');
+require_once('models/picture.php');
 class ImageManager {
 
    public function saveToDB($pdo, $fileName, $path, $title, $description)
@@ -74,6 +75,7 @@ class ImageManager {
         {
             throw new Exception('Error, Please Try Again!');
         } else {
+            $Statement->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'picture');
             $pics = $Statement->fetchAll();
             return $pics;
         }

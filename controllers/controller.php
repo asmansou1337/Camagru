@@ -176,6 +176,7 @@ class Controller
                         $nbpages = $ctrl->getTotalPages($this->pdo);
                         $nbr = filter_input(INPUT_GET, 'nbr', FILTER_SANITIZE_SPECIAL_CHARS);
                         $pics = $ctrl->getGalleryPage($this->pdo, $nbr);
+                        //print_r($pics);
                         if (isset($_SESSION["message"]))
                             $message = $_SESSION["message"];
                             
@@ -215,12 +216,12 @@ class Controller
                                 $ctrl->addLikeToImage($this->pdo);
                                 if (isset($_SESSION["message"]))
                                     $message = $_SESSION["message"];
-                                header('Location: index.php?page=gallery');
+                                //header('Location: index.php?page=gallery');
                             }
                         } catch (Exception $e)
                         {
                             $errors = $e->getMessage();
-                            header('Location: index.php?page=gallery');
+                            //header('Location: index.php?page=gallery');
                         }
                         require('views/messageView.php');
                         unset($_SESSION["message"]);

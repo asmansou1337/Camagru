@@ -128,15 +128,17 @@ class controllerImage {
     public function addLikeToImage($pdo)
     {
         $image = new ImageManager();
-        $img = unserialize($_POST['pic']);
-        print_r($img);
-        $imageId = $img->getId();
-        $ownerUsername = $img->getOwnerUsername();
-        $ownerEmail = $img->getOwnerEmail();
-        $notify = $img->getOwnerNotify();
-        $isLiked = $img->getIsLiked();
-        if (isset($imageId) && isset($ownerUsername) && isset($ownerEmail) && isset($notify)
-        && !empty($imageId) && !empty($ownerUsername) && !empty($ownerEmail) && !empty($notify)) {
+       // $img = json_decode($_POST['pic']);
+       /*$img = json_decode($_POST['pic']);
+        print_r($img['picId']);
+        echo "<script>console.log('Debug Objects: " . $img . "' );</script>";*/
+        $imageId = $_POST['picId'];
+       // $isLiked = $img->getIsLiked();
+        if (isset($imageId) && !empty($imageId)) {
+            $infos = $image->getImageOwnerInfo($pdo, $imageId);
+            $ownerUsername = $infos['username'];
+            $ownerEmail = $infos['email'];
+            $notify = $infos['notify'];
              if (!$image->isLiked($pdo, $imageId, unserialize($_SESSION['user'])->getId()))
             {
                 $image->addImageLike($pdo, $imageId);

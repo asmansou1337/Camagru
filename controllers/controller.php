@@ -216,12 +216,12 @@ class Controller
                                 $ctrl->addLikeToImage($this->pdo);
                                 if (isset($_SESSION["message"]))
                                     $message = $_SESSION["message"];
-                                //header('Location: index.php?page=gallery');
+                                header('Location: index.php?page=gallery');
                             }
                         } catch (Exception $e)
                         {
                             $errors = $e->getMessage();
-                            //header('Location: index.php?page=gallery');
+                            header('Location: index.php?page=gallery');
                         }
                         require('views/messageView.php');
                         unset($_SESSION["message"]);
@@ -311,7 +311,7 @@ class Controller
                         } catch (Exception $e)
                         {
                             $errors = $e->getMessage();
-                            header('Location: index.php?page=gallery');
+                            //header('Location: index.php?page=gallery');
                         }
                         require('views/messageView.php');
                         unset($_SESSION["message"]);

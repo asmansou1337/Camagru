@@ -99,6 +99,21 @@ class ImageManager {
         }
    }
 
+   public function getImageOwnerInfo($pdo, $imgId)
+   {
+        $query = 'SELECT u.id as userId, u.username, u.email, u.notify
+        FROM picture p
+        INNER JOIN user_account u ON u.id = p.id_user AND p.id = ?';
+        $Statement = $pdo->prepare($query);
+        if(!$Statement->execute([$imgId]))
+        {
+            throw new Exception('Error, Please Try Again!');
+        } else {
+            $infos = $Statement->fetchAll();
+            return $infos;
+        }
+   }
+
    public function isLiked($pdo, $picId, $userId) 
    {
         $query = "SELECT * from picture_like WHERE id_picture = ? AND id_user = ?";

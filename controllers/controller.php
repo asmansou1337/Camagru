@@ -231,21 +231,24 @@ class Controller
                 $this->accessControl("notlogged");
                 try 
                 {
+                    $ctrl = new controllerImage();
+                    $ctrlComment = new controllerComment();
                     if (isset($_POST['like']))
                     {
-                        $ctrl = new controllerImage();
-                        $ctrlComment = new controllerComment();
+                        $ctrl->checkImage($_POST['picId']);
                         $ctrl->addLikeToImage($this->pdo);
-                        $pic = $ctrl->getImageDetailPage($this->pdo);
-                        $comment = $ctrlComment->getCommentList($this->pdo);
+                        //$pic = $ctrl->getImageDetailPage($this->pdo);
+                       // $comment = $ctrlComment->getCommentList($this->pdo);
                         if (isset($_SESSION["message"]))
                             $message = $_SESSION["message"];
                     }
                 } catch (Exception $e)
                 {
                     $errors = $e->getMessage();
-                    header('Location: index.php?page=gallery');
+                   // header('Location: index.php?page=gallery');
                 }
+                $pic = $ctrl->getImageDetailPage($this->pdo);
+                $comment = $ctrlComment->getCommentList($this->pdo);
                 require('views/messageView.php');
                 unset($_SESSION["message"]);
                 require('views/imageDetailView.php');
@@ -254,21 +257,22 @@ class Controller
                 $this->accessControl("notlogged");
                 try 
                 {
+                    $ctrl = new controllerComment();
+                    $ctrlImg = new controllerImage();
                     if (isset($_POST['addComment']))
                         {
-                            $ctrl = new controllerComment();
-                            $ctrlImg = new controllerImage();
+                            $ctrlImg->checkImage($_POST['picId']);
                             $ctrl->addNewComment($this->pdo);
-                            $pic = $ctrlImg->getImageDetailPage($this->pdo);
-                            $comment = $ctrl->getCommentList($this->pdo);
                             if (isset($_SESSION["message"]))
                                 $message = $_SESSION["message"];
                         }
                 } catch (Exception $e)
                 {
                     $errors = $e->getMessage();
-                    header('Location: index.php?page=gallery');
+                    //header('Location: index.php?page=gallery');
                 }
+                $pic = $ctrlImg->getImageDetailPage($this->pdo);
+                $comment = $ctrl->getCommentList($this->pdo);
                 require('views/messageView.php');
                 unset($_SESSION["message"]);
                 require('views/imageDetailView.php');
@@ -277,21 +281,22 @@ class Controller
                     $this->accessControl("notlogged");
                     try 
                     {
+                        $ctrl = new controllerComment();
+                        $ctrlImg = new controllerImage();
                         if (isset($_POST['delComment']))
                             {
-                                $ctrl = new controllerComment();
-                                $ctrlImg = new controllerImage();
+                                $ctrlImg->checkImage($_POST['picId']);
                                 $ctrl->delSelectedComment($this->pdo);
-                                $pic = $ctrlImg->getImageDetailPage($this->pdo);
-                                $comment = $ctrl->getCommentList($this->pdo);
                                 if (isset($_SESSION["message"]))
                                     $message = $_SESSION["message"];
                             }
                     } catch (Exception $e)
                     {
                         $errors = $e->getMessage();
-                        header('Location: index.php?page=gallery');
+                        //header('Location: index.php?page=gallery');
                     }
+                    $pic = $ctrlImg->getImageDetailPage($this->pdo);
+                    $comment = $ctrl->getCommentList($this->pdo);
                     require('views/messageView.php');
                     unset($_SESSION["message"]);
                     require('views/imageDetailView.php');
@@ -303,6 +308,8 @@ class Controller
                                 {
                                     $ctrlComment = new controllerComment();
                                     $ctrl = new controllerImage();
+                                    if (isset($_POST['picId']) && !empty($_POST['picId']))
+                                        $_SESSION['pic'] = $_POST['picId'];
                                     $pic = $ctrl->getImageDetailPage($this->pdo);
                                     $comment = $ctrlComment->getCommentList($this->pdo);
                                     if (isset($_SESSION["message"]))
@@ -310,8 +317,9 @@ class Controller
                                 }
                         } catch (Exception $e)
                         {
+                            unset($_SESSION['pic']);
                             $errors = $e->getMessage();
-                            //header('Location: index.php?page=gallery');
+                            header('Location: index.php?page=gallery');
                         }
                         require('views/messageView.php');
                         unset($_SESSION["message"]);
@@ -351,20 +359,20 @@ class Controller
                 $this->accessControl("notlogged");
                 try 
                     {
+                        $ctrl = new controllerImage();
                         if(isset($_POST['imgToDelete']))
                         {
-                            $ctrl = new controllerImage();
                             $ctrl->deleteImage($this->pdo);
-                            $pics = $ctrl->getLoggedUserImages($this->pdo);
-                            $count = count($pics);
                             if (isset($_SESSION["message"]))
                                 $message = $_SESSION["message"];
                             }    
                         } catch (Exception $e)
                         {
                             $errors = $e->getMessage();
-                            header('Location: index.php?page=upload');
+                            //header('Location: index.php?page=upload');
                         }
+                        $pics = $ctrl->getLoggedUserImages($this->pdo);
+                        $count = count($pics);
                         require('views/messageView.php');
                         unset($_SESSION["message"]);
                         require('views/uploadView.php');

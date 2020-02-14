@@ -78,8 +78,10 @@ class controllerImage {
         $imgId = $_POST['delImgId'];
         $imgName =  $_POST['delImgName'];
         if (isset($imgId) && !empty($imgId) && isset($imgName) && !empty($imgName)){
-        $images = new ImageManager();
-        return $images->deleteUserImages($pdo, $imgId, $imgName);
+            $images = new ImageManager();
+            if (!$images->imageExists($pdo, $imgId) || !file_exists($imgName))
+                throw new Exception("Image Inexistant, Please Try Again!");
+            return $images->deleteUserImages($pdo, $imgId, $imgName);
         } else {
             throw new Exception("Error, Please Try Again!");
         }
@@ -115,12 +117,20 @@ class controllerImage {
 
     public function getImageDetailPage($pdo)
     {
-        $imgId = $_POST['picId'];
+        $imgId = $_SESSION['pic'];
         $image = new ImageManager();
         if (isset($imgId) && !empty($imgId)){
+            if (!$image->imageExists($pdo, $imgId))
+                throw new Exception("Image Inexistant, Please Try Again!");
             $pic = $image->getImageById($pdo, $imgId);
             return $pic[0];
         } else
+            throw new Exception("Error, Please Try Again!");
+    }
+
+    public function checkImage($imgId)
+    {
+        if ($_SESSION['pic'] !== $imgId)
             throw new Exception("Error, Please Try Again!");
     }
 
@@ -135,6 +145,8 @@ class controllerImage {
         $imageId = $_POST['picId'];
        // $isLiked = $img->getIsLiked();
         if (isset($imageId) && !empty($imageId)) {
+            if (!$image->imageExists($pdo, $imageId))
+                throw new Exception("Image Inexistant, Please Try Again!");
             $infos = $image->getImageOwnerInfo($pdo, $imageId);
             $ownerUsername = $infos['username'];
             $ownerEmail = $infos['email'];

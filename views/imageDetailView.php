@@ -54,9 +54,6 @@
             <?php if (isset($_SESSION['loggedIn'])) { ?>
                 <form action="index.php?page=addLikeDetail" method="post" class="card-footer-item">
                     <input type="hidden" name="picId" value="<?php echo $pic['picId'] ?>">
-                    <input type="hidden" name="ownerUsername" value="<?php echo $pic['username'] ?>">
-                    <input type="hidden" name="ownerEmail" value="<?php echo $pic['email'] ?>">
-                    <input type="hidden" name="notify" value="<?php echo $pic['notify'] ?>">
                     <input class="button is-medium is-fullwidth is-info" value="<?php echo  ($pic['isLiked'] === 0 ? "Like" : "Unlike") ; ?>" type="submit" name="like">
                 </form>
                 <?php } ?>
@@ -72,9 +69,6 @@
                 <p class="control">
                     <textarea class="textarea is-info" placeholder="Add a comment..." name="comment"></textarea>
                     <input type="hidden" name="picId" value="<?php echo $pic['picId'] ?>">
-                    <input type="hidden" name="ownerUsername" value="<?php echo $pic['username'] ?>">
-                    <input type="hidden" name="ownerEmail" value="<?php echo $pic['email'] ?>">
-                    <input type="hidden" name="notify" value="<?php echo $pic['notify'] ?>">
                 </p>
                 </div>
                 <nav class="level">

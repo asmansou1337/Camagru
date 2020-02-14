@@ -36,9 +36,10 @@ class ImageManager {
 
    public function deleteUserImages($pdo, $id, $name)
    {
-        $query = "DELETE FROM picture WHERE id = ?";
+        $id_user = unserialize($_SESSION['user'])->getId();
+        $query = "DELETE FROM picture WHERE id = ? AND id_user = ?";
         $Statement = $pdo->prepare($query);
-        if(!$Statement->execute([$id]))
+        if(!$Statement->execute([$id, $id_user]))
         {
             throw new Exception('Error Deleting the image, Please Try Again!');
         } else {
@@ -96,6 +97,21 @@ class ImageManager {
         } else {
             $pics = $Statement->fetchAll();
             return $pics;
+        }
+   }
+
+   public function imageExists($pdo, $imgId)
+   {
+        $query = "SELECT * from picture WHERE id = ?";
+        $Statement = $pdo->prepare($query);
+        if(!$Statement->execute([$imgId]))
+        {
+            throw new Exception('Error, Please Try Again!');
+        } else {
+            if ($Statement->rowcount() == 0)
+                return 0;
+            else 
+                return 1;
         }
    }
 

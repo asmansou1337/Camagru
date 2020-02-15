@@ -5,12 +5,12 @@ class ImageManager {
 
    public function saveToDB($pdo, $fileName, $path, $title, $description)
    {
-        $validation = new Validation();
-        if ($title != '' || $description != '')
-        {
-            $title = $validation->validateStringOrigin($title);
-            $description = $validation->validateStringOrigin($description);
-        }
+        // $validation = new Validation();
+        // if ($title != '' || $description != '')
+        // {
+        //     $title = $validation->validateStringOrigin($title);
+        //     $description = $validation->validateStringOrigin($description);
+        // }
         $id_user = unserialize($_SESSION['user'])->getId();
         $query = "INSERT INTO picture (id_user, name, img_path, title, description, creation_date) VALUES (?, ?, ?, ?, ?, NOW())";
         $Statement=$pdo->prepare($query);
@@ -43,7 +43,17 @@ class ImageManager {
         {
             throw new Exception('Error Deleting the image, Please Try Again!');
         } else {
-            unlink($name);
+            if (!($Statement->rowcount() == 0)) {
+                $query = "DELETE FROM comment WHERE id_picture = ?";
+                $query1 = "DELETE FROM picture_like WHERE id_picture = ?";
+                $Statement = $pdo->prepare($query);
+                $Statement1 = $pdo->prepare($query1);
+                if(!$Statement->execute([$id]) || !$Statement1->execute([$id]))
+                {
+                    throw new Exception('Error Deleting the image, Please Try Again!');
+                } 
+                unlink($name);
+            }    
         }
    }
 

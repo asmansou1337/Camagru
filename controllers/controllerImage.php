@@ -1,5 +1,6 @@
 <?php
 require_once('models/imageManager.php');
+require_once('models/Validation.php');
 class controllerImage {
 
     public function createImage($uploadedImage, $upload_dir, $type, $filename)
@@ -25,6 +26,15 @@ class controllerImage {
         if (isset($_POST['imgToSend']) && $_POST['imgToSend'] != '') {
             if (isset($_POST['title']) && isset($_POST['description']))
             {
+                $title = trim(preg_replace('/\s+/', ' ', $_POST['title']));
+                $description = trim(preg_replace('/\s+/', ' ', $_POST['description']));
+                $validation = new Validation();
+                if ($title != '' || $description != '')
+                {
+                    $title = $validation->verifyTitle($title);
+                    $description = $validation->verifyDescription($description);
+                }
+                // merging part
                 $uploadedImage = $_POST['imgToSend'];
                 if (@getimagesize($uploadedImage) == false)
                     throw new Exception("Invalid Image, Please Try Again!");
@@ -54,13 +64,8 @@ class controllerImage {
                         unlink($upload_dir.'tempImage.png');
                     } else
                         throw new Exception("Only the following extentions are allowed: PNG, JPG, JPEG!");
-                        // upload image info to DB
-                        if (isset($_POST['title']) && isset($_POST['description']))
-                        {
-                            $title = $_POST['title'];
-                            $description = $_POST['description'];
-                            $upload ->saveToDB($pdo, $fileName, $fileDestination, $title, $description);
-                        }
+                    $upload ->saveToDB($pdo, $fileName, $fileDestination, $title, $description);
+                        
             } else 
                 throw new Exception("Error Reading Filter, Please Try Again!");
             } else 

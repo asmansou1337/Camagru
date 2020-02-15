@@ -41,6 +41,7 @@ function errorCallback(err) {
 };
 
 function takeShot() {
+    document.getElementById('snap').disabled = true;
     if (document.getElementById('is_video').value == 'true'){
         shotFromVideo();
     }
@@ -129,7 +130,7 @@ window.addEventListener('resize', function(event){
 function myimage(img_url) {
     current = img_url;
     document.getElementById('snap').disabled = false;
-    if (document.getElementById('imgUploaded').src && img_url) {
+    if ((document.getElementById('is_image').value == 'true') && img_url) {
         var elementImg = document.getElementById("filtercanvasimg");
         if (elementImg)
             elementImg.parentNode.removeChild(elementImg);
@@ -160,12 +161,37 @@ function myimage(img_url) {
         canvas.id = "filtercanvasvid";
         canvas.style = "position: absolute; top: 0px; left: 0px;"
         document.getElementById("Webcam").appendChild(canvas);
-        var imgVid = new Image();
-        imgVid.src = document.getElementById(img_url).value;
-        imgVid.size = canvas.width / 3;
-        contextVid.drawImage(imgVid, PosX, PosY, imgVid.size, imgVid.size);
-        // Create Filter image to send
-        var imgFilter = canvas.toDataURL('image/png');
-        document.getElementById('filterpp').value = imgFilter;
+        //console.log(document.getElementById(img_url).value);
+        if (isInArray(document.getElementById(img_url).value)) {
+            console.log('tttt');
+                var imgVid = new Image();
+                imgVid.src = document.getElementById(img_url).value;
+                imgVid.size = canvas.width / 3;
+                contextVid.drawImage(imgVid, PosX, PosY, imgVid.size, imgVid.size);
+                // Create Filter image to send
+                var imgFilter = canvas.toDataURL('image/png');
+                document.getElementById('filterpp').value = imgFilter;
+            // imgVid.onload = function () {
+            //     imgVid.size = canvas.width / 3;
+            //     contextVid.drawImage(imgVid, PosX, PosY, imgVid.size, imgVid.size);
+            //     // Create Filter image to send
+            //     var imgFilter = canvas.toDataURL('image/png');
+            //     document.getElementById('filterpp').value = imgFilter;
+            // }  
+            // // imgVid.onerror = function()
+            // // {
+            // //     document.getElementById('filterpp').value = '';
+            // // }
+        }else
+            document.getElementById('filterpp').value = '';
+       
     }
+}
+
+function isInArray(val) {
+    const array = ["public/filters/1.png", "public/filters/2.png", "public/filters/3.png", "public/filters/4.png", "public/filters/5.png", 
+    "public/filters/6.png", "public/filters/7.png", "public/filters/8.png", "public/filters/9.png", "public/filters/10.png", ];
+    if (array.includes(val))
+        return true;
+    return false;
 }

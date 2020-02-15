@@ -157,5 +157,21 @@ class Validation {
         // }
         return $Statement;
     }
+
+    public function verifyTitle($title)
+    {
+        $title = $this->validateStringOrigin($title);
+        if (strlen($title) > 100)
+            throw new Exception('Error! Title should be less than 100 caracteres, Please try again !');
+        return $title;
+    }
+
+    public function verifyDescription($description)
+    {
+        $description = $this->validateStringOrigin($description);
+        if (strlen($description) > 250)
+            throw new Exception('Error! Description should be less than 250 caracteres, Please try again !');
+        return $description;
+    }
 }
 ?>

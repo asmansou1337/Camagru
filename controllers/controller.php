@@ -176,7 +176,6 @@ class Controller
                         $nbpages = $ctrl->getTotalPages($this->pdo);
                         $nbr = filter_input(INPUT_GET, 'nbr', FILTER_SANITIZE_SPECIAL_CHARS);
                         $pics = $ctrl->getGalleryPage($this->pdo, $nbr);
-                        //print_r($pics);
                         if (isset($_SESSION["message"]))
                             $message = $_SESSION["message"];
                             
@@ -237,21 +236,14 @@ class Controller
                     {
                         $ctrl->checkImage($_POST['picId']);
                         $ctrl->addLikeToImage($this->pdo);
-                        //$pic = $ctrl->getImageDetailPage($this->pdo);
-                       // $comment = $ctrlComment->getCommentList($this->pdo);
                         if (isset($_SESSION["message"]))
                             $message = $_SESSION["message"];
                     }
                 } catch (Exception $e)
                 {
                     $errors = $e->getMessage();
-                   // header('Location: index.php?page=gallery');
                 }
-                $pic = $ctrl->getImageDetailPage($this->pdo);
-                $comment = $ctrlComment->getCommentList($this->pdo);
-                require('views/messageView.php');
-                unset($_SESSION["message"]);
-                require('views/imageDetailView.php');
+                header('Location: index.php?page=reloadImageDetails');
                 break;
             case ($page === "addComment"):
                 $this->accessControl("notlogged");
@@ -269,13 +261,8 @@ class Controller
                 } catch (Exception $e)
                 {
                     $errors = $e->getMessage();
-                    //header('Location: index.php?page=gallery');
                 }
-                $pic = $ctrlImg->getImageDetailPage($this->pdo);
-                $comment = $ctrl->getCommentList($this->pdo);
-                require('views/messageView.php');
-                unset($_SESSION["message"]);
-                require('views/imageDetailView.php');
+                header('Location: index.php?page=reloadImageDetails');
                 break;
             case ($page === "delComment"):
                     $this->accessControl("notlogged");
@@ -293,14 +280,33 @@ class Controller
                     } catch (Exception $e)
                     {
                         $errors = $e->getMessage();
-                        //header('Location: index.php?page=gallery');
                     }
-                    $pic = $ctrlImg->getImageDetailPage($this->pdo);
-                    $comment = $ctrl->getCommentList($this->pdo);
-                    require('views/messageView.php');
-                    unset($_SESSION["message"]);
-                    require('views/imageDetailView.php');
+                    header('Location: index.php?page=reloadImageDetails');
                     break;
+            case ($page === "reloadImageDetails"):
+                $this->accessControl("notlogged");
+                try 
+                {
+                    if (isset( $_SESSION['pic']))
+                        {
+                            $ctrlComment = new controllerComment();
+                            $ctrl = new controllerImage();
+                            $_POST['picId'] = $_SESSION['pic'];
+                            $pic = $ctrl->getImageDetailPage($this->pdo);
+                            $comment = $ctrlComment->getCommentList($this->pdo);
+                            if (isset($_SESSION["message"]))
+                                $message = $_SESSION["message"];
+                        }
+                } catch (Exception $e)
+                {
+                    unset($_SESSION['pic']);
+                    $errors = $e->getMessage();
+                    header('Location: index.php?page=gallery');
+                }
+                require('views/messageView.php');
+                unset($_SESSION["message"]);
+                require('views/imageDetailView.php');
+                break;
             case ($page === "viewImageDetails"):
                     try 
                         {
@@ -369,7 +375,6 @@ class Controller
                         } catch (Exception $e)
                         {
                             $errors = $e->getMessage();
-                            //header('Location: index.php?page=upload');
                         }
                         $pics = $ctrl->getLoggedUserImages($this->pdo);
                         $count = count($pics);

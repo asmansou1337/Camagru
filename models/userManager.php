@@ -14,8 +14,6 @@ class UserManager {
     public function addNewUser($pdo, $username, $email, $password)
     {
         $this->validation = new Validation();
-        //$username = $this->validation->validateString($username);
-
         $username = $this->validation->validateUsername($username);
         $email = $this->validation->validateEmail($email);
         $password = $this->validation->validatePassowrd($password);
@@ -121,6 +119,20 @@ class UserManager {
         $query = "UPDATE user_account SET password = ? WHERE token = ?";
         $Statement=$pdo->prepare($query);
         if(!$Statement->execute([$hashedPassword, $token]))
+        {
+            throw new Exception('Something Went Wrong, Please Try Again!');
+        }
+        else {
+            $_SESSION["message"] = "Your password has changed successfuly.";
+        }
+    }
+
+    public function resetToken($pdo, $token)
+    {
+        $newToken = $this->createToken();
+        $query = "UPDATE user_account SET token = ? WHERE token = ?";
+        $Statement=$pdo->prepare($query);
+        if(!$Statement->execute([$newToken, $token]))
         {
             throw new Exception('Something Went Wrong, Please Try Again!');
         }

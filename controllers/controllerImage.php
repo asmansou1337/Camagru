@@ -38,12 +38,12 @@ class controllerImage {
                 $uploadedImage = $_POST['imgToSend'];
                 if (@getimagesize($uploadedImage) == false)
                     throw new Exception("Invalid Image, Please Try Again!");
-                $imageSize = getimagesize($uploadedImage);
+                $imageSize = @getimagesize($uploadedImage);
                 if (isset($_POST['filterpp']) && !empty($_POST['filterpp'])){
                     $filterImg = $_POST['filterpp'];
                     if (@getimagesize($filterImg) == false)
                         throw new Exception("Invalid Filter, Please Try Again!");
-                    list($filterWidth, $filterHeight) = getimagesize($filterImg);
+                    list($filterWidth, $filterHeight) = @getimagesize($filterImg);
                     $finalFilter = $this->createImage($filterImg, $upload_dir, 'png', 'filter');
                     if ($imageSize['mime'] == 'image/jpeg' || $imageSize['mime'] == 'image/jpg')
                     {

@@ -56,6 +56,7 @@ class controllerSignIn
         } else {
             $user = new UserManager();
             $user->updatePassword($pdo, $password, $_GET['token']);
+            $user->resetToken($pdo, $_GET['token']);
         }
     }
 }

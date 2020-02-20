@@ -19,7 +19,6 @@ class Controller
         $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_SPECIAL_CHARS);
         $title = $page;
         require('views/header.php');
-        error_reporting(0);
         // Depending on the page requested a certain traitement is done
         switch ($page) {
             case ($page === "home"):

@@ -57,10 +57,6 @@ class Validation {
         $query = "SELECT * FROM user_account WHERE username = ?";
         $Statement=$pdo->prepare($query);
         $Statement->execute([$username]);
-        // $ErrorInformation = $Statement->errorInfo();
-        // if(isset($ErrorInformation[2])){
-        //     throw new Exception($ErrorInformation[2]);
-        // }
         if ($Statement->rowCount() > 0)
         {
             throw new Exception('Username Exists Already, Choose another one !');
@@ -72,10 +68,6 @@ class Validation {
         $query = "SELECT * FROM user_account WHERE email = ?";
         $Statement=$pdo->prepare($query);
         $Statement->execute([$email]);
-        // $ErrorInformation = $Statement->errorInfo();
-        // if(isset($ErrorInformation[2])){
-        //     throw new Exception($ErrorInformation[2]);
-        // }
         if ($Statement->rowCount() > 0)
         {
             throw new Exception('Email Exists Already, Choose another one !');
@@ -88,10 +80,6 @@ class Validation {
         $query = "SELECT * FROM user_account WHERE password = ? AND id = ?";
         $Statement=$pdo->prepare($query);
         $Statement->execute([$password, $id_user]);
-        // $ErrorInformation = $Statement->errorInfo();
-        // if(isset($ErrorInformation[2])){
-        //     throw new Exception($ErrorInformation[2]);
-        // }
         if ($Statement->rowCount() === 0)
         {
             throw new Exception('The old password is wrong, Try Again !');
@@ -103,10 +91,6 @@ class Validation {
         $query = "SELECT * FROM user_account WHERE email = ?";
         $Statement=$pdo->prepare($query);
         $Statement->execute([$email]);
-        // $ErrorInformation = $Statement->errorInfo();
-        // if(isset($ErrorInformation[2])){
-        //     throw new Exception($ErrorInformation[2]);
-        // }
         if ($Statement->rowCount() === 0)
         {
             throw new Exception('This Email does not Exist!');
@@ -151,10 +135,6 @@ class Validation {
         $query = "SELECT * FROM user_account WHERE token = ? AND active = 'ON'";
         $Statement = $pdo->prepare($query);
         $Statement->execute([$token]);
-        // $ErrorInformation = $Statement->errorInfo();
-        // if(isset($ErrorInformation[2])){
-        //     throw new Exception($ErrorInformation[2]);
-        // }
         return $Statement;
     }
 

@@ -1,16 +1,9 @@
 <?php
 require_once('models/Validation.php');
-require_once('models/picture.php');
 class ImageManager {
 
    public function saveToDB($pdo, $fileName, $path, $title, $description)
    {
-        // $validation = new Validation();
-        // if ($title != '' || $description != '')
-        // {
-        //     $title = $validation->validateStringOrigin($title);
-        //     $description = $validation->validateStringOrigin($description);
-        // }
         $id_user = unserialize($_SESSION['user'])->getId();
         $query = "INSERT INTO picture (id_user, name, img_path, title, description, creation_date) VALUES (?, ?, ?, ?, ?, NOW())";
         $Statement=$pdo->prepare($query);
@@ -86,7 +79,6 @@ class ImageManager {
         {
             throw new Exception('Error, Please Try Again!');
         } else {
-            $Statement->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'picture');
             $pics = $Statement->fetchAll();
             return $pics;
         }
@@ -136,7 +128,7 @@ class ImageManager {
             throw new Exception('Error, Please Try Again!');
         } else {
             $infos = $Statement->fetchAll();
-            return $infos;
+            return $infos[0];
         }
    }
 

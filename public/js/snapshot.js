@@ -10,8 +10,6 @@ var constraints = {
 
 document.getElementById('is_video').value = 'true';
 document.getElementById('is_image').value = 'false';
-var w;
-var h;
 
 var current;
 var PosX = 0;
@@ -41,7 +39,6 @@ function errorCallback(err) {
 };
 
 function takeShot() {
-   // document.getElementById('snap').disabled = true;
     if (document.getElementById('is_video').value == 'true'){
         shotFromVideo();
     }

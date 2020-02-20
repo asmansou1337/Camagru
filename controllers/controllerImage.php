@@ -143,12 +143,7 @@ class controllerImage {
     public function addLikeToImage($pdo)
     {
         $image = new ImageManager();
-       // $img = json_decode($_POST['pic']);
-       /*$img = json_decode($_POST['pic']);
-        print_r($img['picId']);
-        echo "<script>console.log('Debug Objects: " . $img . "' );</script>";*/
         $imageId = $_POST['picId'];
-       // $isLiked = $img->getIsLiked();
         if (isset($imageId) && !empty($imageId)) {
             if (!$image->imageExists($pdo, $imageId))
                 throw new Exception("Image Inexistant, Please Try Again!");

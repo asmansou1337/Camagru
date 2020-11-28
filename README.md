@@ -46,11 +46,13 @@ user’s preferences.
 - This page should contain 2 sections:
   - A main section containing the preview of the user’s webcam, the list of superposable images and a button allowing to capture a picture.
   - A side section displaying thumbnails of all previous pictures taken.
+  - Because not everyone has a webcam, you should allow the upload of a user image instead of capturing one with the webcam.
+  - The user should be able to delete his edited images, but only his, not other users’ creations.
 
 ![Alt text](screenshots/upload.png?raw=true "Upload")
 ![Alt text](screenshots/upload2.png?raw=true "Upload")
 ![Alt text](screenshots/upload3.png?raw=true "Upload")
 
 **Authorized languages:**
-◦ [Server] PHP
-◦ [Client] HTML - CSS - JavaScript
+- [Server] PHP
+- [Client] HTML - CSS - JavaScript
